@@ -1,0 +1,39 @@
+// 由 scripts/build-offline.mjs 生成，缓存版本随页面内容变化。
+const CACHE = 'ace-offline-497fac1e85';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png'];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting()),
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
+      .then(() => self.clients.claim()),
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match('./index.html')));
+    return;
+  }
+  event.respondWith(
+    caches.match(event.request).then(
+      (hit) =>
+        hit ||
+        fetch(event.request)
+          .then((response) => {
+            const copy = response.clone();
+            caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+            return response;
+          })
+          .catch(() => caches.match('./index.html')),
+    ),
+  );
+});

@@ -1,0 +1,20 @@
+{
+  "name": "Ace 口算练习",
+  "short_name": "Ace 口算",
+  "description": "一年级数学口算练习，离线可用。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff8ee",
+  "theme_color": "#ff8a3d",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

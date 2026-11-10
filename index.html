@@ -1,0 +1,5092 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ace 学习乐园 · 一年级</title>
+  <meta name="theme-color" content="#fff8ee" />
+  <meta name="description" content="一年级语文、数学、英语、科学、道德与法治练习，离线可用，成绩保存在本机。" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Ace 学习" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff8a3d'/%3E%3Cpath d='M32 14l5.2 11.5 12.6 1.6-9.3 8.6 2.5 12.4L32 42.1l-11 6 2.5-12.4-9.3-8.6 12.6-1.6z' fill='%23fff8ee'/%3E%3C/svg%3E" />
+  <style>
+/* Ace 学习乐园 — shared styles */
+
+:root {
+  --cream: #fff8ee;
+  --cream-deep: #f7ecd9;
+  --paper: #ffffff;
+  --ink: #2f2a3d;
+  --ink-soft: #6b6478;
+  --line: #eadfce;
+  --orange: #ff8a3d;
+  --orange-deep: #e86f22;
+  --blue: #3f7dfb;
+  --blue-deep: #2a60d0;
+  --purple: #8a5cf6;
+  --green: #23a96a;
+  --green-deep: #17804f;
+  --pink: #ef5c88;
+  --yellow: #ffc531;
+  --red: #e5484d;
+  --shadow: 0 18px 40px -24px rgba(63, 45, 22, 0.45);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --font: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC",
+    "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font);
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255, 197, 49, 0.18), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgba(63, 125, 251, 0.12), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(255, 138, 61, 0.12), transparent 45%);
+  background-attachment: fixed;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- Home ---------- */
+
+.site-header {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 6px 10px rgba(232, 111, 34, 0.35));
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.brand-text strong {
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.brand-text small {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.header-note {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.hero {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 24px 8px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--orange-deep);
+  background: rgba(255, 138, 61, 0.14);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.hero h1 {
+  margin-top: 16px;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero-copy > p {
+  margin-top: 16px;
+  max-width: 34em;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+
+.hero-stats {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.stat-pill strong {
+  font-size: 20px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-art {
+  position: relative;
+  min-height: 240px;
+}
+
+.float-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border-radius: 24px;
+  border: 2px solid var(--line);
+  box-shadow: var(--shadow);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  animation: bob 5s ease-in-out infinite;
+}
+
+.float-card em {
+  font-style: normal;
+  color: var(--orange);
+  padding: 0 4px;
+}
+
+.float-card--plus {
+  top: 4%;
+  left: 2%;
+  width: 184px;
+  height: 104px;
+  font-size: 32px;
+  transform: rotate(-5deg);
+}
+
+.float-card--minus {
+  bottom: 4%;
+  right: 2%;
+  width: 184px;
+  height: 104px;
+  font-size: 30px;
+  transform: rotate(4deg);
+  animation-delay: -1.6s;
+}
+
+.float-card--minus em {
+  color: var(--blue);
+}
+
+.float-card--star {
+  top: 10%;
+  right: 4%;
+  width: 84px;
+  height: 84px;
+  font-size: 38px;
+  color: var(--yellow);
+  transform: rotate(10deg);
+  animation-delay: -2.4s;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+.topics {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 36px 24px 8px;
+}
+
+.topic-group + .topic-group {
+  margin-top: 40px;
+}
+
+.group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.group-head h2 {
+  font-size: 22px;
+  letter-spacing: 0.01em;
+}
+
+.group-head span {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.topic-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 22px 20px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  box-shadow: 0 2px 0 rgba(63, 45, 22, 0.04);
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--tone, var(--orange));
+  box-shadow: var(--shadow);
+}
+
+.topic-card:active {
+  transform: translateY(0);
+}
+
+.topic-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--tone-soft, rgba(255, 138, 61, 0.14));
+  color: var(--tone, var(--orange));
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.topic-card h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.topic-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.topic-meta {
+  margin-top: auto;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.best {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #d8cdbb;
+}
+
+.best .on {
+  color: var(--yellow);
+}
+
+[data-tone="orange"] {
+  --tone: var(--orange);
+  --tone-soft: rgba(255, 138, 61, 0.15);
+}
+[data-tone="blue"] {
+  --tone: var(--blue);
+  --tone-soft: rgba(63, 125, 251, 0.13);
+}
+[data-tone="purple"] {
+  --tone: var(--purple);
+  --tone-soft: rgba(138, 92, 246, 0.13);
+}
+[data-tone="green"] {
+  --tone: var(--green);
+  --tone-soft: rgba(35, 169, 106, 0.13);
+}
+[data-tone="pink"] {
+  --tone: var(--pink);
+  --tone-soft: rgba(239, 92, 136, 0.13);
+}
+
+.about {
+  max-width: 1080px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+  display: grid;
+  gap: 8px;
+  max-width: 780px;
+}
+
+.about h2 {
+  font-size: 18px;
+}
+
+.about p {
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.site-footer {
+  max-width: 1080px;
+  margin: 56px auto 0;
+  padding: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 13px;
+  text-align: center;
+}
+
+.hint {
+  color: var(--ink-soft);
+}
+
+/* ---------- Practice ---------- */
+
+.page-practice {
+  background-image:
+    radial-gradient(circle at 8% 4%, rgba(255, 138, 61, 0.16), transparent 34%),
+    radial-gradient(circle at 92% 8%, rgba(63, 125, 251, 0.12), transparent 36%);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(255, 248, 238, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(234, 223, 206, 0.8);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 10px 8px 4px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.back-link:hover {
+  color: var(--ink);
+  background: rgba(63, 45, 22, 0.05);
+}
+
+.topbar-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.topbar-title h1 {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-title p {
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timer {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  min-width: 42px;
+  text-align: right;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: rgba(63, 45, 22, 0.06);
+  color: var(--ink);
+}
+
+.icon-btn .icon-off {
+  display: none;
+}
+
+.icon-btn[aria-pressed="false"] .icon-on {
+  display: none;
+}
+
+.icon-btn[aria-pressed="false"] .icon-off {
+  display: block;
+}
+
+.practice {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 20px 20px 48px;
+}
+
+.progress-wrap {
+  margin-bottom: 18px;
+}
+
+.progress {
+  display: flex;
+  gap: 5px;
+  height: 10px;
+}
+
+.progress-seg {
+  flex: 1;
+  border-radius: 999px;
+  background: #ece2d2;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.progress-seg.is-current {
+  background: #cdbfa9;
+}
+
+.progress-seg.is-correct {
+  background: var(--green);
+}
+
+.progress-seg.is-wrong {
+  background: var(--red);
+}
+
+.progress-label {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-card {
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 30px 24px 24px;
+  box-shadow: 0 10px 0 rgba(234, 223, 206, 0.55), var(--shadow);
+}
+
+.expression {
+  text-align: center;
+  font-size: clamp(38px, 11vw, 58px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.answer-row {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.answer-box {
+  min-width: 150px;
+  height: 92px;
+  padding: 0 20px;
+  display: grid;
+  place-items: center;
+  border: 3px dashed #d9c9b2;
+  border-radius: 22px;
+  background: #fffdf9;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.answer-text {
+  font-size: 50px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.answer-text.is-placeholder {
+  color: #cbbba3;
+}
+
+.answer-box.is-correct {
+  border-color: var(--green);
+  border-style: solid;
+  background: #e9f8f0;
+}
+
+.answer-box.is-correct .answer-text {
+  color: var(--green-deep);
+}
+
+.answer-box.is-wrong {
+  border-color: var(--red);
+  border-style: solid;
+  background: #fdeeee;
+  animation: shake 0.36s ease;
+}
+
+.answer-box.is-wrong .answer-text {
+  color: var(--red);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-9px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.feedback {
+  min-height: 30px;
+  margin-top: 14px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.feedback.is-good {
+  color: var(--green-deep);
+}
+
+.feedback.is-bad {
+  color: var(--red);
+}
+
+.next-btn {
+  display: block;
+  margin: 4px auto 0;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.next-btn:hover {
+  background: #443d55;
+}
+
+.keypad {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.keypad button {
+  height: 62px;
+  border: 2px solid #e6d9c6;
+  border-radius: 18px;
+  background: #fffdf9;
+  font-size: 26px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 4px 0 #e6d9c6;
+  transition: transform 0.05s ease, box-shadow 0.05s ease, background-color 0.12s ease;
+}
+
+.keypad button:hover {
+  background: #fff6e9;
+}
+
+.keypad button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #e6d9c6;
+}
+
+.keypad button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.keypad .key-soft {
+  font-size: 22px;
+  color: var(--ink-soft);
+  background: #f6eee2;
+}
+
+.keypad .key-confirm {
+  background: var(--green);
+  border-color: var(--green-deep);
+  box-shadow: 0 4px 0 var(--green-deep);
+  color: #fff;
+  font-size: 19px;
+}
+
+.keypad .key-confirm:hover {
+  background: #1f9a61;
+}
+
+.keypad .key-confirm:active {
+  box-shadow: 0 1px 0 var(--green-deep);
+}
+
+/* ---------- Result ---------- */
+
+.result {
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px 26px;
+  text-align: center;
+  box-shadow: 0 10px 0 rgba(234, 223, 206, 0.55), var(--shadow);
+  animation: rise 0.28s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.stars {
+  margin: 14px 0 6px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stars svg {
+  width: 54px;
+  height: 54px;
+  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.stars svg:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stars svg:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.stars .star-fill {
+  fill: var(--yellow);
+  stroke: #e0a800;
+  stroke-width: 2;
+}
+
+.stars .star-empty {
+  fill: #efe7d8;
+  stroke: #ded1bd;
+  stroke-width: 2;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.result-score {
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-time {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.review {
+  margin: 22px 0 0;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.review:empty {
+  display: none;
+}
+
+.review-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #fdf4f4;
+  border: 1px solid #f6dede;
+  font-size: 15px;
+}
+
+.review-expr {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.review-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.result-actions {
+  margin-top: 26px;
+  display: grid;
+  gap: 10px;
+}
+
+.btn {
+  display: grid;
+  place-items: center;
+  min-height: 52px;
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--orange);
+  border-color: var(--orange-deep);
+  box-shadow: 0 4px 0 var(--orange-deep);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #ff7a26;
+}
+
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--orange-deep);
+}
+
+.btn-ghost {
+  background: #fffdf9;
+  border-color: var(--line);
+  color: var(--ink);
+  box-shadow: 0 4px 0 var(--line);
+}
+
+.btn-ghost:hover {
+  background: #fff6e9;
+}
+
+.btn-ghost:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 820px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 32px;
+  }
+
+  .hero-art {
+    display: none;
+  }
+
+  .header-note {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    padding: 18px 16px 0;
+  }
+
+  .hero {
+    padding: 26px 16px 4px;
+  }
+
+  .hero-copy > p {
+    font-size: 15px;
+  }
+
+  .topics {
+    padding: 28px 16px 4px;
+  }
+
+  .about {
+    margin-top: 36px;
+    padding: 0 16px;
+  }
+
+  .practice {
+    padding: 14px 12px 40px;
+  }
+
+  .quiz-card {
+    padding: 22px 14px 18px;
+    border-radius: 24px;
+  }
+
+  .answer-box {
+    min-width: 128px;
+    height: 80px;
+  }
+
+  .answer-text {
+    font-size: 42px;
+  }
+
+  .keypad {
+    gap: 8px;
+  }
+
+  .keypad button {
+    height: 56px;
+    border-radius: 16px;
+    font-size: 24px;
+  }
+
+  .topbar {
+    padding: 8px 12px;
+  }
+
+  .back-link span {
+    display: none;
+  }
+
+  .topbar-title h1 {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Accounts, nav, ranking ---------- */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.site-nav a {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+  background: rgba(63, 45, 22, 0.06);
+}
+
+.site-nav a.is-active {
+  color: #fff;
+  background: var(--ink);
+}
+
+.site-nav a.is-user:not(.is-active) {
+  color: var(--orange-deep);
+  font-weight: 700;
+}
+
+.hero-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero-actions .btn {
+  min-height: 48px;
+  padding: 10px 22px;
+  font-size: 15px;
+}
+
+.btn-small {
+  width: fit-content;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.btn-quiet {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.btn-quiet:hover {
+  background: rgba(63, 45, 22, 0.05);
+}
+
+/* Avatars */
+
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--avatar, var(--orange));
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.avatar-md {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.avatar-lg {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+}
+
+.avatar-xl {
+  width: 88px;
+  height: 88px;
+  font-size: 36px;
+}
+
+/* Account page */
+
+.account-main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 44px 24px 64px;
+}
+
+.auth-card,
+.profile-card {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.auth-intro h1 {
+  margin-top: 14px;
+  font-size: clamp(24px, 5vw, 30px);
+  line-height: 1.25;
+}
+
+.auth-intro p {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 22px 0 18px;
+  background: #f6eee2;
+  border-radius: 999px;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  padding: 9px 22px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.tab.is-active {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(63, 45, 22, 0.12);
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field > span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.field input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: #fffdf9;
+  font-family: inherit;
+  font-size: 17px;
+  color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field input:focus {
+  border-color: var(--orange);
+  outline: 3px solid rgba(255, 138, 61, 0.18);
+}
+
+.field small {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.form-error {
+  min-height: 18px;
+  margin: -2px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.auth-submit {
+  width: 100%;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-head h1 {
+  font-size: clamp(24px, 5vw, 30px);
+  line-height: 1.2;
+}
+
+.profile-handle {
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.profile-since {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.profile-stats {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.stat-block {
+  padding: 14px 8px;
+  text-align: center;
+  background: #fdf6ea;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.stat-block strong {
+  display: block;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.stat-block span {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.profile-ranks {
+  margin-top: 22px;
+}
+
+.profile-week {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.rank-chips {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rank-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 7px 14px;
+  border: 1px solid #f3ddb9;
+  border-radius: 999px;
+  background: #fff3df;
+  font-size: 13px;
+}
+
+.rank-chip strong {
+  font-size: 17px;
+  color: var(--orange-deep);
+}
+
+.rank-chip small {
+  margin-left: 4px;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.rank-chip.is-empty {
+  border-color: var(--line);
+  background: #f6f1e8;
+  color: var(--ink-soft);
+}
+
+.profile-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.profile-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Ranking page */
+
+.ranking-main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 44px 24px 64px;
+}
+
+.ranking-hero h1 {
+  margin-top: 12px;
+  font-size: clamp(32px, 6vw, 46px);
+  line-height: 1.1;
+}
+
+.ranking-hero p {
+  margin-top: 10px;
+  max-width: 36em;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.board-toolbar {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.board-toolbar .tabs {
+  margin: 0;
+}
+
+.board-updated {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.my-rank {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  font-size: 14px;
+}
+
+.my-rank-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.my-rank-text strong {
+  display: block;
+  font-size: 16px;
+}
+
+.my-rank-text span {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.podium {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.podium[data-count="1"] {
+  grid-template-columns: minmax(0, 240px);
+  justify-content: center;
+}
+
+.podium[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.podium-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 18px 12px 16px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  text-align: center;
+  min-width: 0;
+}
+
+.podium-card.rank-1 {
+  padding-top: 26px;
+  border-color: #f0c657;
+  background: linear-gradient(180deg, #fff9e8, #fffdf9 65%);
+}
+
+.podium-card.is-me {
+  box-shadow: 0 0 0 3px rgba(255, 138, 61, 0.25);
+}
+
+.podium-place {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #efe5d5;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 2px 0 rgba(63, 45, 22, 0.12);
+}
+
+.rank-1 .podium-place {
+  background: var(--yellow);
+  color: #6b4a00;
+}
+
+.rank-2 .podium-place {
+  background: #d5dde8;
+}
+
+.rank-3 .podium-place {
+  background: #e8b48b;
+}
+
+.podium-card .avatar {
+  margin-top: 6px;
+}
+
+.podium-name {
+  max-width: 100%;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.podium-name em {
+  margin-left: 5px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  vertical-align: 2px;
+}
+
+.podium-user {
+  max-width: 100%;
+  font-size: 11px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.podium-score {
+  margin-top: 4px;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--orange-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.podium-score small {
+  margin-left: 2px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.board-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+  transition: opacity 0.15s ease;
+}
+
+.board-list.is-loading {
+  opacity: 0.45;
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) repeat(3, 74px);
+  gap: 8px;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.board-row.is-me {
+  border-color: var(--orange);
+  background: #fff6e9;
+}
+
+.row-rank {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.row-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.row-person .avatar {
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
+}
+
+.row-names {
+  display: grid;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.row-names strong {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-names small {
+  font-size: 11px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-cell {
+  text-align: center;
+}
+
+.row-cell strong {
+  display: block;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-cell small {
+  font-size: 10px;
+  color: var(--ink-soft);
+}
+
+.board-empty,
+.board-error {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.board-error {
+  color: var(--red);
+}
+
+.result-rank {
+  margin-top: 8px;
+  min-height: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.result-rank a {
+  color: var(--blue);
+}
+
+.result-rank.is-error {
+  color: var(--red);
+}
+
+@media (max-width: 430px) {
+  .brand-text {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    padding: 16px 16px 0;
+  }
+
+  .brand-text small {
+    display: none;
+  }
+
+  .brand-text strong {
+    font-size: 17px;
+  }
+
+  .site-nav {
+    gap: 2px;
+    padding: 3px;
+  }
+
+  .site-nav a {
+    padding: 6px 10px;
+    font-size: 13px;
+    max-width: 96px;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 150px;
+  }
+
+  .board-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .account-main,
+  .ranking-main {
+    padding: 28px 16px 48px;
+  }
+
+  .auth-card,
+  .profile-card {
+    padding: 22px 16px;
+    border-radius: 24px;
+  }
+
+  .profile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .podium {
+    gap: 8px;
+  }
+
+  .podium-card {
+    padding: 16px 8px 12px;
+    border-radius: 18px;
+  }
+
+  .podium-card .avatar-lg {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .podium-name {
+    font-size: 14px;
+  }
+
+  .podium-score {
+    font-size: 20px;
+  }
+
+  .board-row {
+    grid-template-columns: 30px minmax(0, 1fr) repeat(2, 48px);
+    gap: 6px;
+    padding: 9px 10px;
+  }
+
+  .board-row .row-cell:nth-child(5) {
+    display: none;
+  }
+
+  .my-rank {
+    padding: 12px 14px;
+  }
+
+  .my-rank .btn-small {
+    flex: none;
+  }
+}
+
+/* 选择题：语文题干与选项，需要比口算更大的换行空间 */
+
+.expression.is-choice {
+  max-width: 94%;
+  margin: 0 auto;
+  font-size: clamp(21px, 5.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.choice-pad {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 4px;
+}
+
+.choice-btn {
+  min-height: 58px;
+  padding: 12px 14px;
+  border: 2px solid #e6d9c6;
+  border-radius: 16px;
+  background: #fffdf9;
+  font-family: inherit;
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 3px 0 #e6d9c6;
+  transition: transform 0.05s ease, box-shadow 0.05s ease, background-color 0.12s ease;
+}
+
+.choice-btn:hover {
+  background: #fff6e9;
+}
+
+.choice-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #e6d9c6;
+}
+
+.choice-btn:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.choice-btn.is-correct {
+  border-color: var(--green);
+  background: #e9f8f0;
+  color: var(--green-deep);
+  box-shadow: 0 3px 0 var(--green-deep);
+  opacity: 1;
+}
+
+.choice-btn.is-wrong {
+  border-color: var(--red);
+  background: #fdeeee;
+  color: var(--red);
+  box-shadow: 0 3px 0 #b9363a;
+}
+
+@media (max-width: 620px) {
+  .choice-pad {
+    grid-template-columns: 1fr;
+  }
+
+  .expression.is-choice {
+    font-size: clamp(20px, 5.6vw, 24px);
+    line-height: 1.6;
+  }
+}
+
+/* 本地单文件版专用的小样式 */
+
+.offline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 2px solid #cfe8d9;
+  background: #eefaf3;
+  color: var(--green-deep);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.offline-badge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+button.back-link {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink-soft);
+}
+
+button.back-link:hover {
+  color: var(--ink);
+  background: rgba(63, 45, 22, 0.05);
+}
+
+.storage-note {
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.site-footer a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .offline-badge {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+/* 成绩单与选手名 */
+
+.player-bar {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.player-bar label {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.player-bar input {
+  width: 128px;
+  padding: 8px 12px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: #fffdf9;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.player-bar input:focus {
+  border-color: var(--orange);
+  outline: 3px solid rgba(255, 138, 61, 0.18);
+}
+
+.player-bar span {
+  font-size: 12px;
+}
+
+.score-card {
+  max-width: 340px;
+  margin: 16px auto 0;
+  padding: 18px 16px 14px;
+  background: #fffdf9;
+  border: 2px solid var(--line);
+  border-radius: 22px;
+}
+
+.score-subject {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.score-value {
+  margin-top: 6px;
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--orange-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.score-value small {
+  margin-left: 4px;
+  font-size: 20px;
+  color: var(--ink-soft);
+}
+
+.score-card .stars {
+  margin: 8px 0 4px;
+  gap: 4px;
+}
+
+.score-card .stars svg {
+  width: 34px;
+  height: 34px;
+}
+
+.score-detail {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.score-player {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.score-date {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.score-tip {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.result-rank {
+  color: var(--orange-deep);
+}
+
+@media (max-width: 520px) {
+  .score-value {
+    font-size: 56px;
+  }
+
+  .player-bar input {
+    width: 110px;
+  }
+}
+
+
+/* 科目卡片 */
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.subject-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--tone, var(--orange));
+  box-shadow: var(--shadow);
+}
+
+.subject-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: var(--tone-soft, rgba(255, 138, 61, 0.14));
+  color: var(--tone, var(--orange));
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.subject-info {
+  min-width: 0;
+}
+
+.subject-info h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.subject-info p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.subject-meta {
+  margin-left: auto;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-card {
+    padding: 16px;
+  }
+
+  .subject-meta {
+    font-size: 11px;
+  }
+}
+
+/* V2：挑战、统计、语音、组合练习 */
+
+.quick-links{
+  max-width:1080px;margin:28px auto 0;padding:0 24px;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+}
+.quick-link{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;
+  background:var(--paper);border:2px solid var(--line);border-radius:20px;
+  font-family:inherit;text-align:left;cursor:pointer;color:var(--ink);
+  box-shadow:0 3px 0 rgba(63,45,22,.06);
+}
+.quick-link:hover{transform:translateY(-2px);border-color:var(--orange)}
+.quick-icon{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+  background:rgba(255,138,61,.14);color:var(--orange-deep);font-weight:800;font-size:18px;flex:none;
+}
+.quick-link strong{display:block;font-size:16px}
+.quick-link small{display:block;font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+/* 挑战 */
+body.is-challenge .progress-wrap{display:none}
+body.is-challenge .timer{color:var(--red);font-weight:800}
+body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--shadow)}
+.challenge-hud{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin-bottom:12px;padding:10px 14px;border-radius:16px;
+  background:var(--paper);border:2px solid var(--line);font-size:13px;font-weight:700;
+}
+.challenge-hud b{font-size:20px;color:var(--orange-deep);font-variant-numeric:tabular-nums}
+
+/* 统计 */
+.stats-main{max-width:880px;margin:0 auto;padding:22px 16px 56px}
+.stats-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-box{
+  background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:14px 12px;
+  text-align:center;
+}
+.stat-box strong{display:block;font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat-box span{display:block;font-size:11px;color:var(--ink-soft);margin-top:4px}
+.stats-section{margin-top:18px;background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:16px}
+.stats-section h2{font-size:16px;margin-bottom:10px}
+.stats-row{
+  display:grid;grid-template-columns:minmax(0,1.3fr) repeat(4,minmax(0,.7fr));
+  gap:8px;align-items:center;padding:10px 0;border-top:1px solid var(--line);
+  font-size:13px;
+}
+.stats-row:first-of-type{border-top:0}
+.stats-row.header{font-size:10px;letter-spacing:.06em;color:var(--ink-soft);font-weight:700}
+.stats-row strong{font-variant-numeric:tabular-nums}
+.stats-row .muted{color:var(--ink-soft);font-size:11px}
+.stats-row.is-weak{background:#fff4e8;border-radius:10px;padding-left:8px;padding-right:8px}
+.stats-empty{font-size:13px;color:var(--ink-soft);padding:8px 0}
+.stats-recent-row{
+  display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);
+  font-size:12px;color:var(--ink-soft);
+}
+.stats-recent-row:first-of-type{border-top:0}
+.stats-recent-row b{color:var(--ink);font-weight:700}
+.stats-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stats-actions .btn{min-height:42px;padding:8px 14px;font-size:13px}
+
+/* 弹窗 */
+.modal{
+  position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;
+  background:rgba(47,42,61,.5);backdrop-filter:blur(2px);
+}
+.modal-card{
+  width:100%;max-width:420px;background:var(--paper);border:2px solid var(--line);
+  border-radius:24px;padding:22px;box-shadow:0 24px 60px -30px rgba(0,0,0,.5);
+}
+.modal-card h2{font-size:22px}
+.modal-sub{font-size:13px;color:var(--ink-soft);margin-top:6px}
+.challenge-group{margin-top:18px}
+.challenge-label{font-size:12px;font-weight:700;color:var(--ink-soft)}
+.challenge-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.challenge-options button{
+  border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
+}
+.challenge-options button.is-on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+
+/* 语音模式 */
+.audio-panel{
+  position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:18px;
+  background:#1c1a24;color:#fff;
+}
+.audio-card{width:100%;max-width:420px;text-align:center}
+.audio-kicker{font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.6)}
+.audio-card h2{font-size:26px;margin-top:10px}
+.audio-text{font-size:14px;line-height:1.8;color:rgba(255,255,255,.78);margin-top:12px;min-height:52px}
+.audio-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.audio-actions button,.audio-judge button,.audio-close{
+  border:2px solid rgba(255,255,255,.35);background:transparent;color:#fff;
+  border-radius:12px;padding:10px 14px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
+}
+.audio-judge{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.audio-judge .audio-correct{background:#23a96a;border-color:#23a96a}
+.audio-judge .audio-wrong{background:#e5484d;border-color:#e5484d}
+.audio-close{margin-top:18px;background:transparent;color:rgba(255,255,255,.7);border-color:transparent;font-size:12px}
+.audio-mic-on{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+
+@media (max-width:620px){
+  .quick-links{grid-template-columns:1fr;padding:0 16px}
+  .stats-overview{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,.8fr));font-size:12px}
+  .stats-row .hide-mobile{display:none}
+  .stats-section{padding:14px 12px}
+}
+
+.picker-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;max-height:46vh;overflow:auto}
+.picker-item{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:9px 10px;font-size:13px;background:#fff;cursor:pointer}
+.picker-item input{width:16px;height:16px;accent-color:var(--orange)}
+.picker-item.is-on{background:#fff4e8;border-color:var(--orange)}
+@media (max-width:520px){.picker-list{grid-template-columns:1fr}}
+
+.daily-row{
+  display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,.55fr)) minmax(0,.6fr);
+  gap:6px;align-items:center;padding:9px 0;border-top:1px solid var(--line);
+  font-size:12px;text-align:right;font-variant-numeric:tabular-nums;
+}
+.daily-row:first-of-type{border-top:0}
+.daily-row.header{font-size:10px;color:var(--ink-soft);font-weight:700;padding-bottom:6px}
+.daily-row > :first-child{text-align:left}
+.daily-date b{display:block;font-size:12px}
+.daily-date small{display:block;font-size:9px;color:var(--ink-soft);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.daily-row b{font-weight:700}
+.daily-row.is-today{background:#fff4e8;border-radius:10px;padding-left:8px;padding-right:8px}
+@media (max-width:520px){
+  .daily-row{grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,.5fr)) minmax(0,.55fr);gap:4px;font-size:11px}
+  .daily-date small{font-size:8px}
+}
+
+  </style>
+</head>
+<body class="page-home">
+  <div id="homeView">
+    <header class="site-header">
+      <a class="brand" href="#" id="brandHome" aria-label="Ace 学习乐园首页">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="40" height="40"><rect width="64" height="64" rx="16" fill="#ff8a3d"/><path d="M32 14l5.2 11.5 12.6 1.6-9.3 8.6 2.5 12.4L32 42.1l-11 6 2.5-12.4-9.3-8.6 12.6-1.6z" fill="#fff8ee"/></svg>
+        </span>
+        <span class="brand-text">
+          <strong>Ace 学习乐园</strong>
+          <small>一年级 · 本地版</small>
+        </span>
+      </a>
+      <span class="offline-badge">无需联网</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">一年级 · 上</span>
+          <h1>今天练什么？</h1>
+          <p>数学和语文，每天选一样，练 10 分钟。成绩只保存在这台设备的浏览器里，可以截图和同学比一比。</p>
+          <div class="hero-stats" id="heroStats" aria-live="polite"></div>
+          <div class="player-bar">
+            <label for="playerName">我是</label>
+            <input id="playerName" maxlength="8" autocomplete="off" placeholder="小朋友" />
+            <span>成绩单上会显示这个名字</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="float-card float-card--plus">8 <em>+</em> 5</span>
+          <span class="float-card float-card--star">★</span>
+          <span class="float-card float-card--minus">15 <em>−</em> 7</span>
+        </div>
+      </section>
+
+      <section class="topics" aria-label="选择科目">
+        <div class="subject-grid" id="subjectGrid"></div>
+      </section>
+
+      <section class="quick-links" aria-label="快速入口">
+        <button class="quick-link" id="challengeBtn" type="button">
+          <span class="quick-icon">时</span>
+          <span><strong>限时挑战</strong><small>1 / 3 / 5 分钟</small></span>
+        </button>
+        <button class="quick-link" id="statsBtn" type="button">
+          <span class="quick-icon">统</span>
+          <span><strong>学习统计</strong><small>分科目看题数</small></span>
+        </button>
+      </section>
+
+      <section class="about">
+        <h2>本地版说明</h2>
+        <p>不需要账号、不连接服务器、不上传成绩，适合没有网络时使用。换一台设备或清理浏览器数据后，本机记录会清空。</p>
+        <p class="storage-note" id="storageNote" hidden>当前浏览器禁止了本地存储，本次成绩只在页面打开期间有效。</p>
+        <p>内容参考广州市一年级使用的统编版语文和人教版数学，用于家庭复习，不替代课堂和课本。</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Ace 学习乐园 · 一年级本地版 · 数据只在这台设备</p>
+    </footer>
+  </div>
+
+  <div id="subjectView" hidden>
+    <header class="topbar">
+      <button class="back-link" id="subjectBackBtn" type="button" aria-label="返回科目列表">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1 id="subjectTitle">科目</h1>
+        <p id="subjectSubtitle">一年级</p>
+      </div>
+      <div class="topbar-tools"></div>
+    </header>
+
+    <main class="subject-main">
+      <section class="topics" aria-label="选择题型">
+        <div class="topic-grid" id="topicGrid"></div>
+      </section>
+
+      <section class="tips-card" id="tipsCard">
+        <h2>在家复习建议</h2>
+        <ul id="tipsList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="statsView" hidden>
+    <header class="topbar">
+      <button class="back-link" id="statsBackBtn" type="button" aria-label="返回首页">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1>学习统计</h1>
+        <p>本机记录</p>
+      </div>
+      <div class="topbar-tools"></div>
+    </header>
+    <main class="stats-main" id="statsContent"></main>
+  </div>
+
+  <div id="challengeSetup" class="modal" hidden>
+    <div class="modal-card">
+      <h2>限时挑战</h2>
+      <p class="modal-sub">选时长和科目，时间到自动结算。</p>
+      <div class="challenge-group">
+        <span class="challenge-label">时长</span>
+        <div class="challenge-options" id="durationOptions">
+          <button type="button" data-duration="60">1 分钟</button>
+          <button type="button" data-duration="180">3 分钟</button>
+          <button type="button" data-duration="300">5 分钟</button>
+        </div>
+      </div>
+      <div class="challenge-group">
+        <span class="challenge-label">科目</span>
+        <div class="challenge-options" id="challengeSubjectOptions">
+          <button type="button" data-challenge-subject="math">数学</button>
+          <button type="button" data-challenge-subject="chinese">语文</button>
+          <button type="button" data-challenge-subject="english">英语</button>
+          <button type="button" data-challenge-subject="all">综合</button>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="challengeCancel" type="button">取消</button>
+        <button class="btn btn-primary" id="challengeStart" type="button">开始挑战</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mathPicker" class="modal" hidden>
+    <div class="modal-card">
+      <h2>自选组合</h2>
+      <p class="modal-sub">勾选要练的数学题型，至少选 1 个。</p>
+      <div class="picker-list" id="mathPickerList"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="mathPickerCancel" type="button">取消</button>
+        <button class="btn btn-primary" id="mathPickerStart" type="button">开始练习</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="audioPanel" class="audio-panel" hidden>
+    <div class="audio-card">
+      <p class="audio-kicker">语音练习 · 家长兜底</p>
+      <h2 id="audioTitle">听题</h2>
+      <p id="audioText" class="audio-text">题目会读出来。孩子口头回答，家长点对错；支持识别的浏览器可以自动听。</p>
+      <div class="audio-actions">
+        <button type="button" id="audioReplay">再听一遍</button>
+        <button type="button" id="audioShow">显示文字</button>
+        <button type="button" id="audioMic">自动听</button>
+      </div>
+      <div class="audio-judge">
+        <button type="button" class="audio-correct" id="audioCorrect">答对了</button>
+        <button type="button" class="audio-wrong" id="audioWrong">答错了</button>
+      </div>
+      <button type="button" class="audio-close" id="audioClose">退出语音</button>
+    </div>
+  </div>
+
+  <div id="practiceView" hidden>
+    <header class="topbar">
+      <button class="back-link" id="backBtn" type="button" aria-label="返回题型列表">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1 id="topicTitle">练习</h1>
+        <p id="topicLevel">一年级</p>
+      </div>
+      <div class="topbar-tools">
+        <span class="timer" id="timer" aria-label="用时">0:00</span>
+        <button class="icon-btn" id="audioBtn" type="button" aria-label="语音练习" title="语音练习">语</button>
+        <button class="icon-btn" id="soundToggle" type="button" aria-pressed="true" aria-label="关闭音效" title="关闭音效">
+          <svg class="icon-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg class="icon-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="practice">
+      <div class="progress-wrap">
+        <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" aria-label="答题进度"></div>
+        <p class="progress-label"><span id="progressNow">第 1 题</span><span id="progressTotal">共 10 题</span></p>
+      </div>
+
+      <section class="quiz-card" id="quizCard" aria-label="练习题">
+        <p class="expression" id="expression">1 + 1 =</p>
+        <div class="answer-row" id="answerRow">
+          <div class="answer-box" id="answerBox" aria-live="polite" aria-label="你的答案">
+            <span id="answerText" class="answer-text">?</span>
+          </div>
+        </div>
+
+        <div class="choice-pad" id="choicePad" hidden aria-label="选项"></div>
+
+        <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+        <button class="next-btn" id="nextBtn" type="button" hidden>下一题</button>
+
+        <div class="keypad" id="keypad" aria-label="数字键盘">
+          <button type="button" data-digit="1">1</button>
+          <button type="button" data-digit="2">2</button>
+          <button type="button" data-digit="3">3</button>
+          <button type="button" data-digit="4">4</button>
+          <button type="button" data-digit="5">5</button>
+          <button type="button" data-digit="6">6</button>
+          <button type="button" data-digit="7">7</button>
+          <button type="button" data-digit="8">8</button>
+          <button type="button" data-digit="9">9</button>
+          <button type="button" class="key-soft" data-action="backspace" aria-label="删除一位">⌫</button>
+          <button type="button" data-digit="0">0</button>
+          <button type="button" class="key-confirm" data-action="submit">确定</button>
+        </div>
+      </section>
+
+      <section class="result" id="result" hidden aria-label="本组结果">
+        <p class="result-eyebrow">成绩单</p>
+        <div class="score-card">
+          <p class="score-subject" id="scoreSubject">数学 · 10 以内加法</p>
+          <p class="score-value"><span id="scoreValue">0</span><small>分</small></p>
+          <div class="stars" id="resultStars" aria-label="星星"></div>
+          <p class="score-detail">第一次答对 <span id="resultCorrect">0</span> / <span id="resultTotal">10</span> · 用时 <span id="resultTime">0:00</span></p>
+          <p class="score-player" id="scorePlayer">小朋友</p>
+          <p class="score-date" id="scoreDate"></p>
+        </div>
+        <p class="result-rank" id="resultNote"></p>
+        <p class="score-tip">第一次答对 10 分，第二次答对 5 分 · 截图和同学比一比</p>
+        <div class="review" id="review"></div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="againBtn" type="button">再练一组</button>
+          <button class="btn btn-ghost" id="homeBtn" type="button">换个题型</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+// Question engine for grade-1 math practice.
+// Pure functions, no DOM. Every topic exposes a generator producing
+// { operands, ops, answer, display, key } with valid grade-1 arithmetic.
+
+const int = (min, max, rng) => min + Math.floor(rng() * (max - min + 1));
+
+const opChar = (op) => (op === '+' ? '+' : '\u2212');
+
+/** Build one question from operands and operators. */
+function makeQuestion(operands, ops) {
+  if (operands.length !== ops.length + 1) {
+    throw new Error('operand/operator length mismatch');
+  }
+  let answer = operands[0];
+  for (let i = 0; i < ops.length; i++) {
+    answer += ops[i] === '+' ? operands[i + 1] : -operands[i + 1];
+  }
+  const display = operands
+    .map((value, i) => (i === 0 ? String(value) : `${opChar(ops[i - 1])} ${value}`))
+    .join(' ');
+  return {
+    operands,
+    ops,
+    answer,
+    display,
+    key: `${operands.join(',')}|${ops.join('')}`,
+  };
+}
+
+/** Rejection-sample a generator until it yields a usable question. */
+function sample(generate, rng, fallback) {
+  for (let attempt = 0; attempt < 400; attempt++) {
+    const question = generate(rng);
+    if (question) return question;
+  }
+  return fallback;
+}
+
+function addWithin(limit, rng) {
+  return sample(
+    (r) => {
+      const allowZero = r() < 0.1;
+      const low = allowZero ? 0 : 1;
+      const a = int(low, limit, r);
+      const b = int(low, limit - a, r);
+      if (a + b < 1) return null;
+      if (a + b > limit) return null;
+      return makeQuestion([a, b], ['+']);
+    },
+    rng,
+    makeQuestion([1, 1], ['+']),
+  );
+}
+
+function subWithin(limit, rng) {
+  return sample(
+    (r) => {
+      const a = int(1, limit, r);
+      const b = int(r() < 0.1 ? 0 : 1, a, r);
+      if (b > a) return null;
+      return makeQuestion([a, b], ['-']);
+    },
+    rng,
+    makeQuestion([5, 2], ['-']),
+  );
+}
+
+function mixWithin(limit, rng) {
+  return rng() < 0.5 ? addWithin(limit, rng) : subWithin(limit, rng);
+}
+
+function addTo20(rng) {
+  return sample(
+    (r) => {
+      const wantCarry = r() < 0.65;
+      let a;
+      let b;
+      if (wantCarry) {
+        // Carry only happens with two single digits whose sum exceeds ten.
+        a = int(2, 9, r);
+        b = int(11 - a, 9, r);
+      } else {
+        a = int(1, 18, r);
+        b = int(1, 20 - a, r);
+        if ((a % 10) + (b % 10) > 10) return null;
+        if (a + b < 10) return null;
+      }
+      if (a + b < 2 || a + b > 20) return null;
+      return makeQuestion([a, b], ['+']);
+    },
+    rng,
+    makeQuestion([8, 7], ['+']),
+  );
+}
+
+function subFrom20(rng) {
+  return sample(
+    (r) => {
+      const wantBorrow = r() < 0.65;
+      let a;
+      let b;
+      if (wantBorrow) {
+        // Units digit too small, so borrowing is required.
+        a = int(11, 18, r);
+        b = int((a % 10) + 1, 9, r);
+      } else {
+        a = int(11, 19, r);
+        b = int(1, a % 10, r);
+      }
+      if (b < 1 || b > 9 || b > a) return null;
+      return makeQuestion([a, b], ['-']);
+    },
+    rng,
+    makeQuestion([15, 7], ['-']),
+  );
+}
+
+function mixTo20(rng) {
+  return rng() < 0.5 ? addTo20(rng) : subFrom20(rng);
+}
+
+/** Three-term chain such as 3 + 4 - 2, every step inside [0, limit]. */
+function chainWithin(limit, rng) {
+  return sample(
+    (r) => {
+      const operands = [int(2, limit - 2, r)];
+      const ops = [];
+      let current = operands[0];
+      for (let step = 0; step < 2; step++) {
+        const room = limit - current;
+        const canAdd = room >= 1;
+        const canSub = current >= 2;
+        const plus = canAdd && (!canSub || r() < 0.5);
+        if (plus) {
+          const b = int(1, room, r);
+          operands.push(b);
+          ops.push('+');
+          current += b;
+        } else {
+          // Keep every intermediate result at 1 or more, so steps stay meaningful.
+          const b = int(1, current - 1, r);
+          operands.push(b);
+          ops.push('-');
+          current -= b;
+        }
+      }
+      if (current < 1 || current > limit) return null;
+      if (ops.every((op) => op === '-')) return null;
+      return makeQuestion(operands, ops);
+    },
+    rng,
+    makeQuestion([3, 2, 4], ['+', '-']),
+  );
+}
+
+/** Whole tens up to 100, e.g. 30 + 40, 80 - 50. */
+function tensWithin100(rng) {
+  return sample(
+    (r) => {
+      if (r() < 0.5) {
+        const a = 10 * int(1, 8, r);
+        const b = 10 * int(1, 10 - a / 10, r);
+        if (a + b > 100) return null;
+        return makeQuestion([a, b], ['+']);
+      }
+      const a = 10 * int(3, 10, r);
+      const b = 10 * int(1, a / 10 - 1, r);
+      return makeQuestion([a, b], ['-']);
+    },
+    rng,
+    makeQuestion([30, 40], ['+']),
+  );
+}
+
+const TOPICS = {
+  add10: {
+    id: 'add10',
+    group: '10 以内',
+    title: '10 以内加法',
+    short: '两个数合起来不超过 10',
+    symbol: '+',
+    tone: 'orange',
+    level: '一年级 · 上',
+    generate: (rng) => addWithin(10, rng),
+  },
+  sub10: {
+    id: 'sub10',
+    group: '10 以内',
+    title: '10 以内减法',
+    short: '从 10 里面拿走一部分',
+    symbol: '\u2212',
+    tone: 'blue',
+    level: '一年级 · 上',
+    generate: (rng) => subWithin(10, rng),
+  },
+  mix10: {
+    id: 'mix10',
+    group: '10 以内',
+    title: '10 以内加减混合',
+    short: '加法和减法轮流出现',
+    symbol: '\u00b1',
+    tone: 'purple',
+    level: '一年级 · 上',
+    generate: (rng) => mixWithin(10, rng),
+  },
+  add20: {
+    id: 'add20',
+    group: '20 以内',
+    title: '20 以内加法',
+    short: '进位加法，例如 8 + 7',
+    symbol: '+',
+    tone: 'orange',
+    level: '一年级 · 上',
+    generate: addTo20,
+  },
+  sub20: {
+    id: 'sub20',
+    group: '20 以内',
+    title: '20 以内减法',
+    short: '退位减法，例如 15 - 7',
+    symbol: '\u2212',
+    tone: 'blue',
+    level: '一年级 · 上',
+    generate: subFrom20,
+  },
+  mix20: {
+    id: 'mix20',
+    group: '20 以内',
+    title: '20 以内加减混合',
+    short: '进位加法和退位减法混合',
+    symbol: '\u00b1',
+    tone: 'purple',
+    level: '一年级 · 上',
+    generate: mixTo20,
+  },
+  chain10: {
+    id: 'chain10',
+    group: '进阶挑战',
+    title: '10 以内连加连减',
+    short: '三个数连续计算，例如 3 + 4 - 2',
+    symbol: '\u21c4',
+    tone: 'green',
+    level: '一年级 · 上',
+    generate: (rng) => chainWithin(10, rng),
+  },
+  chain20: {
+    id: 'chain20',
+    group: '进阶挑战',
+    title: '20 以内连加连减',
+    short: '三个数连续计算，例如 12 - 5 + 6',
+    symbol: '\u21c4',
+    tone: 'green',
+    level: '一年级 · 下',
+    generate: (rng) => chainWithin(20, rng),
+  },
+  tens100: {
+    id: 'tens100',
+    group: '进阶挑战',
+    title: '整十数加减',
+    short: '100 以内整十数，例如 30 + 40',
+    symbol: '\u25ce',
+    tone: 'pink',
+    level: '一年级 · 下',
+    generate: tensWithin100,
+  },
+};
+
+const TOPIC_ORDER = [
+  'add10',
+  'sub10',
+  'mix10',
+  'add20',
+  'sub20',
+  'mix20',
+  'chain10',
+  'chain20',
+  'tens100',
+];
+
+const GROUP_ORDER = ['10 以内', '20 以内', '进阶挑战'];
+
+/** Build a round of distinct questions for one topic. */
+function buildRound(topicId, count = 10, rng = Math.random) {
+  const topic = TOPICS[topicId];
+  if (!topic) throw new Error(`unknown topic: ${topicId}`);
+  const used = new Set();
+  const questions = [];
+  let guard = 0;
+  const guardLimit = count * 400;
+  while (questions.length < count && guard < guardLimit) {
+    guard++;
+    const question = topic.generate(rng);
+    if (!question) continue;
+    if (used.has(question.key)) continue;
+    used.add(question.key);
+    questions.push(question);
+  }
+  if (questions.length < count) {
+    throw new Error(`not enough distinct questions for topic: ${topicId}`);
+  }
+  return questions;
+}
+
+/** 3 stars for a perfect round, fewer as mistakes pile up. */
+function starsFor(correct, total) {
+  if (total <= 0) return 0;
+  const ratio = correct / total;
+  if (ratio === 1) return 3;
+  if (ratio >= 0.8) return 2;
+  if (ratio >= 0.6) return 1;
+  return 0;
+}
+
+function formatTime(totalSeconds) {
+  const seconds = Math.max(0, Math.round(totalSeconds));
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+
+// 一年级本地版：数学 + 语文。离线可用，成绩保存在本机。
+// 计分：第一次答对 10 分，第二次答对 5 分，答错 0 分，单组满分 100。
+(function () {
+  'use strict';
+
+  const QUESTION_COUNT = 10;
+  const MAX_ATTEMPTS = 2;
+  const ADVANCE_DELAY = 720;
+  const MAX_DIGITS = 3;
+  const STORAGE_KEY = 'ace.offline.progress.v2';
+  const LEGACY_KEY = 'ace.offline.progress.v1';
+  const PLAYER_KEY = 'ace.offline.player.v1';
+  const SOUND_KEY = 'ace.sound.v1';
+
+  const $ = (id) => document.getElementById(id);
+
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+  function shuffle(list) {
+    const copy = list.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  const sampleWrong = (list, correct, count) =>
+    shuffle(list.filter((item, index, arr) => item !== correct && arr.indexOf(item) === index)).slice(0, count);
+
+  function choiceQuestion(display, correct, wrong, explain) {
+    const options = shuffle([correct, ...sampleWrong(wrong, correct, 3)]);
+    return {
+      kind: 'choice',
+      display,
+      options,
+      answer: options.indexOf(correct),
+      explain: explain || '',
+      key: `${display}|${correct}`,
+    };
+  }
+
+  /* ---------- 数学 ---------- */
+
+  const MATH_TOPICS = TOPICS;
+
+  /* ---------- 语文：拼音 ---------- */
+
+  const INITIALS = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's', 'y', 'w'];
+  const FINALS = ['a', 'o', 'e', 'i', 'u', 'ü', 'ai', 'ei', 'ui', 'ao', 'ou', 'iu', 'ie', 'üe', 'er', 'an', 'en', 'in', 'un', 'ün', 'ang', 'eng', 'ing', 'ong'];
+  const TONE_NAMES = ['第一声', '第二声', '第三声', '第四声'];
+
+  const TONES = [
+    ['妈', 'mā', '第一声'], ['麻', 'má', '第二声'], ['马', 'mǎ', '第三声'], ['骂', 'mà', '第四声'],
+    ['一', 'yī', '第一声'], ['姨', 'yí', '第二声'], ['椅', 'yǐ', '第三声'], ['意', 'yì', '第四声'],
+    ['花', 'huā', '第一声'], ['华', 'huá', '第二声'], ['画', 'huà', '第四声'],
+    ['猫', 'māo', '第一声'], ['毛', 'máo', '第二声'], ['帽', 'mào', '第四声'],
+  ].map(([char, pinyin, tone]) => ({ char, pinyin, tone }));
+
+  const BLENDS = [
+    ['b', 'ā', 'bā'], ['p', 'ō', 'pō'], ['m', 'ǐ', 'mǐ'], ['f', 'ú', 'fú'],
+    ['d', 'à', 'dà'], ['t', 'ǔ', 'tǔ'], ['n', 'ǐ', 'nǐ'], ['l', 'ǜ', 'lǜ'],
+    ['g', 'ē', 'gē'], ['k', 'ě', 'kě'], ['h', 'ú', 'hú'], ['j', 'ī', 'jī'],
+    ['q', 'í', 'qí'], ['x', 'ǐ', 'xǐ'], ['zh', 'ī', 'zhī'], ['ch', 'ī', 'chī'],
+    ['sh', 'í', 'shí'], ['r', 'ì', 'rì'], ['z', 'ì', 'zì'], ['c', 'ì', 'cì'], ['s', 'ī', 'sī'],
+  ].map(([initial, final, syllable]) => ({ initial, final, syllable }));
+
+  /* ---------- 语文：识字 ---------- */
+
+  const HANZI_1 = [
+    ['天', 'tiān'], ['地', 'dì'], ['人', 'rén'], ['你', 'nǐ'], ['我', 'wǒ'], ['他', 'tā'],
+    ['一', 'yī'], ['二', 'èr'], ['三', 'sān'], ['四', 'sì'], ['五', 'wǔ'], ['上', 'shàng'], ['下', 'xià'],
+    ['口', 'kǒu'], ['耳', 'ěr'], ['目', 'mù'], ['手', 'shǒu'], ['足', 'zú'], ['站', 'zhàn'], ['坐', 'zuò'],
+    ['日', 'rì'], ['月', 'yuè'], ['山', 'shān'], ['川', 'chuān'], ['水', 'shuǐ'], ['火', 'huǒ'], ['田', 'tián'], ['禾', 'hé'],
+    ['六', 'liù'], ['七', 'qī'], ['八', 'bā'], ['九', 'jiǔ'], ['十', 'shí'],
+  ].map(([char, pinyin]) => ({ char, pinyin }));
+
+  const HANZI_2 = [
+    ['对', 'duì'], ['歌', 'gē'], ['雨', 'yǔ'], ['风', 'fēng'], ['虫', 'chóng'], ['清', 'qīng'], ['绿', 'lǜ'], ['桃', 'táo'], ['红', 'hóng'],
+    ['力', 'lì'], ['尖', 'jiān'], ['尘', 'chén'], ['众', 'zhòng'], ['双', 'shuāng'], ['林', 'lín'], ['森', 'sēn'], ['不', 'bù'], ['条', 'tiáo'], ['心', 'xīn'], ['金', 'jīn'],
+    ['包', 'bāo'], ['尺', 'chǐ'], ['作', 'zuò'], ['业', 'yè'], ['笔', 'bǐ'], ['刀', 'dāo'], ['宝', 'bǎo'], ['贝', 'bèi'], ['少', 'shǎo'], ['课', 'kè'], ['早', 'zǎo'],
+    ['国', 'guó'], ['旗', 'qí'], ['中', 'zhōng'], ['们', 'men'], ['声', 'shēng'], ['起', 'qǐ'], ['多', 'duō'], ['么', 'me'], ['向', 'xiàng'],
+  ].map(([char, pinyin]) => ({ char, pinyin }));
+
+  /* ---------- 语文：写字 ---------- */
+
+  const WRITING = [
+    { q: '“口”有几画？', correct: '3 画', wrong: ['2 画', '4 画'], explain: '口：竖、横折、横，共 3 画。' },
+    { q: '“上”的笔顺是什么？', correct: '竖、横、横', wrong: ['横、竖、横', '横、横、竖'], explain: '上：先竖，再短横，最后长横。' },
+    { q: '“日”有几画？', correct: '4 画', wrong: ['3 画', '5 画'], explain: '日：竖、横折、横、横。' },
+    { q: '“田”有几画？', correct: '5 画', wrong: ['4 画', '6 画'], explain: '田：竖、横折、横、竖、横。' },
+    { q: '“禾”有几画？', correct: '5 画', wrong: ['4 画', '6 画'], explain: '禾：撇、横、竖、撇、捺。' },
+    { q: '“火”有几画？', correct: '4 画', wrong: ['3 画', '5 画'], explain: '火：点、撇、撇、捺。' },
+    { q: '“手”有几画？', correct: '4 画', wrong: ['3 画', '5 画'], explain: '手：撇、横、横、竖钩。' },
+    { q: '“目”有几画？', correct: '5 画', wrong: ['4 画', '6 画'], explain: '目：竖、横折、横、横、横。' },
+    { q: '“耳”有几画？', correct: '6 画', wrong: ['5 画', '7 画'], explain: '耳共 6 画。' },
+    { q: '“大”有几画？', correct: '3 画', wrong: ['2 画', '4 画'], explain: '大：横、撇、捺。' },
+    { q: '“人”有几画？', correct: '2 画', wrong: ['3 画', '4 画'], explain: '人：撇、捺。' },
+    { q: '“子”有几画？', correct: '3 画', wrong: ['2 画', '4 画'], explain: '子：横撇、竖钩、横。' },
+    { q: '“了”有几画？', correct: '2 画', wrong: ['3 画', '1 画'], explain: '了：横撇、竖钩。' },
+    { q: '“月”有几画？', correct: '4 画', wrong: ['3 画', '5 画'], explain: '月共 4 画。' },
+    { q: '“儿”有几画？', correct: '2 画', wrong: ['3 画', '4 画'], explain: '儿：撇、竖弯钩。' },
+    { q: '“头”有几画？', correct: '5 画', wrong: ['4 画', '6 画'], explain: '头共 5 画。' },
+    { q: '“里”有几画？', correct: '7 画', wrong: ['6 画', '8 画'], explain: '里共 7 画。' },
+    { q: '“见”有几画？', correct: '4 画', wrong: ['3 画', '5 画'], explain: '见：竖、横折、撇、竖弯钩。' },
+  ];
+
+  /* ---------- 语文：阅读 ---------- */
+
+  const READING_A = [
+    { q: '《秋天》里，秋天到了，树叶怎么了？', correct: '黄了', wrong: ['绿了', '红了'], explain: '天气凉了，树叶黄了。' },
+    { q: '《秋天》里，大雁往哪个方向飞？', correct: '南', wrong: ['北', '东'], explain: '一群大雁往南飞。' },
+    { q: '《秋天》里，大雁一会儿排成“人”字，一会儿排成什么字？', correct: '“一”字', wrong: ['“大”字', '“八”字'], explain: '一会儿排成个“人”字，一会儿排成个“一”字。' },
+    { q: '《江南》里，“江南可采莲”的下一句是？', correct: '莲叶何田田', wrong: ['鱼戏莲叶间', '鱼戏莲叶东'], explain: '江南可采莲，莲叶何田田。' },
+    { q: '《江南》里，鱼在莲叶间做什么？', correct: '戏', wrong: ['睡', '飞'], explain: '鱼戏莲叶间。' },
+    { q: '《江南》里，鱼戏莲叶东，接着是？', correct: '鱼戏莲叶西', wrong: ['鱼戏莲叶南', '鱼戏莲叶北'], explain: '顺序是东、西、南、北。' },
+    { q: '《雪地里的小画家》里，谁没有参加？', correct: '青蛙', wrong: ['小鸡', '小狗'], explain: '青蛙在洞里睡着啦。' },
+    { q: '《雪地里的小画家》里，小鸡画的是什么？', correct: '竹叶', wrong: ['梅花', '枫叶'], explain: '小鸡画竹叶。' },
+    { q: '《雪地里的小画家》里，小狗画的是什么？', correct: '梅花', wrong: ['竹叶', '月牙'], explain: '小狗画梅花。' },
+    { q: '《雪地里的小画家》里，小鸭画的是什么？', correct: '枫叶', wrong: ['竹叶', '梅花'], explain: '小鸭画枫叶。' },
+    { q: '《雪地里的小画家》里，小马画的是什么？', correct: '月牙', wrong: ['枫叶', '梅花'], explain: '小马画月牙。' },
+    { q: '《四季》里，草芽对谁说话？', correct: '小鸟', wrong: ['青蛙', '谷穗'], explain: '草芽尖尖，他对小鸟说：“我是春天。”' },
+    { q: '《四季》里，荷叶对谁说话？', correct: '青蛙', wrong: ['小鸟', '雪人'], explain: '荷叶圆圆，他对青蛙说：“我是夏天。”' },
+    { q: '《四季》里，谷穗说自己是哪个季节？', correct: '秋天', wrong: ['夏天', '冬天'], explain: '谷穗弯弯，他说：“我是秋天。”' },
+    { q: '《四季》里，雪人说自己是哪个季节？', correct: '冬天', wrong: ['秋天', '春天'], explain: '雪人顽皮地说：“我就是冬天。”' },
+  ];
+
+  const READING_B = [
+    { q: '《小小的船》里，弯弯的月儿像什么？', correct: '小船', wrong: ['香蕉', '桥'], explain: '弯弯的月儿小小的船。' },
+    { q: '《小小的船》里，小船的两头怎么样？', correct: '尖', wrong: ['圆', '方'], explain: '小小的船儿两头尖。' },
+    { q: '《小小的船》里，“我”在船里看见了什么？', correct: '闪闪的星星蓝蓝的天', wrong: ['太阳和云', '大海和鱼'], explain: '只看见闪闪的星星蓝蓝的天。' },
+    { q: '《影子》里，影子像什么？', correct: '小黑狗', wrong: ['小花猫', '小兔子'], explain: '影子常常跟着我，就像一条小黑狗。' },
+    { q: '《影子》里，影子常常怎么样？', correct: '跟着我', wrong: ['躲着我', '跑远'], explain: '影子常常跟着我。' },
+    { q: '《两件宝》里，“两件宝”是什么？', correct: '双手和大脑', wrong: ['眼睛和耳朵', '铅笔和本子'], explain: '人有两件宝，双手和大脑。' },
+    { q: '《两件宝》里，用手不用脑，会怎样？', correct: '事情做不好', wrong: ['啥也办不到', '更有创造'], explain: '用手不用脑，事情做不好。' },
+    { q: '《两件宝》里，怎样才有创造？', correct: '用手又用脑', wrong: ['只用手', '只用脑'], explain: '用手又用脑，才能有创造。' },
+    { q: '《比尾巴》里，谁的尾巴长？', correct: '猴子', wrong: ['兔子', '松鼠'], explain: '猴子的尾巴长。' },
+    { q: '《比尾巴》里，谁的尾巴短？', correct: '兔子', wrong: ['猴子', '公鸡'], explain: '兔子的尾巴短。' },
+    { q: '《比尾巴》里，谁的尾巴好像一把伞？', correct: '松鼠', wrong: ['鸭子', '孔雀'], explain: '松鼠的尾巴好像一把伞。' },
+    { q: '《比尾巴》里，公鸡的尾巴怎么样？', correct: '弯', wrong: ['扁', '最好看'], explain: '公鸡的尾巴弯。' },
+    { q: '《比尾巴》里，鸭子的尾巴怎么样？', correct: '扁', wrong: ['弯', '长'], explain: '鸭子的尾巴扁。' },
+    { q: '《比尾巴》里，谁的尾巴最好看？', correct: '孔雀', wrong: ['松鼠', '公鸡'], explain: '孔雀的尾巴最好看。' },
+    { q: '《乌鸦喝水》里，乌鸦一开始为什么喝不着水？', correct: '瓶口小、水不多', wrong: ['水太烫', '瓶子太高'], explain: '瓶口又小，水不多。' },
+    { q: '《乌鸦喝水》里，乌鸦想出了什么办法？', correct: '往瓶里放小石子', wrong: ['把瓶子推倒', '用吸管吸'], explain: '乌鸦把小石子放进瓶子，水渐渐升高。' },
+    { q: '《雨点儿》里，小雨点儿要去哪里？', correct: '有花有草的地方', wrong: ['没有花没有草的地方', '大海里'], explain: '小雨点儿说：我要去有花有草的地方。' },
+    { q: '《雨点儿》里，大雨点儿要去哪里？', correct: '没有花没有草的地方', wrong: ['有花有草的地方', '云彩里'], explain: '大雨点儿说：我要去没有花没有草的地方。' },
+  ];
+
+  const POEMS = [
+    { q: '《咏鹅》：“白毛浮绿水，____。”', correct: '红掌拨清波', wrong: ['曲项向天歌', '鹅，鹅，鹅'], explain: '白毛浮绿水，红掌拨清波。' },
+    { q: '《咏鹅》的作者是谁？', correct: '骆宾王', wrong: ['李白', '李绅'], explain: '《咏鹅》是唐代骆宾王写的。' },
+    { q: '《咏鹅》中，写鹅弯着脖子向天叫的是哪一句？', correct: '曲项向天歌', wrong: ['红掌拨清波', '白毛浮绿水'], explain: '曲项向天歌。' },
+    { q: '《悯农》（其二）：“锄禾日当午，____。”', correct: '汗滴禾下土', wrong: ['粒粒皆辛苦', '谁知盘中餐'], explain: '锄禾日当午，汗滴禾下土。' },
+    { q: '《悯农》（其二）：“谁知盘中餐，____。”', correct: '粒粒皆辛苦', wrong: ['汗滴禾下土', '锄禾日当午'], explain: '谁知盘中餐，粒粒皆辛苦。' },
+    { q: '《悯农》（其二）的作者是谁？', correct: '李绅', wrong: ['李白', '骆宾王'], explain: '《悯农》是唐代李绅写的。' },
+    { q: '《古朗月行》：“小时不识月，____。”', correct: '呼作白玉盘', wrong: ['又疑瑶台镜', '飞在青云端'], explain: '小时不识月，呼作白玉盘。' },
+    { q: '《古朗月行》：“又疑瑶台镜，____。”', correct: '飞在青云端', wrong: ['呼作白玉盘', '小时不识月'], explain: '又疑瑶台镜，飞在青云端。' },
+    { q: '《古朗月行》（节选）的作者是谁？', correct: '李白', wrong: ['李绅', '骆宾王'], explain: '《古朗月行》是唐代李白写的。' },
+    { q: '《风》：“解落三秋叶，____。”', correct: '能开二月花', wrong: ['过江千尺浪', '入竹万竿斜'], explain: '解落三秋叶，能开二月花。' },
+    { q: '《风》：“过江千尺浪，____。”', correct: '入竹万竿斜', wrong: ['能开二月花', '解落三秋叶'], explain: '过江千尺浪，入竹万竿斜。' },
+    { q: '《风》的作者是谁？', correct: '李峤', wrong: ['李白', '李绅'], explain: '《风》是唐代李峤写的。' },
+  ];
+
+  const ORAL = [
+    { q: '口语交际“我说你做”要求说话时怎样？', correct: '声音洪亮，吐字清楚', wrong: ['越快越好', '小声说'], explain: '说话时声音要洪亮，吐字要清楚。' },
+    { q: '别人说话时，应该怎样？', correct: '认真听', wrong: ['打断他', '走开'], explain: '别人说话时要认真听。' },
+    { q: '交朋友时，说话应该看着哪里？', correct: '对方的眼睛', wrong: ['地上', '窗外'], explain: '说话的时候，看着对方的眼睛。' },
+    { q: '什么时候要大声说话？', correct: '让别人听清楚', wrong: ['影响别人', '自己玩'], explain: '有时候要大声说话，让别人听清楚。' },
+    { q: '什么时候要小声说话？', correct: '不影响其他人', wrong: ['让所有人听见', '上课喊叫'], explain: '有时候要小声说话，不影响其他人。' },
+    { q: '口语交际“我会想办法”要求怎样？', correct: '大胆说出自己的想法', wrong: ['不说话', '只点头'], explain: '大胆说出自己的想法。' },
+    { q: '书写提示“先横后竖”，下面哪个字是这样写的？', correct: '十', wrong: ['八', '人'], explain: '十：先写横，再写竖。' },
+    { q: '书写提示“先撇后捺”，下面哪个字是这样写的？', correct: '八', wrong: ['十', '日'], explain: '八：先撇，后捺。' },
+    { q: '书写提示“从上到下”，下面哪个字是这样写的？', correct: '男', wrong: ['叶', '小'], explain: '男：先写上，再写下。' },
+    { q: '书写提示“先外后内”，下面哪个字是这样写的？', correct: '月', wrong: ['小', '十'], explain: '月：先写外框，再写里面。' },
+  ];
+
+
+  /* ---------- 英语：广州版一年级上、下册 ---------- */
+
+  const EN_UNITS = [
+    {
+      id: 'en-u1', title: 'Unit 1 Hello', short: '问候与介绍', level: '广州版 · 上 Unit 1',
+      words: [
+        { en: 'hello', zh: '你好' }, { en: 'hi', zh: '嗨' }, { en: 'goodbye', zh: '再见' },
+        { en: 'morning', zh: '早上' }, { en: 'afternoon', zh: '下午' }, { en: 'evening', zh: '晚上' },
+        { en: 'name', zh: '名字' }, { en: 'teacher', zh: '老师' }, { en: 'friend', zh: '朋友' },
+      ],
+    },
+    {
+      id: 'en-u2', title: 'Unit 2 School things', short: '文具', level: '广州版 · 上 Unit 2',
+      words: [
+        { en: 'pencil', zh: '铅笔' }, { en: 'book', zh: '书' }, { en: 'bag', zh: '书包' },
+        { en: 'ruler', zh: '尺子' }, { en: 'pencil-case', zh: '铅笔盒' }, { en: 'eraser', zh: '橡皮' },
+        { en: 'new', zh: '新的' },
+      ],
+    },
+    {
+      id: 'en-u3', title: 'Unit 3 Numbers', short: '数字与玩具', level: '广州版 · 上 Unit 3',
+      words: [
+        { en: 'one', zh: '一' }, { en: 'two', zh: '二' }, { en: 'three', zh: '三' },
+        { en: 'four', zh: '四' }, { en: 'five', zh: '五' }, { en: 'six', zh: '六' },
+        { en: 'seven', zh: '七' }, { en: 'eight', zh: '八' }, { en: 'nine', zh: '九' },
+        { en: 'ten', zh: '十' }, { en: 'dog', zh: '狗' }, { en: 'cat', zh: '猫' },
+        { en: 'doll', zh: '玩具娃娃' }, { en: 'teddy bear', zh: '泰迪熊' },
+      ],
+    },
+    {
+      id: 'en-u4', title: 'Unit 4 Colours', short: '颜色', level: '广州版 · 上 Unit 4',
+      words: [
+        { en: 'red', zh: '红色' }, { en: 'yellow', zh: '黄色' }, { en: 'blue', zh: '蓝色' },
+        { en: 'green', zh: '绿色' }, { en: 'orange', zh: '橙色' }, { en: 'pink', zh: '粉红色' },
+        { en: 'purple', zh: '紫色' }, { en: 'black', zh: '黑色' },
+      ],
+    },
+    {
+      id: 'en-u5', title: 'Unit 5 Toys', short: '玩具与交通工具', level: '广州版 · 上 Unit 5',
+      words: [
+        { en: 'plane', zh: '飞机' }, { en: 'car', zh: '小汽车' }, { en: 'train', zh: '火车' },
+        { en: 'scooter', zh: '滑板车' }, { en: 'puzzle', zh: '拼图' }, { en: 'skipping rope', zh: '跳绳' },
+      ],
+    },
+    {
+      id: 'en-u6', title: 'Unit 6 Animals', short: '动物与动作', level: '广州版 · 上 Unit 6',
+      words: [
+        { en: 'lion', zh: '狮子' }, { en: 'monkey', zh: '猴子' }, { en: 'rabbit', zh: '兔子' },
+        { en: 'elephant', zh: '大象' }, { en: 'kangaroo', zh: '袋鼠' }, { en: 'bird', zh: '鸟' },
+        { en: 'fish', zh: '鱼' }, { en: 'run', zh: '跑' }, { en: 'walk', zh: '走' },
+        { en: 'jump', zh: '跳' }, { en: 'swim', zh: '游泳' }, { en: 'fly', zh: '飞' },
+      ],
+    },
+    {
+      id: 'en-u7', title: 'Unit 1 My family', short: '家庭成员', level: '广州版 · 下 Unit 1',
+      words: [
+        { en: 'grandpa', zh: '爷爷；外公' }, { en: 'grandma', zh: '奶奶；外婆' }, { en: 'father', zh: '爸爸' },
+        { en: 'mother', zh: '妈妈' }, { en: 'sister', zh: '姐姐；妹妹' }, { en: 'brother', zh: '哥哥；弟弟' },
+        { en: 'baby', zh: '宝宝' }, { en: 'tall', zh: '高的' }, { en: 'short', zh: '矮的' },
+        { en: 'big', zh: '大的' }, { en: 'small', zh: '小的' },
+      ],
+    },
+    {
+      id: 'en-u8', title: 'Unit 2 My house', short: '房子与动作', level: '广州版 · 下 Unit 2',
+      words: [
+        { en: 'house', zh: '房子' }, { en: 'living room', zh: '客厅' }, { en: 'bedroom', zh: '卧室' },
+        { en: 'kitchen', zh: '厨房' }, { en: 'washroom', zh: '洗手间' }, { en: 'sleep', zh: '睡觉' },
+        { en: 'eat', zh: '吃' }, { en: 'cook', zh: '做饭' }, { en: 'play', zh: '玩' },
+        { en: 'wash', zh: '洗' }, { en: 'watch TV', zh: '看电视' },
+      ],
+    },
+    {
+      id: 'en-u9', title: 'Unit 3 My room', short: '房间与方位', level: '广州版 · 下 Unit 3',
+      words: [
+        { en: 'room', zh: '房间' }, { en: 'bed', zh: '床' }, { en: 'desk', zh: '书桌' },
+        { en: 'chair', zh: '椅子' }, { en: 'door', zh: '门' }, { en: 'floor', zh: '地板' },
+        { en: 'on', zh: '在……上面' }, { en: 'in', zh: '在……里面' }, { en: 'under', zh: '在……下面' },
+        { en: 'behind', zh: '在……后面' },
+      ],
+    },
+    {
+      id: 'en-u10', title: 'Unit 4 What do you see?', short: '家具', level: '广州版 · 下 Unit 4',
+      words: [
+        { en: 'sofa', zh: '沙发' }, { en: 'closet', zh: '柜子' }, { en: 'sink', zh: '洗手池' },
+        { en: 'toilet', zh: '马桶' }, { en: 'table', zh: '桌子' }, { en: 'fridge', zh: '冰箱' },
+      ],
+    },
+    {
+      id: 'en-u11', title: 'Unit 5 I want a pet', short: '宠物与形容词', level: '广州版 · 下 Unit 5',
+      words: [
+        { en: 'furry', zh: '毛茸茸的' }, { en: 'scary', zh: '吓人的' }, { en: 'fast', zh: '快的' },
+        { en: 'slow', zh: '慢的' }, { en: 'spider', zh: '蜘蛛' }, { en: 'duck', zh: '鸭子' },
+        { en: 'mouse', zh: '老鼠' }, { en: 'frog', zh: '青蛙' }, { en: 'turtle', zh: '乌龟' },
+        { en: 'feed', zh: '喂食' },
+      ],
+    },
+    {
+      id: 'en-u12', title: 'Unit 6 Food', short: '食物与饮料', level: '广州版 · 下 Unit 6',
+      words: [
+        { en: 'apple', zh: '苹果' }, { en: 'ice cream', zh: '冰淇淋' }, { en: 'noodles', zh: '面条' },
+        { en: 'tea', zh: '茶' }, { en: 'cookie', zh: '饼干' }, { en: 'milk', zh: '牛奶' },
+        { en: 'orange', zh: '橘子' }, { en: 'orange juice', zh: '橘子汁' }, { en: 'cake', zh: '蛋糕' },
+        { en: 'hamburger', zh: '汉堡包' }, { en: 'water', zh: '水' }, { en: 'banana', zh: '香蕉' },
+        { en: 'grape', zh: '葡萄' },
+      ],
+    },
+  ];
+
+  /* ---------- 题型注册 ---------- */
+
+  const TOPIC_MAP = {};
+
+  function addTopic(topic) {
+    TOPIC_MAP[topic.id] = topic;
+  }
+
+  function subjectOfTopic(id) {
+    if (TOPIC_MAP[id]?.subject) return TOPIC_MAP[id].subject;
+    if (id.startsWith('cn-')) return 'chinese';
+    if (id.startsWith('en-')) return 'english';
+    return 'math';
+  }
+
+  for (const id of TOPIC_ORDER) {
+    const source = MATH_TOPICS[id];
+    addTopic({
+      id,
+      subject: 'math',
+      title: source.title,
+      short: source.short,
+      symbol: source.symbol,
+      tone: source.tone,
+      level: source.level,
+      make: () => {
+        const q = source.generate(Math.random);
+        return { kind: 'math', display: q.display, answer: q.answer, key: q.key };
+      },
+    });
+  }
+
+  function addChoiceTopic({ id, title, short, symbol, level, make }) {
+    addTopic({ id, subject: 'chinese', title, short, symbol, tone: 'pink', level, make });
+  }
+
+  addChoiceTopic({
+    id: 'cn-initials',
+    title: '拼音声母',
+    short: 'b p m f 这些是声母',
+    symbol: 'b',
+    level: '一年级 · 拼音',
+    make: () => {
+      const pinyin = pick(INITIALS);
+      return choiceQuestion(`“${pinyin}” 是声母还是韵母？`, '声母', ['韵母', '整体认读音节'], 'b p m f d t n l 这一类是声母。');
+    },
+  });
+
+  addChoiceTopic({
+    id: 'cn-finals',
+    title: '拼音韵母',
+    short: 'a o e i u ü 这些是韵母',
+    symbol: 'a',
+    level: '一年级 · 拼音',
+    make: () => {
+      const pinyin = pick(FINALS);
+      return choiceQuestion(`“${pinyin}” 是声母还是韵母？`, '韵母', ['声母', '整体认读音节'], 'a o e i u ü 这一类是韵母。');
+    },
+  });
+
+  addChoiceTopic({
+    id: 'cn-tones',
+    title: '声调',
+    short: '一声平，二声扬，三声拐弯，四声降',
+    symbol: 'ˉ',
+    level: '一年级 · 拼音',
+    make: () => {
+      const item = pick(TONES);
+      return choiceQuestion(
+        `“${item.char}（${item.pinyin}）” 是第几声？`,
+        item.tone,
+        TONE_NAMES.filter((tone) => tone !== item.tone),
+        `${item.char} 读 ${item.pinyin}，是${item.tone}。`,
+      );
+    },
+  });
+
+  addChoiceTopic({
+    id: 'cn-blend',
+    title: '拼读',
+    short: '声母和韵母拼成一个音节',
+    symbol: '拼',
+    level: '一年级 · 拼音',
+    make: () => {
+      const item = pick(BLENDS);
+      return choiceQuestion(
+        `“${item.initial}—${item.final}” 拼成什么？`,
+        item.syllable,
+        BLENDS.map((b) => b.syllable),
+        `${item.initial} 和 ${item.final} 相拼，读 ${item.syllable}。`,
+      );
+    },
+  });
+
+  function addHanziTopic({ id, title, short, level, list }) {
+    addChoiceTopic({
+      id,
+      title,
+      short,
+      symbol: '字',
+      level,
+      make: () => {
+        const item = pick(list);
+        if (Math.random() < 0.5) {
+          return choiceQuestion(
+            `“${item.pinyin}” 是哪个字？`,
+            item.char,
+            list.map((x) => x.char),
+            `${item.pinyin} → ${item.char}`,
+          );
+        }
+        return choiceQuestion(
+          `“${item.char}” 的读音是？`,
+          item.pinyin,
+          list.map((x) => x.pinyin),
+          `${item.char} 读 ${item.pinyin}。`,
+        );
+      },
+    });
+  }
+
+  addHanziTopic({
+    id: 'cn-hanzi-1',
+    title: '识字（一）',
+    short: '天地人、金木水火土、口耳目手足',
+    level: '一年级 · 识字 p8-14',
+    list: HANZI_1,
+  });
+
+  addHanziTopic({
+    id: 'cn-hanzi-2',
+    title: '识字（二）',
+    short: '对韵歌、日月明、小书包、升国旗',
+    level: '一年级 · 识字 p73-79',
+    list: HANZI_2,
+  });
+
+  function addBankTopic({ id, title, short, symbol, level, bank, subject = 'chinese' }) {
+    addTopic({
+      id,
+      subject,
+      title,
+      short,
+      symbol,
+      tone: 'pink',
+      level,
+      make: () => {
+        const item = pick(bank);
+        return choiceQuestion(item.q, item.correct, item.wrong, item.explain);
+      },
+    });
+  }
+
+  addBankTopic({
+    id: 'cn-writing',
+    title: '写字',
+    short: '笔画数和笔顺',
+    symbol: '写',
+    level: '一年级 · 写字 p108',
+    bank: WRITING,
+  });
+
+  addBankTopic({
+    id: 'cn-reading-a',
+    title: '课文理解（上）',
+    short: '秋天、江南、雪地、四季',
+    symbol: '读',
+    level: '一年级 · p60-67',
+    bank: READING_A,
+  });
+
+  addBankTopic({
+    id: 'cn-reading-b',
+    title: '课文理解（下）',
+    short: '小船、影子、两件宝、比尾巴、乌鸦、雨点儿',
+    symbol: '读',
+    level: '一年级 · p84-100',
+    bank: READING_B,
+  });
+
+  addBankTopic({
+    id: 'cn-poems',
+    title: '古诗',
+    short: '咏鹅、悯农、古朗月行、风',
+    symbol: '诗',
+    level: '一年级 · 日积月累',
+    bank: POEMS,
+  });
+
+  addBankTopic({
+    id: 'cn-oral',
+    title: '口语与书写',
+    short: '口语交际、书写提示',
+    symbol: '说',
+    level: '一年级 · 语文园地',
+    bank: ORAL,
+  });
+
+
+  for (const unit of EN_UNITS) {
+    addTopic({
+      id: unit.id,
+      subject: 'english',
+      title: unit.title.replace(/^Unit \d+ /, ''),
+      short: unit.short,
+      symbol: 'A',
+      tone: 'blue',
+      level: unit.level,
+      make: () => {
+        const word = pick(unit.words);
+        if (Math.random() < 0.5) {
+          return choiceQuestion(
+            `“${word.zh}” 用英语怎么说？`,
+            word.en,
+            sampleWrong(unit.words.map((w) => w.en), word.en, 3),
+            `${word.zh} = ${word.en}`,
+          );
+        }
+        return choiceQuestion(
+          `“${word.en}” 是什么意思？`,
+          word.zh,
+          sampleWrong(unit.words.map((w) => w.zh), word.zh, 3),
+          `${word.en} = ${word.zh}`,
+        );
+      },
+    });
+  }
+
+
+  /* ---------- 数学组合 ---------- */
+
+  const MATH_COMBOS = [
+    {
+      id: 'math-combo-1',
+      title: '10以内 + 进位加',
+      short: '10 以内加减和 20 以内进位加一起练',
+      members: ['add10', 'sub10', 'add20'],
+    },
+    {
+      id: 'math-combo-2',
+      title: '20以内综合',
+      short: '20 以内加法、减法、混合',
+      members: ['add20', 'sub20', 'mix20'],
+    },
+    {
+      id: 'math-combo-3',
+      title: '全部数学综合',
+      short: '9 个数学题型混合出题',
+      members: TOPIC_ORDER,
+    },
+  ];
+
+  for (const combo of MATH_COMBOS) {
+    addTopic({
+      id: combo.id,
+      subject: 'math',
+      title: combo.title,
+      short: combo.short,
+      symbol: '综',
+      tone: 'orange',
+      level: '一年级 · 组合练习',
+      make: () => {
+        const source = pick(combo.members);
+        const question = TOPIC_MAP[source].make();
+        return { ...question, source };
+      },
+    });
+  }
+
+  addTopic({
+    id: 'math-custom',
+    subject: 'math',
+    title: '自选组合',
+    short: '自己勾选题型，生成 10 题',
+    symbol: '选',
+    tone: 'orange',
+    level: '一年级 · 组合练习',
+    members: [],
+    make: () => {
+      const pool = TOPIC_MAP['math-custom'].members.length
+        ? TOPIC_MAP['math-custom'].members
+        : TOPIC_ORDER;
+      const source = pick(pool);
+      const question = TOPIC_MAP[source].make();
+      return { ...question, source };
+    },
+  });
+
+  const SUBJECTS = [
+    {
+      id: 'math',
+      title: '数学',
+      subtitle: '10 以内、20 以内加减法',
+      symbol: '＋',
+      tone: 'orange',
+      intro: '人教版一年级上册：10 以内、20 以内加减法，连加连减和整十数。',
+      tips: [
+        '每天 10 分钟口算，先求准，再求快。',
+        '用积木、水果、手指摆一摆，再说算式。',
+        '错题当天重做一遍，第二天再抽一道。',
+        '生活里数数：楼梯、碗筷、水果，都可以变成口算题。',
+      ],
+    },
+    {
+      id: 'chinese',
+      title: '语文',
+      subtitle: '拼音、识字、阅读、古诗',
+      symbol: '汉',
+      tone: 'pink',
+      intro: '统编版一年级上册：拼音、识字、写字、10 篇阅读课文和 4 首古诗。',
+      tips: [
+        '每天 5 分钟拼音卡：声母、韵母、整体认读音节分开读。',
+        '每天认 5-10 个生字，先说读音，再组一个词。',
+        '亲子朗读课文 10 分钟，遇到不认识的字用拼音帮忙。',
+        '《咏鹅》《悯农》《古朗月行》《风》可以边拍手边读，不要求默写。',
+      ],
+    },
+    {
+      id: 'english',
+      title: '英语',
+      subtitle: '广州版一年级上、下册',
+      symbol: 'A',
+      tone: 'blue',
+      intro: '广州版（教科版）一年级上册 6 个单元、下册 6 个单元，先认读和听说。',
+      tips: [
+        '每天 5 个单词，指着实物说，例如 pencil、bag、red。',
+        '先听读、再认读，不急着背拼写。',
+        '用问候语做角色扮演：Hello! Good morning! Goodbye!',
+        '把颜色、数字、动物融进小游戏，例如“找出红色的东西”。',
+      ],
+    },
+  ];
+
+  const SUBJECT_TOPICS = {
+    math: [...TOPIC_ORDER, 'math-combo-1', 'math-combo-2', 'math-combo-3', 'math-custom'],
+    chinese: ['cn-initials', 'cn-finals', 'cn-tones', 'cn-blend', 'cn-hanzi-1', 'cn-hanzi-2', 'cn-writing', 'cn-reading-a', 'cn-reading-b', 'cn-poems', 'cn-oral'],
+    english: EN_UNITS.map((unit) => unit.id),
+  };
+
+  const SUBJECT_MAP = Object.fromEntries(SUBJECTS.map((s) => [s.id, s]));
+
+  /* ---------- 状态与存储 ---------- */
+
+  const els = {
+    homeView: $('homeView'),
+    subjectView: $('subjectView'),
+    practiceView: $('practiceView'),
+    statsView: $('statsView'),
+    statsContent: $('statsContent'),
+    statsBackBtn: $('statsBackBtn'),
+    challengeBtn: $('challengeBtn'),
+    statsBtn: $('statsBtn'),
+    challengeSetup: $('challengeSetup'),
+    challengeCancel: $('challengeCancel'),
+    challengeStart: $('challengeStart'),
+    durationOptions: $('durationOptions'),
+    challengeSubjectOptions: $('challengeSubjectOptions'),
+    audioBtn: $('audioBtn'),
+    audioPanel: $('audioPanel'),
+    audioTitle: $('audioTitle'),
+    audioText: $('audioText'),
+    audioReplay: $('audioReplay'),
+    audioShow: $('audioShow'),
+    audioMic: $('audioMic'),
+    audioCorrect: $('audioCorrect'),
+    audioWrong: $('audioWrong'),
+    audioClose: $('audioClose'),
+    mathPicker: $('mathPicker'),
+    mathPickerList: $('mathPickerList'),
+    mathPickerCancel: $('mathPickerCancel'),
+    mathPickerStart: $('mathPickerStart'),
+    subjectGrid: $('subjectGrid'),
+    heroStats: $('heroStats'),
+    storageNote: $('storageNote'),
+    playerName: $('playerName'),
+    brandHome: $('brandHome'),
+    subjectBackBtn: $('subjectBackBtn'),
+    subjectTitle: $('subjectTitle'),
+    subjectSubtitle: $('subjectSubtitle'),
+    topicGrid: $('topicGrid'),
+    tipsList: $('tipsList'),
+    backBtn: $('backBtn'),
+    title: $('topicTitle'),
+    level: $('topicLevel'),
+    timer: $('timer'),
+    sound: $('soundToggle'),
+    progress: $('progress'),
+    progressNow: $('progressNow'),
+    progressTotal: $('progressTotal'),
+    quiz: $('quizCard'),
+    expression: $('expression'),
+    answerRow: $('answerRow'),
+    answerBox: $('answerBox'),
+    answerText: $('answerText'),
+    choicePad: $('choicePad'),
+    feedback: $('feedback'),
+    nextBtn: $('nextBtn'),
+    keypad: $('keypad'),
+    result: $('result'),
+    resultStars: $('resultStars'),
+    scoreSubject: $('scoreSubject'),
+    scoreValue: $('scoreValue'),
+    resultCorrect: $('resultCorrect'),
+    resultTotal: $('resultTotal'),
+    resultTime: $('resultTime'),
+    scorePlayer: $('scorePlayer'),
+    scoreDate: $('scoreDate'),
+    resultNote: $('resultNote'),
+    review: $('review'),
+    againBtn: $('againBtn'),
+    homeBtn: $('homeBtn'),
+  };
+
+  const state = {
+    subjectId: null,
+    topicId: null,
+    questions: [],
+    index: 0,
+    attempts: 0,
+    entered: '',
+    results: [],
+    locked: false,
+    finished: false,
+    startedAt: 0,
+    timerId: null,
+    advanceTimer: null,
+    soundOn: readSound(),
+    player: loadPlayer(),
+    mode: 'normal',
+    challenge: null,
+    audio: null,
+    selectedDuration: 60,
+    selectedSubject: 'math',
+    audioOpen: false,
+    audioAnswering: false,
+    audioRecognition: null,
+  };
+
+  let storageOk = true;
+  let progress = loadProgress();
+
+  function emptySubject() {
+    return { rounds: 0, questions: 0, correct: 0, wrong: 0, bestScore: 0, seconds: 0 };
+  }
+
+  function emptyProgress() {
+    return {
+      version: 2,
+      totals: { rounds: 0, questions: 0, correct: 0, wrong: 0, score: 0, seconds: 0 },
+      subjects: { math: emptySubject(), chinese: emptySubject(), english: emptySubject() },
+      topics: {},
+      rounds: [],
+      challengeBests: {},
+    };
+  }
+
+  function normalizeSubject(raw) {
+    const value = raw || {};
+    return {
+      rounds: Number(value.rounds) || 0,
+      questions: Number(value.questions) || 0,
+      correct: Number(value.correct) || 0,
+      wrong: Number(value.wrong) || 0,
+      bestScore: Number(value.bestScore) || 0,
+      seconds: Number(value.seconds) || 0,
+    };
+  }
+
+  function normalizeProgress(parsed) {
+    const result = emptyProgress();
+    const totals = parsed.totals || {};
+    result.totals = {
+      rounds: Number(totals.rounds) || 0,
+      questions: Number(totals.questions) || 0,
+      correct: Number(totals.correct) || 0,
+      wrong: Number(totals.wrong) || 0,
+      score: Number(totals.score) || 0,
+      seconds: Number(totals.seconds) || 0,
+    };
+    if (parsed.subjects && typeof parsed.subjects === 'object') {
+      for (const id of Object.keys(result.subjects)) {
+        result.subjects[id] = normalizeSubject(parsed.subjects[id]);
+      }
+    }
+    result.topics = parsed.topics && typeof parsed.topics === 'object' ? parsed.topics : {};
+    result.rounds = Array.isArray(parsed.rounds) ? parsed.rounds.slice(0, 200) : [];
+    result.challengeBests =
+      parsed.challengeBests && typeof parsed.challengeBests === 'object'
+        ? parsed.challengeBests
+        : {};
+    return result;
+  }
+
+  function migrateLegacy(parsed) {
+    const result = emptyProgress();
+    const totals = parsed.totals || {};
+    result.totals.rounds = Number(totals.rounds) || 0;
+    result.totals.score = Number(totals.score) || 0;
+    result.totals.correct = Number(totals.correct) || 0;
+    result.totals.wrong = Number(totals.wrong) || 0;
+    result.topics = parsed.topics && typeof parsed.topics === 'object' ? parsed.topics : {};
+    result.totals.questions = result.totals.rounds * QUESTION_COUNT;
+    for (const [id, topic] of Object.entries(result.topics)) {
+      const subject = subjectOfTopic(id);
+      if (!result.subjects[subject]) continue;
+      const rounds = Number(topic.rounds) || 0;
+      result.subjects[subject].rounds += rounds;
+      result.subjects[subject].questions += rounds * QUESTION_COUNT;
+      result.subjects[subject].correct += Number(topic.correct) || 0;
+      result.subjects[subject].wrong += Number(topic.wrong) || 0;
+      result.subjects[subject].bestScore = Math.max(
+        result.subjects[subject].bestScore,
+        Number(topic.bestScore) || 0,
+      );
+      topic.questions = Number(topic.questions) || rounds * QUESTION_COUNT;
+    }
+    return result;
+  }
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') return normalizeProgress(parsed);
+      }
+      const legacyRaw = localStorage.getItem(LEGACY_KEY);
+      if (legacyRaw) {
+        const legacy = JSON.parse(legacyRaw);
+        if (legacy && typeof legacy === 'object') {
+          const migrated = migrateLegacy(legacy);
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+          } catch {
+            // ignore
+          }
+          return migrated;
+        }
+      }
+      return emptyProgress();
+    } catch {
+      storageOk = false;
+      return emptyProgress();
+    }
+  }
+
+  function saveProgress() {
+    if (!storageOk) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch {
+      storageOk = false;
+      updateStorageNote();
+    }
+  }
+
+  function updateStorageNote() {
+    if (els.storageNote) els.storageNote.hidden = storageOk;
+  }
+
+  function loadPlayer() {
+    try {
+      const name = localStorage.getItem(PLAYER_KEY);
+      return name && name.trim() ? name.trim().slice(0, 8) : '小朋友';
+    } catch {
+      return '小朋友';
+    }
+  }
+
+  function savePlayer(name) {
+    try {
+      localStorage.setItem(PLAYER_KEY, name);
+    } catch {
+      // 忽略
+    }
+  }
+
+  function readSound() {
+    try {
+      const raw = localStorage.getItem(SOUND_KEY);
+      if (!raw) return true;
+      return JSON.parse(raw)?.on !== false;
+    } catch {
+      return true;
+    }
+  }
+
+  function writeSound(on) {
+    try {
+      localStorage.setItem(SOUND_KEY, JSON.stringify({ on }));
+    } catch {
+      // 忽略
+    }
+  }
+
+  /* ---------- 音效 ---------- */
+
+  let audioCtx = null;
+
+  function ensureAudio() {
+    if (!state.soundOn) return null;
+    try {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return null;
+        audioCtx = new Ctx();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    } catch {
+      return null;
+    }
+  }
+
+  function tone(freq, delay, duration, type = 'sine', volume = 0.05) {
+    const ctx = ensureAudio();
+    if (!ctx) return;
+    const start = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.03);
+  }
+
+  const playCorrect = () => {
+    tone(740, 0, 0.13);
+    tone(988, 0.09, 0.18);
+  };
+
+  const playWrong = () => {
+    tone(210, 0, 0.16, 'triangle', 0.045);
+    tone(160, 0.1, 0.2, 'triangle', 0.04);
+  };
+
+  const playTap = () => tone(620, 0, 0.05, 'sine', 0.025);
+
+  /* ---------- 首页 ---------- */
+
+  function starsMarkup(count) {
+    const filled = Math.max(0, Math.min(3, count || 0));
+    let html = '';
+    for (let i = 0; i < 3; i++) {
+      html += `<span class="${i < filled ? 'on' : ''}" aria-hidden="true">★</span>`;
+    }
+    return html;
+  }
+
+  function subjectStats(subjectId) {
+    return progress.subjects[subjectId] || emptySubject();
+  }
+
+  function overallBest() {
+    return SUBJECTS.reduce((best, s) => Math.max(best, subjectStats(s.id).bestScore || 0), 0);
+  }
+
+  function overallAccuracy() {
+    const answered = progress.totals.correct + progress.totals.wrong;
+    return answered ? Math.round((progress.totals.correct / answered) * 100) : 0;
+  }
+
+  function renderHome() {
+    els.subjectGrid.innerHTML = SUBJECTS.map((subject) => {
+      const stats = subjectStats(subject.id);
+      const count = SUBJECT_TOPICS[subject.id].length;
+      return `
+        <a class="subject-card" href="#" data-subject="${subject.id}" data-tone="${subject.tone}">
+          <span class="subject-icon" aria-hidden="true">${subject.symbol}</span>
+          <span class="subject-info">
+            <h3>${subject.title}</h3>
+            <p>${subject.subtitle}</p>
+          </span>
+          <span class="subject-meta">${
+            stats.questions
+              ? `${stats.questions} 题<br>最高 ${stats.bestScore || 0} 分`
+              : `${count} 个题型`
+          }</span>
+        </a>`;
+    }).join('');
+
+    const totals = progress.totals;
+    els.heroStats.innerHTML = `
+      <span class="stat-pill">已练 <strong>${totals.questions || 0}</strong> 题</span>
+      <span class="stat-pill">最高分 <strong>${overallBest()}</strong></span>
+      <span class="stat-pill">正确率 <strong>${overallAccuracy()}%</strong></span>`;
+    updateStorageNote();
+  }
+
+  function topicCard(topic) {
+    const personal = progress.topics[topic.id];
+    const played = personal?.questions || 0;
+    const best = personal?.bestScore || 0;
+    return `
+      <a class="topic-card" href="#" data-topic="${topic.id}" data-tone="${topic.tone}">
+        <span class="topic-icon" aria-hidden="true">${topic.symbol}</span>
+        <h3>${topic.title}</h3>
+        <p>${topic.short}</p>
+        <div class="topic-meta">
+          <span>${played ? `${played} 题 · 最高 ${best} 分` : topic.level}</span>
+          <span class="best" title="最佳星星">${starsMarkup(personal?.bestStars || 0)}</span>
+        </div>
+      </a>`;
+  }
+
+  function openSubject(subjectId) {
+    const subject = SUBJECT_MAP[subjectId];
+    if (!subject) return;
+    stopRound();
+    state.subjectId = subjectId;
+    els.subjectTitle.textContent = subject.title;
+    els.subjectSubtitle.textContent = subject.intro;
+    els.topicGrid.innerHTML = SUBJECT_TOPICS[subjectId].map((id) => topicCard(TOPIC_MAP[id])).join('');
+    els.tipsList.innerHTML = subject.tips.map((tip) => `<li>${tip}</li>`).join('');
+    els.homeView.hidden = true;
+    els.practiceView.hidden = true;
+    els.statsView.hidden = true;
+    els.subjectView.hidden = false;
+    window.scrollTo(0, 0);
+  }
+
+  function showHome() {
+    stopRound();
+    state.mode = 'normal';
+    state.challenge = null;
+    document.body.classList.remove('is-challenge');
+    els.audioBtn.hidden = false;
+    if (state.audioOpen) closeAudio();
+    els.challengeSetup.hidden = true;
+    els.subjectView.hidden = true;
+    els.practiceView.hidden = true;
+    els.statsView.hidden = true;
+    els.homeView.hidden = false;
+    renderHome();
+    window.scrollTo(0, 0);
+  }
+
+  function shortDate(iso) {
+    try {
+      return new Intl.DateTimeFormat('zh-CN', {
+        month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+      }).format(new Date(iso));
+    } catch {
+      return '';
+    }
+  }
+
+  function accuracy(correct, wrong) {
+    const total = correct + wrong;
+    return total ? Math.round((correct / total) * 100) : 0;
+  }
+
+  function openStats() {
+    stopRound();
+    els.homeView.hidden = true;
+    els.subjectView.hidden = true;
+    els.practiceView.hidden = true;
+    els.statsView.hidden = false;
+    renderStats();
+    window.scrollTo(0, 0);
+  }
+
+  function renderStats() {
+    const totals = progress.totals;
+    const subjectRows = SUBJECTS.map((subject) => {
+      const stats = progress.subjects[subject.id] || emptySubject();
+      return `
+        <div class="stats-row">
+          <strong>${subject.title}</strong>
+          <span>${stats.questions} 题</span>
+          <span>${accuracy(stats.correct, stats.wrong)}%</span>
+          <span class="hide-mobile">${stats.rounds} 组</span>
+          <strong class="hide-mobile">${stats.bestScore || 0}</strong>
+        </div>`;
+    }).join('');
+
+    const topicRows = [];
+    for (const subject of SUBJECTS) {
+      for (const id of SUBJECT_TOPICS[subject.id]) {
+        const stats = progress.topics[id];
+        if (!stats || !stats.questions) continue;
+        topicRows.push({ subject, id, stats });
+      }
+    }
+    topicRows.sort((a, b) => accuracy(a.stats.correct, a.stats.wrong) - accuracy(b.stats.correct, b.stats.wrong));
+    const weakIds = new Set(
+      topicRows
+        .filter((row) => row.stats.questions >= 10 && accuracy(row.stats.correct, row.stats.wrong) < 80)
+        .slice(0, 3)
+        .map((row) => row.id),
+    );
+    const topicHtml = topicRows.length
+      ? topicRows.map(({ subject, id, stats }) => `
+          <div class="stats-row${weakIds.has(id) ? ' is-weak' : ''}">
+            <span><strong>${TOPIC_MAP[id]?.title || id}</strong><br><small class="muted">${subject.title} · ${stats.rounds} 组</small></span>
+            <span>${stats.questions} 题</span>
+            <span>${accuracy(stats.correct, stats.wrong)}%</span>
+            <span class="hide-mobile">${stats.bestScore || 0} 分</span>
+            <span class="muted hide-mobile">${weakIds.has(id) ? '待加强' : ''}</span>
+          </div>`).join('')
+      : '<p class="stats-empty">还没有题型记录。先练一组。</p>';
+
+    const dayMap = {};
+    for (const row of progress.rounds) {
+      const date = new Date(row.date);
+      if (Number.isNaN(date.getTime())) continue;
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      if (!dayMap[key]) {
+        dayMap[key] = { math: 0, chinese: 0, english: 0, total: 0, topics: new Set() };
+      }
+      let counts = row.subjectCounts;
+      if (!counts) {
+        counts = {};
+        if (row.subject === 'all' || row.subject === 'mixed') {
+          const sids = [...new Set((row.topics || []).map(subjectOfTopic))];
+          if (sids.length) {
+            const base = Math.floor(row.questions / sids.length);
+            let rest = row.questions % sids.length;
+            for (const sid of sids) {
+              counts[sid] = base + (rest > 0 ? 1 : 0);
+              if (rest > 0) rest -= 1;
+            }
+          } else {
+            counts.math = row.questions;
+          }
+        } else {
+          counts[row.subject] = row.questions;
+        }
+      }
+      for (const sid of ['math', 'chinese', 'english']) {
+        dayMap[key][sid] += Number(counts[sid]) || 0;
+      }
+      dayMap[key].total += row.questions;
+      for (const id of row.topics || []) {
+        const topic = TOPIC_MAP[id];
+        if (topic) dayMap[key].topics.add(topic.title);
+      }
+    }
+
+    const dayRows = [];
+    const today = new Date();
+    for (let offset = 0; offset < 7; offset += 1) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - offset);
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      const entry = dayMap[key] || { math: 0, chinese: 0, english: 0, total: 0, topics: new Set() };
+      const label = offset === 0 ? '今天' : offset === 1 ? '昨天' : `${date.getMonth() + 1}月${date.getDate()}日`;
+      const topics = [...entry.topics];
+      let topicText = topics.slice(0, 2).join(' · ') + (topics.length > 2 ? ' 等' : '');
+      if (!topicText) {
+        const names = [
+          ['数学', entry.math],
+          ['语文', entry.chinese],
+          ['英语', entry.english],
+        ].filter(([, count]) => count > 0).map(([name]) => name);
+        topicText = names.length ? names.join(' · ') : '没有练习';
+      }
+      dayRows.push(`
+        <div class="daily-row${offset === 0 ? ' is-today' : ''}">
+          <div class="daily-date"><b>${label}</b><small>${topicText || '没有练习'}</small></div>
+          <span>${entry.math}</span>
+          <span>${entry.chinese}</span>
+          <span>${entry.english}</span>
+          <b>${entry.total}</b>
+        </div>`);
+    }
+
+    const challengeRows = Object.entries(progress.challengeBests || {})
+      .sort((a, b) => (b[1].score || 0) - (a[1].score || 0))
+      .slice(0, 6)
+      .map(([key, best]) => {
+        const [subjectId, duration] = key.split(':');
+        const label = subjectId === 'all' ? '综合' : (SUBJECT_MAP[subjectId]?.title || subjectId);
+        return `
+          <div class="stats-recent-row">
+            <span><b>${label} · ${Number(duration) / 60} 分钟</b><br>${best.questions || 0} 题</span>
+            <span>${best.date ? shortDate(best.date) : ''}</span>
+            <strong>${best.score || 0} 分</strong>
+          </div>`;
+      }).join('');
+
+    const recent = progress.rounds.slice(0, 20);
+    const recentHtml = recent.length
+      ? recent.map((row) => `
+          <div class="stats-recent-row">
+            <span><b>${row.mode === 'challenge' ? '挑战' : '练习'} · ${SUBJECT_MAP[row.subject]?.title || ''}</b><br>${shortDate(row.date)}</span>
+            <span>${row.questions} 题 · ${accuracy(row.correct, row.wrong)}%</span>
+            <strong>${row.score} 分</strong>
+          </div>`).join('')
+      : '<p class="stats-empty">还没有记录。</p>';
+
+    els.statsContent.innerHTML = `
+      <section class="stats-overview">
+        <div class="stat-box"><strong>${totals.questions || 0}</strong><span>完成题数</span></div>
+        <div class="stat-box"><strong>${accuracy(totals.correct, totals.wrong)}%</strong><span>正确率</span></div>
+        <div class="stat-box"><strong>${totals.rounds}</strong><span>练习组数</span></div>
+        <div class="stat-box"><strong>${overallBest()}</strong><span>最高分</span></div>
+      </section>
+      <section class="stats-section">
+        <h2>分科目</h2>
+        <div class="stats-row header"><span>科目</span><span>题数</span><span>正确率</span><span class="hide-mobile">组数</span><span class="hide-mobile">最高</span></div>
+        ${subjectRows}
+      </section>
+      <section class="stats-section">
+        <h2>每天练了什么（最近 7 天）</h2>
+        <div class="daily-row header"><span>日期 / 题型</span><span>数学</span><span>语文</span><span>英语</span><span>合计</span></div>
+        ${dayRows.join('')}
+      </section>
+      <section class="stats-section">
+        <h2>分题型</h2>
+        <div class="stats-row header"><span>题型</span><span>题数</span><span>正确率</span><span class="hide-mobile">最高</span><span class="hide-mobile">状态</span></div>
+        ${topicHtml}
+      </section>
+      <section class="stats-section">
+        <h2>挑战最高分</h2>
+        ${challengeRows || '<p class="stats-empty">还没有挑战记录。</p>'}
+      </section>
+      <section class="stats-section">
+        <h2>最近记录</h2>
+        ${recentHtml}
+      </section>
+      <div class="stats-actions">
+        <button class="btn btn-primary" id="statsPracticeBtn" type="button">去练一组</button>
+        <button class="btn btn-ghost" id="statsClearBtn" type="button">清空统计</button>
+      </div>`;
+
+    const practiceBtn = document.getElementById('statsPracticeBtn');
+    if (practiceBtn) practiceBtn.addEventListener('click', showHome);
+    const clearBtn = document.getElementById('statsClearBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (!window.confirm('清空所有统计和记录？这个操作不能撤销。')) return;
+        progress = emptyProgress();
+        saveProgress();
+        renderStats();
+      });
+    }
+  }
+
+  /* ---------- 做题 ---------- */
+
+  function stopRound() {
+    window.clearTimeout(state.advanceTimer);
+    window.clearInterval(state.timerId);
+    state.finished = true;
+  }
+
+  function buildProgress() {
+    els.progress.innerHTML = '';
+    for (let i = 0; i < QUESTION_COUNT; i++) {
+      const segment = document.createElement('span');
+      segment.className = 'progress-seg';
+      els.progress.appendChild(segment);
+    }
+  }
+
+  function renderProgress() {
+    const segments = els.progress.children;
+    for (let i = 0; i < QUESTION_COUNT; i++) {
+      const segment = segments[i];
+      if (!segment) continue;
+      segment.className = 'progress-seg';
+      if (i < state.results.length) {
+        segment.classList.add(state.results[i].correct ? 'is-correct' : 'is-wrong');
+      } else if (i === state.index && !state.finished) {
+        segment.classList.add('is-current');
+      }
+    }
+    els.progress.setAttribute('aria-valuenow', String(state.results.length));
+    els.progressNow.textContent = state.finished ? '本组完成' : `第 ${Math.min(state.index + 1, QUESTION_COUNT)} 题`;
+  }
+
+  function setEntered(value) {
+    state.entered = value;
+    els.answerText.textContent = value || '?';
+    els.answerText.classList.toggle('is-placeholder', !value);
+  }
+
+  function setKeypadDisabled(disabled) {
+    for (const button of els.keypad.querySelectorAll('button')) button.disabled = disabled;
+  }
+
+  function setChoiceDisabled(disabled) {
+    for (const button of els.choicePad.querySelectorAll('button')) button.disabled = disabled;
+  }
+
+  function renderQuestion() {
+    const question = state.questions[state.index];
+    state.locked = false;
+    state.attempts = 0;
+    els.quiz.hidden = false;
+    els.result.hidden = true;
+    els.answerBox.classList.remove('is-correct', 'is-wrong');
+    els.feedback.textContent = '';
+    els.feedback.className = 'feedback';
+    els.nextBtn.hidden = true;
+    els.expression.classList.toggle('is-choice', question.kind === 'choice');
+
+    if (question.kind === 'choice') {
+      els.expression.textContent = question.display;
+      els.answerRow.hidden = true;
+      els.keypad.hidden = true;
+      els.choicePad.hidden = false;
+      els.choicePad.innerHTML = '';
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'choice-btn';
+        button.dataset.choice = String(index);
+        button.textContent = option;
+        els.choicePad.appendChild(button);
+      });
+      setChoiceDisabled(false);
+    } else {
+      els.expression.textContent = `${question.display} =`;
+      els.answerRow.hidden = false;
+      els.keypad.hidden = false;
+      els.choicePad.hidden = true;
+      els.choicePad.innerHTML = '';
+      setEntered('');
+      setKeypadDisabled(false);
+    }
+    if (state.mode === 'challenge' && state.challenge) {
+      els.level.textContent = `${state.challenge.label} · ${state.results.length} 题`;
+    }
+    renderProgress();
+  }
+
+  const PRAISE = ['答对了！', '太棒了！', '真厉害！', '完全正确！'];
+  let praiseIndex = 0;
+
+  function praise() {
+    const text = PRAISE[praiseIndex % PRAISE.length];
+    praiseIndex += 1;
+    return text;
+  }
+
+  function maxAttempts() {
+    return state.mode === 'challenge' ? 1 : MAX_ATTEMPTS;
+  }
+
+  function advanceDelay() {
+    return state.mode === 'challenge' ? 460 : ADVANCE_DELAY;
+  }
+
+  function pressDigit(digit) {
+    if (state.locked) return;
+    if (state.entered.length >= MAX_DIGITS) return;
+    if (state.entered === '0') state.entered = '';
+    setEntered(state.entered + digit);
+    playTap();
+  }
+
+  function backspace() {
+    if (state.locked || !state.entered) return;
+    setEntered(state.entered.slice(0, -1));
+    playTap();
+  }
+
+  function submit() {
+    if (state.locked || !state.entered) return;
+    const question = state.questions[state.index];
+    const value = Number(state.entered);
+
+    if (value === question.answer) {
+      state.locked = true;
+      setKeypadDisabled(true);
+      els.answerBox.classList.remove('is-wrong');
+      els.answerBox.classList.add('is-correct');
+      state.results.push({
+        question,
+        correct: state.attempts === 0,
+        attempts: state.attempts + 1,
+        given: value,
+        points: state.attempts === 0 ? 10 : 5,
+      });
+      els.feedback.textContent = praise();
+      els.feedback.className = 'feedback is-good';
+      playCorrect();
+      renderProgress();
+      state.advanceTimer = window.setTimeout(next, advanceDelay());
+      return;
+    }
+
+    state.attempts += 1;
+    playWrong();
+    els.answerBox.classList.remove('is-wrong');
+    void els.answerBox.offsetWidth;
+    els.answerBox.classList.add('is-wrong');
+
+    if (state.attempts < maxAttempts()) {
+      els.feedback.textContent = '再试一次，你可以的！';
+      els.feedback.className = 'feedback is-bad';
+      setEntered('');
+      window.setTimeout(() => {
+        if (!state.locked) els.answerBox.classList.remove('is-wrong');
+      }, 700);
+      return;
+    }
+
+    state.locked = true;
+    setKeypadDisabled(true);
+    state.results.push({ question, correct: false, attempts: maxAttempts(), given: value, points: 0 });
+    els.feedback.textContent = `正确答案是 ${question.answer}`;
+    els.feedback.className = 'feedback is-bad';
+    if (state.mode === 'challenge') state.advanceTimer = window.setTimeout(next, 900);
+    else els.nextBtn.hidden = false;
+    renderProgress();
+  }
+
+  function chooseOption(index, button) {
+    if (state.locked) return;
+    const question = state.questions[state.index];
+    const value = question.options[index];
+
+    if (index === question.answer) {
+      state.locked = true;
+      button.classList.add('is-correct');
+      setChoiceDisabled(true);
+      state.results.push({
+        question,
+        correct: state.attempts === 0,
+        attempts: state.attempts + 1,
+        given: value,
+        points: state.attempts === 0 ? 10 : 5,
+      });
+      els.feedback.textContent = praise();
+      els.feedback.className = 'feedback is-good';
+      playCorrect();
+      renderProgress();
+      state.advanceTimer = window.setTimeout(next, advanceDelay());
+      return;
+    }
+
+    state.attempts += 1;
+    button.classList.add('is-wrong');
+    button.disabled = true;
+    playWrong();
+    els.feedback.className = 'feedback is-bad';
+
+    if (state.attempts < maxAttempts()) {
+      els.feedback.textContent = '再试一次，你可以的！';
+      return;
+    }
+
+    state.locked = true;
+    const correctButton = els.choicePad.querySelector(`[data-choice="${question.answer}"]`);
+    if (correctButton) correctButton.classList.add('is-correct');
+    setChoiceDisabled(true);
+    state.results.push({ question, correct: false, attempts: maxAttempts(), given: value, points: 0 });
+    els.feedback.textContent = `正确答案是 ${question.options[question.answer]}`;
+    if (state.mode === 'challenge') state.advanceTimer = window.setTimeout(next, 900);
+    else els.nextBtn.hidden = false;
+    renderProgress();
+  }
+
+  function next() {
+    window.clearTimeout(state.advanceTimer);
+    if (state.finished) return;
+    if (state.mode === 'challenge') {
+      if (!state.challenge || Date.now() >= state.challenge.endAt) {
+        finishChallenge();
+        return;
+      }
+      state.index += 1;
+      if (state.index >= state.questions.length) state.questions.push(...buildChallengePool(state.challenge.topicIds, 80));
+      els.level.textContent = `${state.challenge.label} · ${state.results.length} 题`;
+      renderQuestion();
+      return;
+    }
+    if (state.index >= QUESTION_COUNT - 1) {
+      finish();
+      return;
+    }
+    state.index += 1;
+    renderQuestion();
+  }
+
+  const STAR_PATH = 'M32 5.5l7.8 16.7 18.3 2.3-13.6 12.5 3.7 18.1L32 46.3l-16.2 8.8 3.7-18.1L5.9 24.5l18.3-2.3z';
+
+  function starIcon(filled) {
+    return `<svg viewBox="0 0 64 64" aria-hidden="true"><path class="${filled ? 'star-fill' : 'star-empty'}" d="${STAR_PATH}"/></svg>`;
+  }
+
+  function nowLabel() {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function ensureTopicStats(id) {
+    if (!progress.topics[id]) {
+      progress.topics[id] = {
+        rounds: 0, questions: 0, correct: 0, wrong: 0, bestScore: 0, bestStars: 0,
+      };
+    }
+    const item = progress.topics[id];
+    item.questions = Number(item.questions) || 0;
+    item.rounds = Number(item.rounds) || 0;
+    return item;
+  }
+
+  function recordCompletion({ subjectId, topicId, mode, questions, correct, score, seconds, results }) {
+    const wrong = questions - correct;
+    const totals = progress.totals;
+    totals.rounds += 1;
+    totals.questions += questions;
+    totals.correct += correct;
+    totals.wrong += wrong;
+    totals.score += score;
+    totals.seconds += seconds;
+
+    const groups = {};
+    for (const item of results) {
+      const source = item.question.source || topicId;
+      const sid = subjectId === 'all' || subjectId === 'mixed'
+        ? (TOPIC_MAP[source]?.subject || 'math')
+        : subjectId;
+      if (!groups[sid]) groups[sid] = { questions: 0, correct: 0, score: 0, seconds: 0 };
+      groups[sid].questions += 1;
+      groups[sid].correct += item.correct ? 1 : 0;
+      groups[sid].score += item.points || 0;
+    }
+    if (!Object.keys(groups).length) {
+      groups[subjectId] = { questions, correct, score, seconds };
+    }
+    for (const [sid, group] of Object.entries(groups)) {
+      const subject = progress.subjects[sid] || emptySubject();
+      subject.rounds += 1;
+      subject.questions += group.questions;
+      subject.correct += group.correct;
+      subject.wrong += group.questions - group.correct;
+      subject.seconds += group.seconds || seconds;
+      if (mode === 'normal') subject.bestScore = Math.max(subject.bestScore || 0, group.score);
+      progress.subjects[sid] = subject;
+    }
+
+    const sources = {};
+    for (const item of results) {
+      const source = item.question.source || topicId;
+      sources[source] = (sources[source] || 0) + 1;
+    }
+    for (const [source, count] of Object.entries(sources)) {
+      const topicStats = ensureTopicStats(source);
+      topicStats.rounds += 1;
+      topicStats.questions += count;
+      const correctPart = results.filter(
+        (item) => (item.question.source || topicId) === source && item.correct,
+      ).length;
+      topicStats.correct += correctPart;
+      topicStats.wrong += count - correctPart;
+      if (source === topicId) {
+        topicStats.bestScore = Math.max(topicStats.bestScore || 0, score);
+        topicStats.bestStars = Math.max(topicStats.bestStars || 0, starsFor(correct, questions));
+      }
+    }
+    if (topicId.startsWith('math-combo') || topicId === 'math-custom') {
+      const comboStats = ensureTopicStats(topicId);
+      comboStats.rounds += 1;
+      comboStats.questions += questions;
+      comboStats.correct += correct;
+      comboStats.wrong += wrong;
+      comboStats.bestScore = Math.max(comboStats.bestScore || 0, score);
+      comboStats.bestStars = Math.max(comboStats.bestStars || 0, starsFor(correct, questions));
+    }
+
+    progress.rounds.unshift({
+      date: new Date().toISOString(),
+      subject: subjectId,
+      topicId,
+      topics: Object.keys(sources),
+      mode,
+      questions,
+      correct,
+      wrong,
+      score,
+      seconds,
+      subjectCounts: Object.fromEntries(
+        Object.entries(groups).map(([sid, group]) => [sid, group.questions]),
+      ),
+    });
+    if (progress.rounds.length > 200) progress.rounds.length = 200;
+  }
+
+  function finish() {
+    state.finished = true;
+    state.locked = true;
+    window.clearInterval(state.timerId);
+    if (state.audioOpen) closeAudio();
+    const elapsed = (Date.now() - state.startedAt) / 1000;
+    els.timer.textContent = formatTime(elapsed);
+
+    const firstTry = state.results.filter((item) => item.correct).length;
+    const score = state.results.reduce((sum, item) => sum + (item.points || 0), 0);
+    const stars = starsFor(firstTry, QUESTION_COUNT);
+    const topic = TOPIC_MAP[state.topicId];
+    const subject = SUBJECT_MAP[topic.subject];
+    const previous = progress.topics[state.topicId] || { bestScore: 0, bestStars: 0 };
+
+    recordCompletion({
+      subjectId: subject.id,
+      topicId: state.topicId,
+      mode: 'normal',
+      questions: QUESTION_COUNT,
+      correct: firstTry,
+      score,
+      seconds: Math.round(elapsed),
+      results: state.results,
+    });
+    saveProgress();
+
+    const personal = progress.topics[state.topicId] || { bestScore: 0 };
+    els.level.textContent = `${topic.level} · 最高 ${personal.bestScore} 分`;
+    renderProgress();
+    renderResult({
+      firstTry, score, stars, elapsed, topic, subject,
+      previousBest: previous.bestScore || 0, questionCount: QUESTION_COUNT, mode: 'normal',
+    });
+  }
+
+  function renderResult({ firstTry, score, stars, elapsed, topic, subject, previousBest, questionCount = QUESTION_COUNT, mode = 'normal' }) {
+    els.resultStars.innerHTML = [0, 1, 2].map((i) => starIcon(i < stars)).join('');
+    els.resultStars.setAttribute('aria-label', `${stars} 颗星`);
+    els.scoreSubject.textContent = `${subject.title} · ${topic.title}`;
+    els.scoreValue.textContent = String(score);
+    els.resultCorrect.textContent = String(firstTry);
+    els.resultTotal.textContent = String(questionCount);
+    els.resultTime.textContent = formatTime(elapsed);
+    els.scorePlayer.textContent = state.player;
+    els.scoreDate.textContent = nowLabel();
+
+    if (score === 100) {
+      els.resultNote.textContent = '满分！太厉害了！';
+    } else if (score > previousBest) {
+      els.resultNote.textContent = previousBest ? '新纪录！' : '完成第一组，继续加油！';
+    } else if (previousBest > 0) {
+      els.resultNote.textContent = `最高分 ${previousBest} 分`;
+    } else {
+      els.resultNote.textContent = '';
+    }
+
+    const missed = state.results.filter((item) => !item.correct || item.attempts > 1);
+    if (!missed.length) {
+      els.review.innerHTML = '<p class="review-title">全部一次答对</p><p class="review-note">这一组没有错题，继续保持！</p>';
+    } else {
+      els.review.innerHTML =
+        '<p class="review-title">再看一眼</p>' +
+        missed
+          .map((item) => {
+            const q = item.question;
+            const answer = q.kind === 'choice' ? q.options[q.answer] : q.answer;
+            const expression = q.kind === 'choice' ? q.display : `${q.display} = ${answer}`;
+            return `
+              <div class="review-item">
+                <span class="review-expr">${expression}</span>
+                <span class="review-note">${item.correct ? '第二次答对' : `你的答案 ${item.given}`}</span>
+              </div>`;
+          })
+          .join('');
+    }
+
+    els.quiz.hidden = true;
+    els.result.hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildTopicRound(topic) {
+    const seen = new Set();
+    const questions = [];
+    let guard = 0;
+    while (questions.length < QUESTION_COUNT && guard < 1500) {
+      guard += 1;
+      const question = topic.make();
+      if (!question || seen.has(question.key)) continue;
+      seen.add(question.key);
+      questions.push(question);
+    }
+    while (questions.length < QUESTION_COUNT) questions.push(topic.make());
+    return questions;
+  }
+
+
+  /* ---------- 挑战模式 ---------- */
+
+  function buildChallengePool(topicIds, count = 200) {
+    const seen = new Set();
+    const pool = [];
+    let guard = 0;
+    while (pool.length < count && guard < count * 40) {
+      guard += 1;
+      const source = pick(topicIds);
+      const question = TOPIC_MAP[source].make();
+      if (!question) continue;
+      question.source = source;
+      const key = `${source}|${question.key}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      pool.push(question);
+    }
+    while (pool.length < count) {
+      const source = pick(topicIds);
+      const question = TOPIC_MAP[source].make();
+      question.source = source;
+      pool.push(question);
+    }
+    return pool;
+  }
+
+  function updateChallengeSetupUI() {
+    for (const button of els.durationOptions.querySelectorAll('button')) {
+      button.classList.toggle('is-on', Number(button.dataset.duration) === state.selectedDuration);
+    }
+    for (const button of els.challengeSubjectOptions.querySelectorAll('button')) {
+      button.classList.toggle(
+        'is-on',
+        button.dataset.challengeSubject === state.selectedSubject,
+      );
+    }
+  }
+
+  function openChallengeSetup() {
+    if (state.mode === 'challenge') return;
+    state.selectedDuration = 60;
+    state.selectedSubject = 'math';
+    updateChallengeSetupUI();
+    els.challengeSetup.hidden = false;
+  }
+
+  function closeChallengeSetup() {
+    els.challengeSetup.hidden = true;
+  }
+
+  function startChallenge() {
+    const duration = state.selectedDuration;
+    const subjectId = state.selectedSubject;
+    const rawTopics = subjectId === 'all'
+      ? ['math', 'chinese', 'english'].flatMap((id) => SUBJECT_TOPICS[id])
+      : SUBJECT_TOPICS[subjectId];
+    const topicIds = rawTopics.filter(
+      (id) => !id.startsWith('math-combo') && id !== 'math-custom',
+    );
+    const pool = buildChallengePool(topicIds, 200);
+
+    window.clearTimeout(state.advanceTimer);
+    window.clearInterval(state.timerId);
+    state.mode = 'challenge';
+    state.subjectId = subjectId;
+    state.topicId = `challenge-${subjectId}`;
+    state.questions = pool;
+    state.index = 0;
+    state.results = [];
+    state.attempts = 0;
+    state.entered = '';
+    state.finished = false;
+    state.locked = false;
+    state.challenge = {
+      duration,
+      subjectId,
+      topicIds,
+      label: `${duration / 60} 分钟挑战`,
+      endAt: Date.now() + duration * 1000,
+      score: 0,
+    };
+    els.title.textContent = subjectId === 'all'
+      ? '综合挑战'
+      : `${SUBJECT_MAP[subjectId].title}挑战`;
+    els.level.textContent = `${state.challenge.label} · 0 题`;
+    els.quiz.hidden = false;
+    els.result.hidden = true;
+    els.review.innerHTML = '';
+    els.resultNote.textContent = '';
+    els.feedback.textContent = '';
+    els.feedback.className = 'feedback';
+    els.nextBtn.hidden = true;
+    els.challengeSetup.hidden = true;
+    els.homeView.hidden = true;
+    els.subjectView.hidden = true;
+    els.statsView.hidden = true;
+    els.practiceView.hidden = false;
+    document.body.classList.add('is-challenge');
+    els.audioBtn.hidden = true;
+    window.scrollTo(0, 0);
+    startChallengeTimer();
+    renderQuestion();
+  }
+
+  function startChallengeTimer() {
+    window.clearInterval(state.timerId);
+    const tick = () => {
+      if (!state.challenge || state.finished) return;
+      const left = Math.max(0, Math.ceil((state.challenge.endAt - Date.now()) / 1000));
+      els.timer.textContent = formatTime(left);
+      if (left <= 0) finishChallenge();
+    };
+    tick();
+    state.timerId = window.setInterval(tick, 250);
+  }
+
+  function finishChallenge() {
+    if (state.finished || !state.challenge) return;
+    state.finished = true;
+    state.locked = true;
+    window.clearInterval(state.timerId);
+    document.body.classList.remove('is-challenge');
+    const duration = state.challenge.duration;
+    const subjectId = state.challenge.subjectId;
+    const results = state.results;
+    const questions = results.length;
+    const correct = results.filter((item) => item.correct).length;
+    const score = results.reduce((sum, item) => sum + (item.points || 0), 0);
+    const bestKey = `${subjectId}:${duration}`;
+    const previousBest = progress.challengeBests[bestKey]?.score || 0;
+
+    progress.challengeBests[bestKey] = {
+      score: Math.max(previousBest, score),
+      questions: Math.max(progress.challengeBests[bestKey]?.questions || 0, questions),
+      date: new Date().toISOString(),
+    };
+    recordCompletion({
+      subjectId,
+      topicId: `challenge-${subjectId}`,
+      mode: 'challenge',
+      questions,
+      correct,
+      score,
+      seconds: duration,
+      results,
+    });
+    saveProgress();
+
+    const subject = subjectId === 'all'
+      ? { title: '综合' }
+      : SUBJECT_MAP[subjectId];
+    els.level.textContent = `${state.challenge.label} · 完成 ${questions} 题`;
+    els.timer.textContent = '0:00';
+    const tip = document.querySelector('.score-tip');
+    if (tip) tip.textContent = '第一次答对 10 分 · 截图和同学比一比';
+    renderResult({
+      firstTry: correct,
+      score,
+      stars: starsFor(correct, Math.max(questions, 1)),
+      elapsed: duration,
+      topic: { title: `${duration / 60} 分钟挑战`, level: '限时挑战' },
+      subject,
+      previousBest,
+      questionCount: questions,
+      mode: 'challenge',
+    });
+  }
+
+
+  /* ---------- 自选数学组合 ---------- */
+
+  function openMathPicker() {
+    const selected = new Set(TOPIC_MAP['math-custom'].members);
+    els.mathPickerList.innerHTML = TOPIC_ORDER.map((id) => {
+      const topic = TOPIC_MAP[id];
+      return `
+        <label class="picker-item${selected.has(id) ? ' is-on' : ''}">
+          <input type="checkbox" value="${id}" ${selected.has(id) ? 'checked' : ''}>
+          <span>${topic.title}</span>
+        </label>`;
+    }).join('');
+    els.mathPickerList.querySelectorAll('input').forEach((input) => {
+      input.addEventListener('change', () => {
+        input.closest('.picker-item').classList.toggle('is-on', input.checked);
+      });
+    });
+    els.mathPicker.hidden = false;
+  }
+
+  function closeMathPicker() {
+    els.mathPicker.hidden = true;
+  }
+
+  function startCustomMath() {
+    const selected = [...els.mathPickerList.querySelectorAll('input:checked')].map(
+      (input) => input.value,
+    );
+    if (!selected.length) {
+      window.alert('至少选一个题型。');
+      return;
+    }
+    TOPIC_MAP['math-custom'].members = selected;
+    closeMathPicker();
+    startTopic('math-custom');
+  }
+
+  /* ---------- 语音模式 ---------- */
+
+  function speechSupported() {
+    return typeof window.speechSynthesis !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined';
+  }
+
+  function recognitionSupported() {
+    return Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  }
+
+  function speak(text, lang = 'zh-CN') {
+    if (!speechSupported()) {
+      els.audioText.textContent = '这个浏览器不支持语音朗读，请用“显示文字”看题。';
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find((item) => item.lang && item.lang.startsWith(lang));
+      if (voice) utterance.voice = voice;
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      els.audioText.textContent = '语音播放失败，请用“显示文字”。';
+    }
+  }
+
+  function questionSpeech(question) {
+    if (question.kind === 'math') {
+      return `${question.display.replaceAll('−', '减').replaceAll('+', '加')} 等于几？`;
+    }
+    const options = question.options
+      .map((option, index) => `${'ABCD'[index] || index + 1}，${option}`)
+      .join('；');
+    return `${question.display} 选项：${options}。`;
+  }
+
+  function renderAudioQuestion() {
+    const question = state.questions[state.index];
+    if (!question) return;
+    state.audioAnswering = false;
+    els.audioTitle.textContent = '听题';
+    els.audioText.textContent = '先听题，再口头回答。家长点“答对了/答错了”。';
+    els.audioShow.textContent = '显示文字';
+    els.audioMic.hidden = !recognitionSupported();
+    els.audioCorrect.disabled = false;
+    els.audioWrong.disabled = false;
+    speak(questionSpeech(question));
+  }
+
+  function openAudio() {
+    if (state.mode === 'challenge') {
+      window.alert('挑战模式不能用语音练习。');
+      return;
+    }
+    if (!els.result.hidden) return;
+    if (!els.audioPanel) return;
+    state.audioOpen = true;
+    els.audioPanel.hidden = false;
+    renderAudioQuestion();
+  }
+
+  function closeAudio() {
+    state.audioOpen = false;
+    els.audioPanel.hidden = true;
+    try {
+      if (speechSupported()) window.speechSynthesis.cancel();
+      if (state.audioRecognition) state.audioRecognition.stop();
+    } catch {
+      // ignore
+    }
+    state.audioRecognition = null;
+  }
+
+  function normalizeSpoken(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/[\s，。,.!?！？、"'“”‘’]/g, '');
+  }
+
+  function spokenNumber(text) {
+    const raw = String(text || '');
+    const tail = raw.split(/等于|是|得/).pop() || raw;
+    const digits = tail.match(/\d+/g);
+    if (digits && digits.length) return Number(digits[digits.length - 1]);
+    const map = { 零: 0, 〇: 0, 一: 1, 二: 2, 两: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+    let section = 0;
+    let number = 0;
+    let found = false;
+    for (const char of tail) {
+      if (char in map) {
+        number = map[char];
+        found = true;
+      } else if (char === '十') {
+        section += (number || 1) * 10;
+        number = 0;
+        found = true;
+      } else if (char === '百') {
+        section += (number || 1) * 100;
+        number = 0;
+        found = true;
+      }
+    }
+    return found ? section + number : null;
+  }
+
+  function speechMatches(transcript) {
+    const question = state.questions[state.index];
+    if (!question) return false;
+    if (question.kind === 'math') {
+      return spokenNumber(transcript) === question.answer;
+    }
+    const heard = normalizeSpoken(transcript);
+    const expected = normalizeSpoken(question.options[question.answer]);
+    if (heard.includes(expected)) return true;
+    const letter = 'abcd'[question.answer];
+    return heard === letter || heard === String(question.answer + 1);
+  }
+
+  function audioAnswer(isCorrect, heard = '') {
+    if (state.audioAnswering) return;
+    state.audioAnswering = true;
+    state.locked = true;
+    const question = state.questions[state.index];
+    state.results.push({
+      question,
+      correct: isCorrect,
+      attempts: 1,
+      given: heard || (isCorrect ? '语音答对' : '语音答错'),
+      points: isCorrect ? 10 : 0,
+    });
+    renderProgress();
+    els.audioCorrect.disabled = true;
+    els.audioWrong.disabled = true;
+    if (state.index >= QUESTION_COUNT - 1) {
+      closeAudio();
+      finish();
+      return;
+    }
+    state.index += 1;
+    renderQuestion();
+    renderAudioQuestion();
+  }
+
+  function startRecognition() {
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Recognition) {
+      els.audioText.textContent = '这个浏览器不支持自动听写。请家长点“答对了/答错了”。';
+      return;
+    }
+    try {
+      if (state.audioRecognition) state.audioRecognition.stop();
+      const recognition = new Recognition();
+      const current = state.questions[state.index];
+      const expected = current?.kind === 'choice' ? current.options[current.answer] : '';
+      recognition.lang = /[\u4e00-\u9fff]/.test(expected) || current?.kind === 'math'
+        ? 'zh-CN'
+        : 'en-US';
+      recognition.interimResults = false;
+      recognition.continuous = false;
+      recognition.maxAlternatives = 3;
+      state.audioRecognition = recognition;
+      els.audioText.textContent = '正在听…请大声回答。';
+      els.audioMic.classList.add('audio-mic-on');
+      recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        els.audioMic.classList.remove('audio-mic-on');
+        els.audioText.textContent = `听到：${text}`;
+        if (speechMatches(text)) {
+          els.audioText.textContent = `听到：${text}，答对了！`;
+          window.setTimeout(() => audioAnswer(true, text), 500);
+        } else {
+          els.audioText.textContent = `听到：${text}。如果答对了，点“答对了”。`;
+        }
+      };
+      recognition.onerror = () => {
+        els.audioMic.classList.remove('audio-mic-on');
+        els.audioText.textContent = '没有听清，或者浏览器不支持。请再试一次，或让家长点按钮。';
+      };
+      recognition.onend = () => {
+        els.audioMic.classList.remove('audio-mic-on');
+      };
+      recognition.start();
+    } catch {
+      els.audioText.textContent = '麦克风不可用，请让家长点按钮。';
+    }
+  }
+
+  function startTimer() {
+    state.startedAt = Date.now();
+    els.timer.textContent = '0:00';
+    window.clearInterval(state.timerId);
+    state.timerId = window.setInterval(() => {
+      els.timer.textContent = formatTime((Date.now() - state.startedAt) / 1000);
+    }, 500);
+  }
+
+  function startTopic(topicId) {
+    state.startedAt = Date.now();
+    els.timer.textContent = '0:00';
+    window.clearInterval(state.timerId);
+    state.timerId = window.setInterval(() => {
+      els.timer.textContent = formatTime((Date.now() - state.startedAt) / 1000);
+    }, 500);
+  }
+
+  function startTopic(topicId) {
+    const topic = TOPIC_MAP[topicId];
+    if (!topic) return;
+    window.clearTimeout(state.advanceTimer);
+    window.clearInterval(state.timerId);
+
+    state.mode = 'normal';
+    state.challenge = null;
+    document.body.classList.remove('is-challenge');
+    els.audioBtn.hidden = false;
+    if (state.audioOpen) closeAudio();
+    els.challengeSetup.hidden = true;
+    els.statsView.hidden = true;
+    state.topicId = topicId;
+    state.subjectId = topic.subject;
+    state.questions = buildTopicRound(topic);
+    state.index = 0;
+    state.results = [];
+    state.attempts = 0;
+    state.entered = '';
+    state.finished = false;
+    state.locked = false;
+
+    els.title.textContent = topic.title;
+    const best = progress.topics[topicId]?.bestScore || 0;
+    els.level.textContent = best ? `${topic.level} · 最高 ${best} 分` : topic.level;
+    els.result.hidden = true;
+    els.quiz.hidden = false;
+    els.review.innerHTML = '';
+    els.resultNote.textContent = '';
+    els.nextBtn.hidden = true;
+    els.expression.classList.remove('is-choice');
+    els.answerRow.hidden = false;
+
+    els.subjectView.hidden = true;
+    els.homeView.hidden = true;
+    els.practiceView.hidden = false;
+    window.scrollTo(0, 0);
+    startTimer();
+    renderProgress();
+    renderQuestion();
+  }
+
+  function syncSoundButton() {
+    els.sound.setAttribute('aria-pressed', String(state.soundOn));
+    const label = state.soundOn ? '关闭音效' : '打开音效';
+    els.sound.setAttribute('aria-label', label);
+    els.sound.title = label;
+  }
+
+  /* ---------- 事件 ---------- */
+
+  els.statsBtn.addEventListener('click', openStats);
+  els.statsBackBtn.addEventListener('click', showHome);
+  els.mathPickerCancel.addEventListener('click', closeMathPicker);
+  els.mathPickerStart.addEventListener('click', startCustomMath);
+  els.audioBtn.addEventListener('click', openAudio);
+  els.audioClose.addEventListener('click', closeAudio);
+  els.audioReplay.addEventListener('click', () => {
+    const question = state.questions[state.index];
+    if (question) speak(questionSpeech(question));
+  });
+  els.audioShow.addEventListener('click', () => {
+    const question = state.questions[state.index];
+    if (!question) return;
+    if (els.audioText.dataset.shown === '1') {
+      els.audioText.dataset.shown = '0';
+      els.audioText.textContent = '先听题，再口头回答。';
+      els.audioShow.textContent = '显示文字';
+    } else {
+      els.audioText.dataset.shown = '1';
+      els.audioText.textContent = question.kind === 'choice'
+        ? `${question.display}\n${question.options.map((o, i) => `${'ABCD'[i]} ${o}`).join('  ')}`
+        : `${question.display} = ?`;
+      els.audioShow.textContent = '隐藏文字';
+    }
+  });
+  els.audioMic.addEventListener('click', startRecognition);
+  els.audioCorrect.addEventListener('click', () => audioAnswer(true));
+  els.audioWrong.addEventListener('click', () => audioAnswer(false));
+
+  els.challengeBtn.addEventListener('click', openChallengeSetup);
+  els.challengeCancel.addEventListener('click', closeChallengeSetup);
+  els.challengeStart.addEventListener('click', startChallenge);
+  els.durationOptions.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-duration]');
+    if (!button) return;
+    state.selectedDuration = Number(button.dataset.duration);
+    updateChallengeSetupUI();
+  });
+  els.challengeSubjectOptions.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-challenge-subject]');
+    if (!button) return;
+    state.selectedSubject = button.dataset.challengeSubject;
+    updateChallengeSetupUI();
+  });
+
+  els.subjectGrid.addEventListener('click', (event) => {
+    const card = event.target.closest('[data-subject]');
+    if (!card) return;
+    event.preventDefault();
+    openSubject(card.dataset.subject);
+  });
+
+  els.topicGrid.addEventListener('click', (event) => {
+    const card = event.target.closest('[data-topic]');
+    if (!card) return;
+    event.preventDefault();
+    if (card.dataset.topic === 'math-custom') {
+      openMathPicker();
+      return;
+    }
+    startTopic(card.dataset.topic);
+  });
+
+  els.brandHome.addEventListener('click', (event) => {
+    event.preventDefault();
+    showHome();
+  });
+
+  els.subjectBackBtn.addEventListener('click', showHome);
+  els.backBtn.addEventListener('click', () => {
+    if (state.mode === 'challenge' && !state.finished) {
+      if (!window.confirm('挑战还没结束，确定退出？')) return;
+      stopRound();
+      state.mode = 'normal';
+      state.challenge = null;
+      document.body.classList.remove('is-challenge');
+      showHome();
+      return;
+    }
+    stopRound();
+    openSubject(state.subjectId);
+  });
+  els.againBtn.addEventListener('click', () => {
+    if (state.mode === 'challenge') startChallenge();
+    else startTopic(state.topicId);
+  });
+  els.homeBtn.addEventListener('click', () => {
+    stopRound();
+    if (state.mode === 'challenge') showHome();
+    else openSubject(state.subjectId);
+  });
+
+  els.playerName.value = state.player === '小朋友' ? '' : state.player;
+  els.playerName.placeholder = '小朋友';
+  els.playerName.addEventListener('input', () => {
+    const name = els.playerName.value.trim().slice(0, 8);
+    state.player = name || '小朋友';
+    savePlayer(state.player);
+  });
+
+  els.keypad.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button || button.disabled) return;
+    if (button.dataset.digit !== undefined) {
+      pressDigit(button.dataset.digit);
+    } else if (button.dataset.action === 'backspace') {
+      backspace();
+    } else if (button.dataset.action === 'submit') {
+      submit();
+    }
+  });
+
+  els.choicePad.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-choice]');
+    if (!button || button.disabled) return;
+    chooseOption(Number(button.dataset.choice), button);
+  });
+
+  els.nextBtn.addEventListener('click', next);
+
+  els.sound.addEventListener('click', () => {
+    state.soundOn = !state.soundOn;
+    writeSound(state.soundOn);
+    syncSoundButton();
+    if (state.soundOn) playTap();
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (els.practiceView.hidden) return;
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (state.finished) return;
+    const question = state.questions[state.index];
+    if (!question) return;
+
+    if (question.kind === 'choice') {
+      if (/^[1-9]$/.test(event.key)) {
+        const index = Number(event.key) - 1;
+        const button = els.choicePad.querySelector(`[data-choice="${index}"]`);
+        if (button && !button.disabled) {
+          event.preventDefault();
+          chooseOption(index, button);
+        }
+      } else if (event.key === 'Enter' && !els.nextBtn.hidden) {
+        event.preventDefault();
+        next();
+      }
+      return;
+    }
+
+    if (/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+      pressDigit(event.key);
+    } else if (event.key === 'Backspace') {
+      event.preventDefault();
+      backspace();
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (!els.nextBtn.hidden) next();
+      else submit();
+    }
+  });
+
+  /* ---------- 启动 ---------- */
+
+  buildProgress();
+  els.progressTotal.textContent = `共 ${QUESTION_COUNT} 题`;
+  syncSoundButton();
+  renderHome();
+})();
+
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      const secure = location.protocol === 'https:' ||
+        ['localhost', '127.0.0.1'].includes(location.hostname);
+      if (secure) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js').catch(() => {});
+        });
+      }
+    }
+  </script>
+</body>
+</html>
