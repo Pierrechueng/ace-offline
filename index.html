@@ -2362,7 +2362,7 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
           <button type="button" data-topic-timer="180">3 分钟</button>
           <button type="button" data-topic-timer="300">5 分钟</button>
         </div>
-        <span class="timer-bar-note">选了限时，时间到就自动交卷</span>
+        <span class="timer-bar-note">选了限时，题数不限，一直做到时间到</span>
       </section>
 
       <section class="topics" aria-label="选择题型">
@@ -2422,7 +2422,7 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
   <div id="mathPicker" class="modal" hidden>
     <div class="modal-card">
       <h2>自选组合</h2>
-      <p class="modal-sub">勾选要练的数学题型，至少选 1 个。</p>
+      <p class="modal-sub">勾选要练的数学题型，至少选 1 个；选了限时就不限题数。</p>
       <div class="picker-list" id="mathPickerList"></div>
       <div class="challenge-group">
         <span class="challenge-label">限时</span>
@@ -2869,7 +2869,7 @@ function formatTime(totalSeconds) {
   const PLAYER_KEY = 'ace.offline.player.v1';
   const SOUND_KEY = 'ace.sound.v1';
   const TOPIC_TIMER_KEY = 'ace.topic.timer.v2';
-  const SLOW_SECONDS = 15;
+  const SLOW_SECONDS = 6;
   const WRONG_LIMIT = 120;
   const SLOW_LIMIT = 60;
   const TIMER_OPTIONS = [0, 60, 180, 300];
@@ -3593,6 +3593,8 @@ function formatTime(totalSeconds) {
     reviewTab: 'wrong',
     topicDuration: readTopicTimer(),
     deadline: 0,
+    duration: 0,
+    seenKeys: null,
     timedOut: false,
     questionStartAt: 0,
   };
@@ -3744,6 +3746,7 @@ function formatTime(totalSeconds) {
 
   function roundSize() {
     if (state.mode === 'review') return Math.max(state.questions.length, 1);
+    if (state.deadline) return Math.max(state.questions.length, 1);
     return QUESTION_COUNT;
   }
 
@@ -3765,7 +3768,9 @@ function formatTime(totalSeconds) {
         ? (TOPIC_MAP[topicId]?.subject || 'math')
         : subjectId,
       given: item.given,
-      seconds: item.seconds || 0,
+      correct: Boolean(item.correct),
+      attempts: item.attempts || 1,
+      seconds: Math.round(item.seconds || 0),
       date: new Date().toISOString(),
     };
   }
@@ -3782,19 +3787,23 @@ function formatTime(totalSeconds) {
   }
 
   function updateReviewBooks(results, subjectId, topicId) {
+    const inReview = topicId === 'review-wrong' || topicId === 'review-slow';
     for (const item of results) {
       const question = item.question;
       const source = question.source || topicId;
       const key = `${source}|${question.key}`;
-      const cleared = item.correct || (topicId === 'review-wrong' && item.resolved);
-      if (cleared) delete progress.wrongBook[key];
-      else progress.wrongBook[key] = reviewSnapshot(question, item, subjectId, source);
+      const snapshot = reviewSnapshot(question, item, subjectId, source);
       const isMath = source.startsWith('math') || (TOPIC_MAP[source]?.subject || subjectId) === 'math';
-      if (!isMath || topicId === 'review-wrong') continue;
-      if ((item.seconds || 0) >= SLOW_SECONDS) {
+      const slow = isMath && !inReview && (item.seconds || 0) >= SLOW_SECONDS;
+      const cleared = item.correct || (inReview && item.resolved);
+      if (slow) {
         progress.slowBook[key] = reviewSnapshot(question, item, 'math', source);
-      } else if (item.correct) {
-        delete progress.slowBook[key];
+        progress.wrongBook[key] = snapshot;
+      } else if (cleared) {
+        delete progress.wrongBook[key];
+        if (isMath && topicId !== 'review-wrong') delete progress.slowBook[key];
+      } else {
+        progress.wrongBook[key] = snapshot;
       }
     }
     trimBook(progress.wrongBook, WRONG_LIMIT);
@@ -3994,14 +4003,16 @@ function formatTime(totalSeconds) {
             <b>${expression}</b>
             <small>${topic?.title || '综合'}${item.seconds ? ` · ${item.seconds} 秒` : ''}</small>
           </div>
-          <div class="review-row-ans">
-            <span class="ans-bad">你写 ${displayGiven(item)}</span>
-            <span class="ans-good">正确 ${displayAnswer(item)}</span>
-          </div>
+          <div class="review-row-ans">${
+            item.correct
+              ? '<span class="ans-good">答对了</span>'
+              : `<span class="ans-bad">你写 ${displayGiven(item)}</span>
+                 <span class="ans-good">正确 ${displayAnswer(item)}</span>`
+          }</div>
         </div>`;
     }).join('');
     const empty = state.reviewTab === 'slow'
-      ? '还没有慢题。数学题超过 15 秒才算慢题。'
+      ? '还没有慢题。数学题想了 6 秒以上才算慢题。'
       : '还没有错题。答错一题就会自动进来，答对一次就自动划掉。';
     els.reviewContent.innerHTML = `
       <div class="review-tabs">
@@ -4011,7 +4022,7 @@ function formatTime(totalSeconds) {
       <section class="stats-section">
         <h2>${title}${list.length ? `（${list.length} 道）` : ''}</h2>
         <p class="review-hint">${state.reviewTab === 'slow'
-          ? '做数学题时，同一题想了 15 秒以上，就会记在这里。'
+          ? '做数学题时，同一题想了 6 秒以上，就会记在这里，也会收进错题本。'
           : '答对一次，这题就会从错题本消失。'}</p>
         ${rows || `<p class="stats-empty">${empty}</p>`}
       </section>
@@ -4369,7 +4380,23 @@ function formatTime(totalSeconds) {
     }
   }
 
+  function syncTimedProgress() {
+    if (!state.deadline || state.mode !== 'normal') return;
+    const want = state.finished
+      ? state.results.length
+      : state.results.length + 1;
+    while (els.progress.children.length < want) {
+      const segment = document.createElement('span');
+      segment.className = 'progress-seg';
+      els.progress.appendChild(segment);
+    }
+    els.progress.setAttribute('aria-valuemax', String(Math.max(want, 1)));
+    els.progressTotal.textContent =
+      `限时 ${state.duration / 60} 分钟 · 已答 ${state.results.length} 题`;
+  }
+
   function renderProgress() {
+    syncTimedProgress();
     const segments = els.progress.children;
     for (let i = 0; i < segments.length; i++) {
       const segment = segments[i];
@@ -4609,6 +4636,12 @@ function formatTime(totalSeconds) {
       renderQuestion();
       return;
     }
+    if (state.deadline) {
+      state.index += 1;
+      if (state.index >= state.questions.length) extendTopicRound();
+      renderQuestion();
+      return;
+    }
     if (state.index >= roundSize() - 1) {
       finish();
       return;
@@ -4735,7 +4768,8 @@ function formatTime(totalSeconds) {
     const isReview = state.mode === 'review';
     const questionCount = Math.min(state.results.length, roundSize());
     const firstTry = state.results.filter((item) => item.correct).length;
-    const score = state.results.reduce((sum, item) => sum + (item.points || 0), 0);
+    const rawScore = state.results.reduce((sum, item) => sum + (item.points || 0), 0);
+    const score = state.deadline ? Math.min(100, rawScore) : rawScore;
     const stars = starsFor(firstTry, Math.max(questionCount, 1));
     const topic = isReview
       ? { title: state.reviewKind === 'slow' ? '数学慢题' : '错题本', level: '复习本' }
@@ -4791,7 +4825,7 @@ function formatTime(totalSeconds) {
     els.scorePlayer.textContent = state.player;
     els.scoreDate.textContent = nowLabel();
 
-    if (score === 100) {
+    if (score === 100 && firstTry === questionCount && questionCount > 0) {
       els.resultNote.textContent = '满分！太厉害了！';
     } else if (score > previousBest) {
       els.resultNote.textContent = previousBest ? '新纪录！' : '完成第一组，继续加油！';
@@ -4826,19 +4860,29 @@ function formatTime(totalSeconds) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function buildTopicRound(topic) {
-    const seen = new Set();
-    const questions = [];
+  function topicBatch(topic, seen, count) {
+    const batch = [];
     let guard = 0;
-    while (questions.length < QUESTION_COUNT && guard < 1500) {
+    while (batch.length < count && guard < count * 200) {
       guard += 1;
       const question = topic.make();
       if (!question || seen.has(question.key)) continue;
       seen.add(question.key);
-      questions.push(question);
+      batch.push(question);
     }
-    while (questions.length < QUESTION_COUNT) questions.push(topic.make());
-    return questions;
+    while (batch.length < count) batch.push(topic.make());
+    return batch;
+  }
+
+  function buildTopicRound(topic) {
+    return topicBatch(topic, new Set(), QUESTION_COUNT);
+  }
+
+  function extendTopicRound() {
+    const topic = TOPIC_MAP[state.topicId];
+    if (!topic) return;
+    if (!state.seenKeys) state.seenKeys = new Set(state.questions.map((item) => item.key));
+    state.questions.push(...topicBatch(topic, state.seenKeys, QUESTION_COUNT));
   }
 
 
@@ -5271,6 +5315,7 @@ function formatTime(totalSeconds) {
     state.reviewKind = null;
     state.challenge = null;
     state.deadline = duration ? Date.now() + duration * 1000 : 0;
+    state.duration = duration;
     state.timedOut = false;
     document.body.classList.remove('is-challenge');
     document.body.classList.toggle('is-timed', Boolean(duration));
@@ -5282,6 +5327,7 @@ function formatTime(totalSeconds) {
     state.topicId = topicId;
     state.subjectId = topic.subject;
     state.questions = buildTopicRound(topic);
+    state.seenKeys = new Set(state.questions.map((item) => item.key));
     state.index = 0;
     state.results = [];
     state.attempts = 0;
@@ -5293,9 +5339,9 @@ function formatTime(totalSeconds) {
     const best = progress.topics[topicId]?.bestScore || 0;
     const limitNote = duration ? ` · 限时 ${duration / 60} 分钟` : '';
     els.level.textContent = best ? `${topic.level} · 最高 ${best} 分${limitNote}` : `${topic.level}${limitNote}`;
-    buildProgress(QUESTION_COUNT);
+    buildProgress(duration ? 0 : QUESTION_COUNT);
     els.progressTotal.textContent = duration
-      ? `限时 ${duration / 60} 分钟 · ${QUESTION_COUNT} 题`
+      ? `限时 ${duration / 60} 分钟 · 已答 0 题`
       : `共 ${QUESTION_COUNT} 题`;
     els.result.hidden = true;
     els.quiz.hidden = false;
