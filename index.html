@@ -2077,7 +2077,7 @@ button.back-link:hover {
 
 .quick-links{
   max-width:1080px;margin:28px auto 0;padding:0 24px;
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
 }
 .quick-link{
   display:flex;align-items:center;gap:14px;padding:16px 18px;
@@ -2092,6 +2092,52 @@ button.back-link:hover {
 }
 .quick-link strong{display:block;font-size:16px}
 .quick-link small{display:block;font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+/* 科目限时 */
+.timer-bar{
+  max-width:1080px;margin:0 auto 4px;padding:14px 18px;
+  background:var(--paper);border:2px solid var(--line);border-radius:20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.timer-bar-label{font-size:13px;font-weight:800;color:var(--ink)}
+.timer-bar-note{font-size:11px;color:var(--ink-soft)}
+.timer-options{display:flex;gap:8px;flex-wrap:wrap}
+.timer-options button{
+  border:2px solid var(--line);background:#fff;border-radius:12px;padding:7px 13px;
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);
+}
+.timer-options button.is-on{background:var(--ink);color:#fff;border-color:var(--ink)}
+body.is-timed .timer{color:var(--red);font-weight:800}
+@media (max-width:620px){
+  .timer-bar{padding:12px 14px;gap:8px}
+  .timer-bar-note{display:none}
+}
+
+/* 复习本 */
+.review-tabs{display:flex;gap:8px;margin-bottom:14px}
+.review-tabs button{
+  flex:1;border:2px solid var(--line);background:var(--paper);border-radius:14px;
+  padding:11px 10px;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);
+  cursor:pointer;
+}
+.review-tabs button b{font-variant-numeric:tabular-nums;margin-left:4px}
+.review-tabs button.is-on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.review-hint{font-size:11px;color:var(--ink-soft);margin-bottom:6px}
+.review-row{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 0;border-top:1px solid var(--line);
+}
+.review-row:first-of-type{border-top:0}
+.review-row-main{min-width:0}
+.review-row-main b{font-size:15px;word-break:break-word}
+.review-row-main small{display:block;font-size:10px;color:var(--ink-soft);margin-top:3px}
+.review-row-ans{display:flex;flex-direction:column;gap:3px;text-align:right;flex:none;font-size:11px}
+.ans-bad{color:var(--red)}
+.ans-good{color:#1f8a55;font-weight:700}
+@media (max-width:420px){
+  .review-row{flex-direction:column;align-items:flex-start;gap:4px}
+  .review-row-ans{text-align:left;flex-direction:row;gap:10px}
+}
 
 /* 挑战 */
 body.is-challenge .progress-wrap{display:none}
@@ -2177,8 +2223,10 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
 .audio-mic-on{animation:pulse 1s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.45}}
 
-@media (max-width:620px){
+@media (max-width:760px){
   .quick-links{grid-template-columns:1fr;padding:0 16px}
+}
+@media (max-width:620px){
   .stats-overview{grid-template-columns:1fr 1fr}
   .stats-row{grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,.8fr));font-size:12px}
   .stats-row .hide-mobile{display:none}
@@ -2258,6 +2306,10 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
           <span class="quick-icon">统</span>
           <span><strong>学习统计</strong><small>分科目看题数</small></span>
         </button>
+        <button class="quick-link" id="reviewBtn" type="button">
+          <span class="quick-icon">本</span>
+          <span><strong>复习本</strong><small id="reviewBadge">答错和太慢的题自动收进来</small></span>
+        </button>
       </section>
 
       <section class="about">
@@ -2271,6 +2323,21 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
     <footer class="site-footer">
       <p>Ace 学习乐园 · 一年级本地版 · 数据只在这台设备</p>
     </footer>
+  </div>
+
+  <div id="reviewView" hidden>
+    <header class="topbar">
+      <button class="back-link" id="reviewBackBtn" type="button" aria-label="返回首页">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1>复习本</h1>
+        <p>错题和数学慢题</p>
+      </div>
+      <div class="topbar-tools"></div>
+    </header>
+    <main class="stats-main" id="reviewContent"></main>
   </div>
 
   <div id="subjectView" hidden>
@@ -2287,6 +2354,17 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
     </header>
 
     <main class="subject-main">
+      <section class="timer-bar" aria-label="这一科的限时设置">
+        <span class="timer-bar-label">限时</span>
+        <div class="timer-options" id="topicTimerOptions">
+          <button type="button" data-topic-timer="0">不限时</button>
+          <button type="button" data-topic-timer="60">1 分钟</button>
+          <button type="button" data-topic-timer="180">3 分钟</button>
+          <button type="button" data-topic-timer="300">5 分钟</button>
+        </div>
+        <span class="timer-bar-note">选了限时，时间到就自动交卷</span>
+      </section>
+
       <section class="topics" aria-label="选择题型">
         <div class="topic-grid" id="topicGrid"></div>
       </section>
@@ -2346,6 +2424,15 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
       <h2>自选组合</h2>
       <p class="modal-sub">勾选要练的数学题型，至少选 1 个。</p>
       <div class="picker-list" id="mathPickerList"></div>
+      <div class="challenge-group">
+        <span class="challenge-label">限时</span>
+        <div class="challenge-options" id="pickerTimerOptions">
+          <button type="button" data-topic-timer="0">不限时</button>
+          <button type="button" data-topic-timer="60">1 分钟</button>
+          <button type="button" data-topic-timer="180">3 分钟</button>
+          <button type="button" data-topic-timer="300">5 分钟</button>
+        </div>
+      </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" id="mathPickerCancel" type="button">取消</button>
         <button class="btn btn-primary" id="mathPickerStart" type="button">开始练习</button>
@@ -2781,6 +2868,11 @@ function formatTime(totalSeconds) {
   const LEGACY_KEY = 'ace.offline.progress.v1';
   const PLAYER_KEY = 'ace.offline.player.v1';
   const SOUND_KEY = 'ace.sound.v1';
+  const TOPIC_TIMER_KEY = 'ace.topic.timer.v2';
+  const SLOW_SECONDS = 15;
+  const WRONG_LIMIT = 120;
+  const SLOW_LIMIT = 60;
+  const TIMER_OPTIONS = [0, 60, 180, 300];
 
   const $ = (id) => document.getElementById(id);
 
@@ -3405,6 +3497,13 @@ function formatTime(totalSeconds) {
     statsBackBtn: $('statsBackBtn'),
     challengeBtn: $('challengeBtn'),
     statsBtn: $('statsBtn'),
+    reviewBtn: $('reviewBtn'),
+    reviewBadge: $('reviewBadge'),
+    reviewView: $('reviewView'),
+    reviewContent: $('reviewContent'),
+    reviewBackBtn: $('reviewBackBtn'),
+    topicTimerOptions: $('topicTimerOptions'),
+    pickerTimerOptions: $('pickerTimerOptions'),
     challengeSetup: $('challengeSetup'),
     challengeCancel: $('challengeCancel'),
     challengeStart: $('challengeStart'),
@@ -3472,6 +3571,7 @@ function formatTime(totalSeconds) {
     questions: [],
     index: 0,
     attempts: 0,
+    firstWrong: null,
     entered: '',
     results: [],
     locked: false,
@@ -3489,6 +3589,12 @@ function formatTime(totalSeconds) {
     audioOpen: false,
     audioAnswering: false,
     audioRecognition: null,
+    reviewKind: null,
+    reviewTab: 'wrong',
+    topicDuration: readTopicTimer(),
+    deadline: 0,
+    timedOut: false,
+    questionStartAt: 0,
   };
 
   let storageOk = true;
@@ -3506,6 +3612,8 @@ function formatTime(totalSeconds) {
       topics: {},
       rounds: [],
       challengeBests: {},
+      wrongBook: {},
+      slowBook: {},
     };
   }
 
@@ -3543,6 +3651,10 @@ function formatTime(totalSeconds) {
       parsed.challengeBests && typeof parsed.challengeBests === 'object'
         ? parsed.challengeBests
         : {};
+    result.wrongBook =
+      parsed.wrongBook && typeof parsed.wrongBook === 'object' ? parsed.wrongBook : {};
+    result.slowBook =
+      parsed.slowBook && typeof parsed.slowBook === 'object' ? parsed.slowBook : {};
     return result;
   }
 
@@ -3611,6 +3723,82 @@ function formatTime(totalSeconds) {
 
   function updateStorageNote() {
     if (els.storageNote) els.storageNote.hidden = storageOk;
+  }
+
+  function readTopicTimer() {
+    try {
+      const raw = Number(localStorage.getItem(TOPIC_TIMER_KEY));
+      return TIMER_OPTIONS.includes(raw) ? raw : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  function saveTopicTimer(value) {
+    try {
+      localStorage.setItem(TOPIC_TIMER_KEY, String(value));
+    } catch {
+      // 忽略
+    }
+  }
+
+  function roundSize() {
+    if (state.mode === 'review') return Math.max(state.questions.length, 1);
+    return QUESTION_COUNT;
+  }
+
+  function resultSeconds() {
+    if (!state.questionStartAt) return 0;
+    return Math.max(0, Math.round((Date.now() - state.questionStartAt) / 100) / 10);
+  }
+
+  function reviewSnapshot(question, item, subjectId, topicId) {
+    return {
+      kind: question.kind,
+      display: question.display,
+      options: question.kind === 'choice' ? question.options : null,
+      answer: question.answer,
+      explain: question.explain || '',
+      key: question.key,
+      topicId,
+      subject: subjectId === 'all' || subjectId === 'mixed'
+        ? (TOPIC_MAP[topicId]?.subject || 'math')
+        : subjectId,
+      given: item.given,
+      seconds: item.seconds || 0,
+      date: new Date().toISOString(),
+    };
+  }
+
+  function trimBook(book, limit) {
+    const keys = Object.keys(book);
+    if (keys.length <= limit) return;
+    keys
+      .sort((a, b) => new Date(book[a].date) - new Date(book[b].date))
+      .slice(0, keys.length - limit)
+      .forEach((key) => {
+        delete book[key];
+      });
+  }
+
+  function updateReviewBooks(results, subjectId, topicId) {
+    for (const item of results) {
+      const question = item.question;
+      const source = question.source || topicId;
+      const key = `${source}|${question.key}`;
+      const cleared = item.correct || (topicId === 'review-wrong' && item.resolved);
+      if (cleared) delete progress.wrongBook[key];
+      else progress.wrongBook[key] = reviewSnapshot(question, item, subjectId, source);
+      const isMath = source.startsWith('math') || (TOPIC_MAP[source]?.subject || subjectId) === 'math';
+      if (!isMath || topicId === 'review-wrong') continue;
+      if ((item.seconds || 0) >= SLOW_SECONDS) {
+        progress.slowBook[key] = reviewSnapshot(question, item, 'math', source);
+      } else if (item.correct) {
+        delete progress.slowBook[key];
+      }
+    }
+    trimBook(progress.wrongBook, WRONG_LIMIT);
+    trimBook(progress.slowBook, SLOW_LIMIT);
   }
 
   function loadPlayer() {
@@ -3743,7 +3931,168 @@ function formatTime(totalSeconds) {
       <span class="stat-pill">已练 <strong>${totals.questions || 0}</strong> 题</span>
       <span class="stat-pill">最高分 <strong>${overallBest()}</strong></span>
       <span class="stat-pill">正确率 <strong>${overallAccuracy()}%</strong></span>`;
+    updateReviewBadge();
     updateStorageNote();
+  }
+
+  function reviewItems(kind) {
+    const book = kind === 'slow' ? progress.slowBook : progress.wrongBook;
+    return Object.entries(book)
+      .map(([key, item]) => ({ key, ...item }))
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function updateReviewBadge() {
+    if (!els.reviewBadge) return;
+    const wrong = Object.keys(progress.wrongBook).length;
+    const slow = Object.keys(progress.slowBook).length;
+    els.reviewBadge.textContent = wrong || slow
+      ? `${wrong} 道错题 · ${slow} 道慢题`
+      : '答错和太慢的题自动收进来';
+  }
+
+  function openReview(tab) {
+    stopRound();
+    state.mode = 'review';
+    if (tab === 'wrong' || tab === 'slow') state.reviewTab = tab;
+    if (state.audioOpen) closeAudio();
+    els.homeView.hidden = true;
+    els.subjectView.hidden = true;
+    els.practiceView.hidden = true;
+    els.statsView.hidden = true;
+    els.reviewView.hidden = false;
+    document.body.classList.remove('is-timed', 'is-challenge');
+    renderReview();
+    window.scrollTo(0, 0);
+  }
+
+  function displayAnswer(item) {
+    if (item.kind === 'choice' && Array.isArray(item.options)) {
+      return item.options[item.answer] ?? '';
+    }
+    return item.answer;
+  }
+
+  function displayGiven(item) {
+    if (item.kind === 'choice' && Array.isArray(item.options) && Number.isInteger(item.given)) {
+      return item.options[item.given] ?? '';
+    }
+    return item.given;
+  }
+
+  function renderReview() {
+    const wrong = reviewItems('wrong');
+    const slow = reviewItems('slow');
+    const list = state.reviewTab === 'slow' ? slow : wrong;
+    const title = state.reviewTab === 'slow' ? '数学慢题' : '错题本';
+    const rows = list.slice(0, 40).map((item) => {
+      const topic = TOPIC_MAP[item.topicId];
+      const expression = item.kind === 'choice' ? item.display : `${item.display} =`;
+      return `
+        <div class="review-row">
+          <div class="review-row-main">
+            <b>${expression}</b>
+            <small>${topic?.title || '综合'}${item.seconds ? ` · ${item.seconds} 秒` : ''}</small>
+          </div>
+          <div class="review-row-ans">
+            <span class="ans-bad">你写 ${displayGiven(item)}</span>
+            <span class="ans-good">正确 ${displayAnswer(item)}</span>
+          </div>
+        </div>`;
+    }).join('');
+    const empty = state.reviewTab === 'slow'
+      ? '还没有慢题。数学题超过 15 秒才算慢题。'
+      : '还没有错题。答错一题就会自动进来，答对一次就自动划掉。';
+    els.reviewContent.innerHTML = `
+      <div class="review-tabs">
+        <button type="button" data-review-tab="wrong" class="${state.reviewTab === 'wrong' ? 'is-on' : ''}">错题 <b>${wrong.length}</b></button>
+        <button type="button" data-review-tab="slow" class="${state.reviewTab === 'slow' ? 'is-on' : ''}">数学慢题 <b>${slow.length}</b></button>
+      </div>
+      <section class="stats-section">
+        <h2>${title}${list.length ? `（${list.length} 道）` : ''}</h2>
+        <p class="review-hint">${state.reviewTab === 'slow'
+          ? '做数学题时，同一题想了 15 秒以上，就会记在这里。'
+          : '答对一次，这题就会从错题本消失。'}</p>
+        ${rows || `<p class="stats-empty">${empty}</p>`}
+      </section>
+      <div class="stats-actions">
+        <button class="btn btn-primary" id="reviewPracticeBtn" ${list.length ? '' : 'disabled'}>练这 ${Math.min(list.length, 10)} 题</button>
+        <button class="btn" id="reviewClearBtn" ${list.length ? '' : 'disabled'}>清空${title}</button>
+        <button class="btn" id="reviewHomeBtn">回首页</button>
+      </div>`;
+    updateReviewBadge();
+  }
+
+  function startReviewRound(kind) {
+    const items = reviewItems(kind).slice(0, 10);
+    if (!items.length) return;
+    const questions = items.map((item) => ({
+      kind: item.kind,
+      display: item.display,
+      options: Array.isArray(item.options) ? item.options.slice() : undefined,
+      answer: item.answer,
+      explain: item.explain || '',
+      key: item.key,
+      source: item.topicId,
+    }));
+    window.clearTimeout(state.advanceTimer);
+    window.clearInterval(state.timerId);
+    state.mode = 'review';
+    state.reviewKind = kind;
+    state.challenge = null;
+    state.deadline = 0;
+    state.timedOut = false;
+    document.body.classList.remove('is-challenge', 'is-timed');
+    els.audioBtn.hidden = false;
+    if (state.audioOpen) closeAudio();
+    els.subjectView.hidden = true;
+    els.homeView.hidden = true;
+    els.statsView.hidden = true;
+    els.reviewView.hidden = true;
+    els.practiceView.hidden = false;
+    state.subjectId = 'mixed';
+    state.topicId = `review-${kind}`;
+    state.questions = questions;
+    state.index = 0;
+    state.results = [];
+    state.attempts = 0;
+    state.entered = '';
+    state.finished = false;
+    state.locked = false;
+
+    els.title.textContent = kind === 'slow' ? '数学慢题复习' : '错题复习';
+    els.level.textContent = `复习 ${questions.length} 题`;
+    buildProgress(questions.length);
+    els.progressTotal.textContent = `复习 ${questions.length} 题`;
+    els.result.hidden = true;
+    els.quiz.hidden = false;
+    els.review.innerHTML = '';
+    els.resultNote.textContent = '';
+    els.nextBtn.hidden = true;
+    els.expression.classList.remove('is-choice');
+    els.answerRow.hidden = false;
+    window.scrollTo(0, 0);
+    startTimer();
+    renderProgress();
+    renderQuestion();
+  }
+
+  function syncTimerUI() {
+    for (const box of [els.topicTimerOptions, els.pickerTimerOptions]) {
+      if (!box) continue;
+      for (const button of box.querySelectorAll('button[data-topic-timer]')) {
+        button.classList.toggle('is-on', Number(button.dataset.topicTimer) === state.topicDuration);
+      }
+    }
+  }
+
+  function handleTimerPick(event) {
+    const button = event.target.closest('button[data-topic-timer]');
+    if (!button) return;
+    const value = Number(button.dataset.topicTimer);
+    state.topicDuration = TIMER_OPTIONS.includes(value) ? value : 0;
+    saveTopicTimer(state.topicDuration);
+    syncTimerUI();
   }
 
   function topicCard(topic) {
@@ -3774,7 +4123,10 @@ function formatTime(totalSeconds) {
     els.homeView.hidden = true;
     els.practiceView.hidden = true;
     els.statsView.hidden = true;
+    els.reviewView.hidden = true;
+    document.body.classList.remove('is-timed');
     els.subjectView.hidden = false;
+    syncTimerUI();
     window.scrollTo(0, 0);
   }
 
@@ -3789,6 +4141,8 @@ function formatTime(totalSeconds) {
     els.subjectView.hidden = true;
     els.practiceView.hidden = true;
     els.statsView.hidden = true;
+    els.reviewView.hidden = true;
+    document.body.classList.remove('is-timed', 'is-challenge');
     els.homeView.hidden = false;
     renderHome();
     window.scrollTo(0, 0);
@@ -3814,6 +4168,7 @@ function formatTime(totalSeconds) {
     els.homeView.hidden = true;
     els.subjectView.hidden = true;
     els.practiceView.hidden = true;
+    els.reviewView.hidden = true;
     els.statsView.hidden = false;
     renderStats();
     window.scrollTo(0, 0);
@@ -4004,9 +4359,10 @@ function formatTime(totalSeconds) {
     state.finished = true;
   }
 
-  function buildProgress() {
+  function buildProgress(count = QUESTION_COUNT) {
     els.progress.innerHTML = '';
-    for (let i = 0; i < QUESTION_COUNT; i++) {
+    els.progress.setAttribute('aria-valuemax', String(count));
+    for (let i = 0; i < count; i++) {
       const segment = document.createElement('span');
       segment.className = 'progress-seg';
       els.progress.appendChild(segment);
@@ -4015,7 +4371,7 @@ function formatTime(totalSeconds) {
 
   function renderProgress() {
     const segments = els.progress.children;
-    for (let i = 0; i < QUESTION_COUNT; i++) {
+    for (let i = 0; i < segments.length; i++) {
       const segment = segments[i];
       if (!segment) continue;
       segment.className = 'progress-seg';
@@ -4026,7 +4382,9 @@ function formatTime(totalSeconds) {
       }
     }
     els.progress.setAttribute('aria-valuenow', String(state.results.length));
-    els.progressNow.textContent = state.finished ? '本组完成' : `第 ${Math.min(state.index + 1, QUESTION_COUNT)} 题`;
+    els.progressNow.textContent = state.finished
+      ? '本组完成'
+      : `第 ${Math.min(state.index + 1, roundSize())} 题`;
   }
 
   function setEntered(value) {
@@ -4045,8 +4403,10 @@ function formatTime(totalSeconds) {
 
   function renderQuestion() {
     const question = state.questions[state.index];
+    state.questionStartAt = Date.now();
     state.locked = false;
     state.attempts = 0;
+    state.firstWrong = null;
     els.quiz.hidden = false;
     els.result.hidden = true;
     els.answerBox.classList.remove('is-correct', 'is-wrong');
@@ -4129,8 +4489,10 @@ function formatTime(totalSeconds) {
       state.results.push({
         question,
         correct: state.attempts === 0,
+        resolved: true,
         attempts: state.attempts + 1,
-        given: value,
+        given: state.attempts === 0 ? value : (state.firstWrong ?? value),
+        seconds: resultSeconds(),
         points: state.attempts === 0 ? 10 : 5,
       });
       els.feedback.textContent = praise();
@@ -4142,6 +4504,7 @@ function formatTime(totalSeconds) {
     }
 
     state.attempts += 1;
+    if (state.firstWrong == null) state.firstWrong = value;
     playWrong();
     els.answerBox.classList.remove('is-wrong');
     void els.answerBox.offsetWidth;
@@ -4159,7 +4522,15 @@ function formatTime(totalSeconds) {
 
     state.locked = true;
     setKeypadDisabled(true);
-    state.results.push({ question, correct: false, attempts: maxAttempts(), given: value, points: 0 });
+    state.results.push({
+      question,
+      correct: false,
+      resolved: false,
+      attempts: maxAttempts(),
+      given: state.firstWrong ?? value,
+      seconds: resultSeconds(),
+      points: 0,
+    });
     els.feedback.textContent = `正确答案是 ${question.answer}`;
     els.feedback.className = 'feedback is-bad';
     if (state.mode === 'challenge') state.advanceTimer = window.setTimeout(next, 900);
@@ -4179,8 +4550,10 @@ function formatTime(totalSeconds) {
       state.results.push({
         question,
         correct: state.attempts === 0,
+        resolved: true,
         attempts: state.attempts + 1,
-        given: value,
+        given: state.attempts === 0 ? value : (state.firstWrong ?? value),
+        seconds: resultSeconds(),
         points: state.attempts === 0 ? 10 : 5,
       });
       els.feedback.textContent = praise();
@@ -4192,6 +4565,7 @@ function formatTime(totalSeconds) {
     }
 
     state.attempts += 1;
+    if (state.firstWrong == null) state.firstWrong = value;
     button.classList.add('is-wrong');
     button.disabled = true;
     playWrong();
@@ -4206,7 +4580,15 @@ function formatTime(totalSeconds) {
     const correctButton = els.choicePad.querySelector(`[data-choice="${question.answer}"]`);
     if (correctButton) correctButton.classList.add('is-correct');
     setChoiceDisabled(true);
-    state.results.push({ question, correct: false, attempts: maxAttempts(), given: value, points: 0 });
+    state.results.push({
+      question,
+      correct: false,
+      resolved: false,
+      attempts: maxAttempts(),
+      given: state.firstWrong ?? value,
+      seconds: resultSeconds(),
+      points: 0,
+    });
     els.feedback.textContent = `正确答案是 ${question.options[question.answer]}`;
     if (state.mode === 'challenge') state.advanceTimer = window.setTimeout(next, 900);
     else els.nextBtn.hidden = false;
@@ -4227,7 +4609,7 @@ function formatTime(totalSeconds) {
       renderQuestion();
       return;
     }
-    if (state.index >= QUESTION_COUNT - 1) {
+    if (state.index >= roundSize() - 1) {
       finish();
       return;
     }
@@ -4341,40 +4723,61 @@ function formatTime(totalSeconds) {
     if (progress.rounds.length > 200) progress.rounds.length = 200;
   }
 
-  function finish() {
+  function finish({ timedOut = false } = {}) {
     state.finished = true;
     state.locked = true;
+    state.timedOut = Boolean(timedOut);
     window.clearInterval(state.timerId);
     if (state.audioOpen) closeAudio();
     const elapsed = (Date.now() - state.startedAt) / 1000;
     els.timer.textContent = formatTime(elapsed);
 
+    const isReview = state.mode === 'review';
+    const questionCount = Math.min(state.results.length, roundSize());
     const firstTry = state.results.filter((item) => item.correct).length;
     const score = state.results.reduce((sum, item) => sum + (item.points || 0), 0);
-    const stars = starsFor(firstTry, QUESTION_COUNT);
-    const topic = TOPIC_MAP[state.topicId];
-    const subject = SUBJECT_MAP[topic.subject];
-    const previous = progress.topics[state.topicId] || { bestScore: 0, bestStars: 0 };
+    const stars = starsFor(firstTry, Math.max(questionCount, 1));
+    const topic = isReview
+      ? { title: state.reviewKind === 'slow' ? '数学慢题' : '错题本', level: '复习本' }
+      : TOPIC_MAP[state.topicId];
+    const subject = isReview ? { id: 'mixed', title: '复习' } : SUBJECT_MAP[topic.subject];
+    const previous = isReview
+      ? { bestScore: 0, bestStars: 0 }
+      : progress.topics[state.topicId] || { bestScore: 0, bestStars: 0 };
 
-    recordCompletion({
-      subjectId: subject.id,
-      topicId: state.topicId,
-      mode: 'normal',
-      questions: QUESTION_COUNT,
-      correct: firstTry,
-      score,
-      seconds: Math.round(elapsed),
-      results: state.results,
-    });
-    saveProgress();
+    if (questionCount > 0) {
+      recordCompletion({
+        subjectId: isReview ? 'mixed' : subject.id,
+        topicId: isReview ? `review-${state.reviewKind}` : state.topicId,
+        mode: isReview ? 'review' : 'normal',
+        questions: questionCount,
+        correct: firstTry,
+        score,
+        seconds: Math.round(elapsed),
+        results: state.results,
+      });
+      updateReviewBooks(state.results, isReview ? 'mixed' : subject.id, state.topicId);
+      saveProgress();
+    } else {
+      saveProgress();
+    }
 
-    const personal = progress.topics[state.topicId] || { bestScore: 0 };
-    els.level.textContent = `${topic.level} · 最高 ${personal.bestScore} 分`;
+    if (!isReview) {
+      const personal = progress.topics[state.topicId] || { bestScore: 0 };
+      els.level.textContent = state.timedOut
+        ? `时间到 · 完成 ${questionCount} 题`
+        : `${topic.level} · 最高 ${personal.bestScore} 分`;
+    } else {
+      els.level.textContent = `复习 ${questionCount} 题`;
+    }
     renderProgress();
     renderResult({
       firstTry, score, stars, elapsed, topic, subject,
-      previousBest: previous.bestScore || 0, questionCount: QUESTION_COUNT, mode: 'normal',
+      previousBest: previous.bestScore || 0, questionCount, mode: isReview ? 'review' : 'normal',
     });
+    if (state.timedOut) {
+      els.resultNote.textContent = `时间到！完成 ${questionCount} 题，答对 ${firstTry} 题`;
+    }
   }
 
   function renderResult({ firstTry, score, stars, elapsed, topic, subject, previousBest, questionCount = QUESTION_COUNT, mode = 'normal' }) {
@@ -4585,6 +4988,7 @@ function formatTime(totalSeconds) {
       seconds: duration,
       results,
     });
+    updateReviewBooks(results, subjectId, `challenge-${subjectId}`);
     saveProgress();
 
     const subject = subjectId === 'all'
@@ -4625,6 +5029,7 @@ function formatTime(totalSeconds) {
         input.closest('.picker-item').classList.toggle('is-on', input.checked);
       });
     });
+    syncTimerUI();
     els.mathPicker.hidden = false;
   }
 
@@ -4838,20 +5243,21 @@ function formatTime(totalSeconds) {
 
   function startTimer() {
     state.startedAt = Date.now();
-    els.timer.textContent = '0:00';
+    const deadline = state.deadline;
+    els.timer.textContent = formatTime(deadline ? Math.max(0, Math.round((deadline - Date.now()) / 1000)) : 0);
     window.clearInterval(state.timerId);
-    state.timerId = window.setInterval(() => {
+    const tick = () => {
+      if (state.finished) return;
+      if (deadline) {
+        const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        els.timer.textContent = formatTime(left);
+        if (left <= 0) finish({ timedOut: true });
+        return;
+      }
       els.timer.textContent = formatTime((Date.now() - state.startedAt) / 1000);
-    }, 500);
-  }
-
-  function startTopic(topicId) {
-    state.startedAt = Date.now();
-    els.timer.textContent = '0:00';
-    window.clearInterval(state.timerId);
-    state.timerId = window.setInterval(() => {
-      els.timer.textContent = formatTime((Date.now() - state.startedAt) / 1000);
-    }, 500);
+    };
+    tick();
+    state.timerId = window.setInterval(tick, 500);
   }
 
   function startTopic(topicId) {
@@ -4860,13 +5266,19 @@ function formatTime(totalSeconds) {
     window.clearTimeout(state.advanceTimer);
     window.clearInterval(state.timerId);
 
+    const duration = state.topicDuration;
     state.mode = 'normal';
+    state.reviewKind = null;
     state.challenge = null;
+    state.deadline = duration ? Date.now() + duration * 1000 : 0;
+    state.timedOut = false;
     document.body.classList.remove('is-challenge');
+    document.body.classList.toggle('is-timed', Boolean(duration));
     els.audioBtn.hidden = false;
     if (state.audioOpen) closeAudio();
     els.challengeSetup.hidden = true;
     els.statsView.hidden = true;
+    els.reviewView.hidden = true;
     state.topicId = topicId;
     state.subjectId = topic.subject;
     state.questions = buildTopicRound(topic);
@@ -4879,7 +5291,12 @@ function formatTime(totalSeconds) {
 
     els.title.textContent = topic.title;
     const best = progress.topics[topicId]?.bestScore || 0;
-    els.level.textContent = best ? `${topic.level} · 最高 ${best} 分` : topic.level;
+    const limitNote = duration ? ` · 限时 ${duration / 60} 分钟` : '';
+    els.level.textContent = best ? `${topic.level} · 最高 ${best} 分${limitNote}` : `${topic.level}${limitNote}`;
+    buildProgress(QUESTION_COUNT);
+    els.progressTotal.textContent = duration
+      ? `限时 ${duration / 60} 分钟 · ${QUESTION_COUNT} 题`
+      : `共 ${QUESTION_COUNT} 题`;
     els.result.hidden = true;
     els.quiz.hidden = false;
     els.review.innerHTML = '';
@@ -4908,6 +5325,32 @@ function formatTime(totalSeconds) {
 
   els.statsBtn.addEventListener('click', openStats);
   els.statsBackBtn.addEventListener('click', showHome);
+  els.reviewBtn.addEventListener('click', () => openReview('wrong'));
+  els.reviewBackBtn.addEventListener('click', showHome);
+  els.topicTimerOptions.addEventListener('click', handleTimerPick);
+  els.pickerTimerOptions.addEventListener('click', handleTimerPick);
+  els.reviewContent.addEventListener('click', (event) => {
+    const tab = event.target.closest('[data-review-tab]');
+    if (tab) {
+      state.reviewTab = tab.dataset.reviewTab;
+      renderReview();
+      return;
+    }
+    if (event.target.closest('#reviewPracticeBtn')) {
+      startReviewRound(state.reviewTab);
+      return;
+    }
+    if (event.target.closest('#reviewClearBtn')) {
+      const label = state.reviewTab === 'slow' ? '数学慢题' : '错题本';
+      if (!window.confirm(`确定清空${label}？清空后不能恢复。`)) return;
+      if (state.reviewTab === 'slow') progress.slowBook = {};
+      else progress.wrongBook = {};
+      saveProgress();
+      renderReview();
+      return;
+    }
+    if (event.target.closest('#reviewHomeBtn')) showHome();
+  });
   els.mathPickerCancel.addEventListener('click', closeMathPicker);
   els.mathPickerStart.addEventListener('click', startCustomMath);
   els.audioBtn.addEventListener('click', openAudio);
@@ -4976,6 +5419,12 @@ function formatTime(totalSeconds) {
 
   els.subjectBackBtn.addEventListener('click', showHome);
   els.backBtn.addEventListener('click', () => {
+    if (state.mode === 'review') {
+      const kind = state.reviewKind;
+      stopRound();
+      openReview(kind);
+      return;
+    }
     if (state.mode === 'challenge' && !state.finished) {
       if (!window.confirm('挑战还没结束，确定退出？')) return;
       stopRound();
@@ -4990,11 +5439,13 @@ function formatTime(totalSeconds) {
   });
   els.againBtn.addEventListener('click', () => {
     if (state.mode === 'challenge') startChallenge();
+    else if (state.mode === 'review') startReviewRound(state.reviewKind);
     else startTopic(state.topicId);
   });
   els.homeBtn.addEventListener('click', () => {
     stopRound();
     if (state.mode === 'challenge') showHome();
+    else if (state.mode === 'review') openReview(state.reviewKind);
     else openSubject(state.subjectId);
   });
 
