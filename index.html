@@ -1821,6 +1821,527 @@ button {
   }
 }
 
+/* ---------- Explore（课外发现） ---------- */
+
+.page-explore {
+  background-image:
+    radial-gradient(circle at 10% 6%, rgba(255, 197, 49, 0.2), transparent 34%),
+    radial-gradient(circle at 90% 10%, rgba(63, 125, 251, 0.14), transparent 38%),
+    radial-gradient(circle at 50% 96%, rgba(138, 92, 246, 0.1), transparent 42%);
+}
+
+.explore-hero {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 44px 24px 8px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.explore-copy h1 {
+  margin-top: 16px;
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
+.explore-lead {
+  margin-top: 16px;
+  max-width: 32em;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+
+.explore-meter {
+  margin-top: 26px;
+  max-width: 380px;
+}
+
+.explore-meter-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #f0e4d2;
+  overflow: hidden;
+}
+
+.explore-meter-bar > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--orange), var(--yellow));
+  transition: width 0.4s ease;
+}
+
+.explore-meter p {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.explore-meter p span {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* 今日一题 */
+
+.daily-card {
+  position: relative;
+  padding: 24px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fffdf9;
+  box-shadow: 0 24px 48px -32px rgba(63, 45, 22, 0.5);
+}
+
+.daily-card::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed rgba(232, 111, 34, 0.22);
+  border-radius: calc(var(--radius-lg) - 8px);
+  pointer-events: none;
+}
+
+.daily-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #a8480c;
+}
+
+.daily-card h2 {
+  margin-top: 10px;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+.daily-body p {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.daily-reveal {
+  margin-top: 16px;
+}
+
+.daily-answer {
+  padding-top: 4px;
+}
+
+.daily-answer .ex-a {
+  margin-top: 12px;
+}
+
+/* 分类筛选 */
+
+.explore-filters {
+  max-width: 1080px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+}
+
+.filters-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.filter-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fffdf9;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.filter-chip em {
+  font-style: normal;
+  font-size: 12px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(63, 45, 22, 0.07);
+}
+
+.filter-chip:hover {
+  transform: translateY(-1px);
+  border-color: #e2d3bd;
+  color: var(--ink);
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+  box-shadow: 0 3px 0 #171320;
+}
+
+.filter-chip[aria-pressed="true"] em {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.filter-chip:active {
+  transform: translateY(1px);
+}
+
+/* 问题列表 */
+
+.explore-list {
+  max-width: 1080px;
+  margin: 34px auto 0;
+  padding: 0 24px;
+}
+
+.list-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.list-head h2 {
+  font-size: 20px;
+}
+
+.list-head p {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.explore-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.ex-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 14px;
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.ex-card:hover {
+  transform: translateY(-2px);
+  border-color: #e6d5bc;
+  box-shadow: 0 16px 30px -22px rgba(63, 45, 22, 0.55);
+}
+
+.ex-card.is-open {
+  border-color: rgba(255, 138, 61, 0.72);
+  box-shadow: 0 18px 36px -24px rgba(232, 111, 34, 0.5);
+}
+
+.ex-card.is-flash {
+  animation: ex-flash 1.2s ease;
+}
+
+@keyframes ex-flash {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 138, 61, 0);
+  }
+  30% {
+    box-shadow: 0 0 0 6px rgba(255, 138, 61, 0.32);
+  }
+}
+
+.ex-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.ex-emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.ex-cat {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ex-seen {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(35, 169, 106, 0.12);
+  color: #0f5c36;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ex-q {
+  margin-top: 10px;
+  font-size: 17px;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+.ex-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.ex-card.is-open .ex-panel {
+  grid-template-rows: 1fr;
+}
+
+.ex-panel-inner {
+  overflow: hidden;
+}
+
+.ex-a {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #4b4558;
+}
+
+.ex-tip {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--orange);
+  border-radius: 0 12px 12px 0;
+  background: #fff6e9;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #6a4a2a;
+}
+
+.ex-tip span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--orange-deep);
+}
+
+.ex-source {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.ex-source a {
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(63, 125, 251, 0.35);
+}
+
+.ex-source a:hover {
+  border-bottom-color: var(--blue);
+}
+
+.ex-toggle {
+  margin-top: 12px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.ex-toggle:hover {
+  color: var(--ink);
+  border-color: #ded0ba;
+  background: #fff8ee;
+}
+
+.ex-toggle:active {
+  transform: translateY(1px);
+}
+
+.ex-chevron {
+  transition: transform 0.25s ease;
+}
+
+.ex-card.is-open .ex-chevron {
+  transform: rotate(180deg);
+}
+
+.explore-empty {
+  margin-top: 18px;
+  padding: 18px;
+  border: 2px dashed var(--line);
+  border-radius: 18px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* 首页入口 */
+
+.explore-teaser {
+  max-width: 1080px;
+  margin: 44px auto 0;
+  padding: 0 24px;
+}
+
+.explore-teaser a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 24px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, #fffdf9, #fff4e2);
+  text-decoration: none;
+  box-shadow: 0 18px 36px -30px rgba(63, 45, 22, 0.6);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.explore-teaser a:hover {
+  transform: translateY(-2px);
+  border-color: #e6d5bc;
+  box-shadow: 0 22px 40px -30px rgba(63, 45, 22, 0.65);
+}
+
+.explore-teaser .teaser-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 138, 61, 0.16);
+  font-size: 26px;
+}
+
+.explore-teaser h2 {
+  font-size: 19px;
+}
+
+.explore-teaser p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.explore-teaser .teaser-go {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--orange-deep);
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .explore-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .explore-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 32px;
+  }
+
+  .daily-card {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 560px) {
+  .explore-hero,
+  .explore-filters,
+  .explore-list,
+  .explore-teaser {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .explore-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .explore-teaser a {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .explore-teaser .teaser-go {
+    display: none;
+  }
+
+  .filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-chip {
+    flex: none;
+  }
+}
+
 /* 本地单文件版专用的小样式 */
 
 .offline-badge {
@@ -2077,7 +2598,7 @@ button.back-link:hover {
 
 .quick-links{
   max-width:1080px;margin:28px auto 0;padding:0 24px;
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;
 }
 .quick-link{
   display:flex;align-items:center;gap:14px;padding:16px 18px;
@@ -2223,6 +2744,9 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
 .audio-mic-on{animation:pulse 1s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.45}}
 
+@media (max-width:980px){
+  .quick-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media (max-width:760px){
   .quick-links{grid-template-columns:1fr;padding:0 16px}
 }
@@ -2254,6 +2778,199 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
 @media (max-width:520px){
   .daily-row{grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,.5fr)) minmax(0,.55fr);gap:4px;font-size:11px}
   .daily-date small{font-size:8px}
+}
+
+/* ===== 小游戏 ===== */
+.games-main{max-width:1080px;margin:0 auto;padding:8px 24px 64px}
+.games-lead{margin:0 0 18px;font-size:14px;color:var(--ink-soft);line-height:1.7}
+.games-note{margin:22px 0 0;font-size:12px;color:var(--ink-soft);text-align:center}
+.games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.game-card{
+  display:flex;flex-direction:column;gap:12px;padding:20px;
+  background:var(--paper);border:2px solid var(--line);border-radius:22px;
+  font-family:inherit;text-align:left;color:var(--ink);cursor:pointer;
+  box-shadow:0 4px 0 rgba(63,45,22,.05);transition:transform .15s ease,border-color .15s ease;
+}
+.game-card:hover{transform:translateY(-3px);border-color:var(--orange)}
+.game-card-emoji{font-size:34px;line-height:1}
+.game-card-body{display:flex;flex-direction:column;gap:5px}
+.game-card-subject{align-self:flex-start;font-size:11px;font-weight:800;color:var(--orange-deep);background:rgba(255,138,61,.14);border-radius:999px;padding:3px 9px}
+.game-card-title{font-size:20px}
+.game-card-note{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.game-card-rule{font-size:11px;color:var(--ink-soft)}
+.game-card-score{margin-top:auto;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px dashed var(--line)}
+.game-card-score b{font-size:22px;color:var(--orange-deep)}
+.game-card-score small{font-size:11px;color:var(--ink-soft)}
+
+.game-view{min-height:100vh}
+.game-hud{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+  max-width:1080px;margin:0 auto;padding:12px 24px;background:var(--cream);
+  border-bottom:1px solid var(--line);
+}
+.game-exit{border:2px solid var(--line);background:var(--paper);border-radius:12px;padding:7px 12px;font-family:inherit;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer}
+.game-hud-title{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.game-hud-stats{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+.game-hud-lives{letter-spacing:2px;color:var(--red);font-size:15px}
+.game-hud-time{min-width:44px;text-align:right;color:var(--ink-soft)}
+.game-main{max-width:1080px;margin:0 auto;padding:18px 24px 56px;text-align:center}
+.game-prompt{margin:0 0 6px;min-height:42px;display:flex;align-items:center;justify-content:center}
+.game-eq{font-size:24px;font-weight:800;color:var(--ink);line-height:1.4}
+.game-eq em{font-style:normal;color:var(--orange-deep)}
+.game-stage{margin:8px auto 0}
+.game-stage[hidden]{display:none}
+
+/* 数字泡泡 */
+.bubble-stage{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+  max-width:470px;padding:6px;
+}
+.bubble{
+  aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;
+  font-family:inherit;font-size:28px;font-weight:800;color:#0d4d63;
+  background:radial-gradient(circle at 32% 28%,#ffffff 0%,#c8f0ff 34%,#7fd4ef 100%);
+  box-shadow:inset 0 -6px 12px rgba(13,77,99,.18),0 6px 14px rgba(13,77,99,.14);
+  display:grid;place-items:center;animation:bubble-bob 3.2s ease-in-out infinite alternate;
+  transition:transform .12s ease,opacity .18s ease;
+}
+.bubble:nth-child(2n){animation-delay:.6s}
+.bubble:nth-child(3n){animation-delay:1.1s}
+.bubble:nth-child(4n){animation-delay:1.6s}
+.bubble:active{transform:scale(.94)}
+.bubble.is-pop{animation:none;transform:scale(1.35);opacity:0}
+.bubble.is-wrong{animation:none;background:radial-gradient(circle at 32% 28%,#fff,#ffc9c9 40%,#f27e7e);color:#7a1c1c;transform:translateX(4px)}
+@keyframes bubble-bob{from{transform:translateY(-5px)}to{transform:translateY(6px)}}
+
+/* 拼音配对 */
+.pinyin-stage{max-width:470px}
+.memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.memory-card{
+  aspect-ratio:4/5;border-radius:14px;border:2px solid var(--line);cursor:pointer;
+  background:linear-gradient(145deg,#fff3e2,#ffe3c4);
+  display:grid;place-items:center;padding:4px;font-family:inherit;
+  transition:transform .15s ease,background .15s ease;
+  box-shadow:0 3px 0 rgba(63,45,22,.07);
+}
+.memory-card .memory-face{font-size:30px;font-weight:800;color:var(--orange-deep);line-height:1.1;word-break:break-word}
+.memory-card.is-up{background:#fff;transform:translateY(-2px)}
+.memory-card.is-up .memory-face{color:var(--ink);font-size:32px}
+.memory-card.is-pinyin .memory-face{font-size:17px;color:#2c6e8f}
+.memory-card.is-matched{border-color:#7fc99b;background:#eafaf0;opacity:.75;cursor:default}
+.memory-card.is-matched .memory-face{font-size:30px;color:#207a4b}
+
+/* 单词打地鼠 */
+.mole-stage{max-width:470px}
+.mole-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mole-hole{
+  position:relative;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 62%,#6b4a2e 0%,#8a6642 55%,#c8a97e 100%);
+  box-shadow:inset 0 8px 14px rgba(0,0,0,.28);
+  overflow:hidden;display:block;
+}
+.mole{
+  position:absolute;left:6%;right:6%;bottom:0;height:84%;
+  border:0;border-radius:50% 50% 14px 14px;cursor:pointer;
+  background:linear-gradient(180deg,#d9b08c 0%,#b9825b 100%);
+  color:#3a2414;font-family:inherit;font-size:13px;font-weight:800;
+  line-height:1.15;padding:6px 5px;word-break:break-word;
+  animation:mole-up .18s ease-out;box-shadow:inset 0 6px 0 rgba(255,255,255,.28);
+}
+.mole:active{transform:translateY(2px)}
+.mole.is-hit{animation:mole-hit .3s ease forwards}
+.mole.is-miss{opacity:.35;animation:mole-miss .3s ease}
+@keyframes mole-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes mole-hit{to{transform:translateY(100%) scale(.9)}}
+@keyframes mole-miss{50%{transform:translateX(-5px)}100%{transform:translateX(0)}}
+
+/* 结算 */
+.game-result{
+  max-width:400px;margin:26px auto 0;padding:26px 22px;
+  background:var(--paper);border:2px solid var(--line);border-radius:24px;
+  box-shadow:0 8px 0 rgba(63,45,22,.06);
+}
+.game-result-reason{margin:0;font-size:14px;font-weight:700;color:var(--orange-deep)}
+.game-result-score{margin:10px 0 0;font-size:20px;color:var(--ink-soft)}
+.game-result-score strong{font-size:52px;color:var(--ink);font-variant-numeric:tabular-nums}
+.game-result-best{margin:4px 0 0;font-size:12px;color:var(--ink-soft)}
+.game-result-actions{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .games-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+}
+@media (max-width:620px){
+  .games-main{padding:6px 16px 48px}
+  .game-hud{padding:10px 14px;gap:8px}
+  .game-hud-title{font-size:13px}
+  .game-hud-stats{gap:9px;font-size:13px}
+  .game-main{padding:12px 14px 40px}
+  .game-eq{font-size:20px}
+  .bubble-stage{gap:10px}
+  .bubble{font-size:24px}
+  .memory-grid{gap:8px}
+  .memory-card .memory-face{font-size:26px}
+  .memory-card.is-pinyin .memory-face{font-size:14px}
+  .mole-grid{gap:9px}
+  .mole{font-size:11px}
+  .game-result-score strong{font-size:44px}
+}
+
+/* 课外发现 · 离线版排版微调（组件样式复用 assets/style.css） */
+
+.explore-offline .explore-hero {
+  padding-top: 22px;
+  padding-bottom: 0;
+}
+
+.explore-offline .explore-copy .eyebrow {
+  margin: 0;
+}
+
+.explore-heading {
+  margin-top: 12px;
+  font-size: clamp(26px, 4.2vw, 38px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+}
+
+.explore-offline .explore-lead {
+  margin-top: 12px;
+  max-width: 30em;
+  font-size: 15px;
+}
+
+.explore-offline .hero-actions {
+  margin-top: 20px;
+}
+
+.explore-offline .daily-card {
+  padding: 22px;
+}
+
+.explore-offline .daily-card h2 {
+  font-size: 20px;
+}
+
+.explore-offline .explore-filters {
+  margin-top: 30px;
+}
+
+.explore-offline .explore-list {
+  margin-top: 26px;
+  padding-bottom: 64px;
+}
+
+.explore-offline .explore-empty {
+  margin-top: 18px;
+}
+
+@media (max-width: 820px) {
+  .explore-offline .explore-hero {
+    padding-top: 16px;
+  }
+
+  .explore-offline .daily-card {
+    max-width: none;
+  }
 }
 
   </style>
@@ -2310,6 +3027,21 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
           <span class="quick-icon">本</span>
           <span><strong>复习本</strong><small id="reviewBadge">答错和太慢的题自动收进来</small></span>
         </button>
+        <button class="quick-link" id="gamesBtn" type="button">
+          <span class="quick-icon">玩</span>
+          <span><strong>小游戏</strong><small>数学 · 语文 · 英语</small></span>
+        </button>
+      </section>
+
+      <section class="explore-teaser" aria-labelledby="exploreTeaserTitle">
+        <a href="#explore" id="exploreTeaser">
+          <span class="teaser-mark" aria-hidden="true">🔭</span>
+          <div class="teaser-text">
+            <h2 id="exploreTeaserTitle">课外发现：学校里学不到的问题</h2>
+            <p>36 个小问题，6 个分类，其中 9 条能在家动手试。不用联网，看过的条数记在这台设备上。</p>
+          </div>
+          <span class="teaser-go" aria-hidden="true">去看看 →</span>
+        </a>
       </section>
 
       <section class="about">
@@ -2338,6 +3070,60 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
       <div class="topbar-tools"></div>
     </header>
     <main class="stats-main" id="reviewContent"></main>
+  </div>
+
+  <div id="exploreView" class="explore-offline" hidden>
+    <header class="topbar">
+      <button class="back-link" id="exploreBackBtn" type="button" aria-label="返回首页">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1>发现</h1>
+        <p>课外 · 好奇心</p>
+      </div>
+      <div class="topbar-tools"></div>
+    </header>
+
+    <main>
+      <section class="explore-hero">
+        <div class="explore-copy">
+          <p class="eyebrow">课外 · 好奇心</p>
+          <h2 class="explore-heading">学校里学不到的问题</h2>
+          <p class="explore-lead">课本之外，还有一整个世界的为什么。挑一条看看，不用背，也不用考。</p>
+          <div class="explore-meter" id="exSeenBar" role="progressbar" aria-valuemin="0" aria-valuemax="36" aria-valuenow="0" aria-label="看过的条数">
+            <div class="explore-meter-bar"><span id="exSeenFill"></span></div>
+            <p><span id="exSeenCount">0</span> / <span id="exSeenTotal">36</span> 个问题看过了</p>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="exRandom" type="button">随便翻一条</button>
+          </div>
+        </div>
+        <aside class="daily-card" aria-labelledby="exDailyTitle">
+          <p class="daily-eyebrow" id="exDailyDate">今日一题</p>
+          <h2 id="exDailyTitle">今日一题</h2>
+          <div class="daily-body" id="exDailyBody"></div>
+          <div class="daily-reveal">
+            <button class="btn btn-ghost btn-small" id="exDailyReveal" type="button" aria-expanded="false" aria-controls="exDailyAnswer">看答案</button>
+          </div>
+          <div class="daily-answer" id="exDailyAnswer" hidden></div>
+        </aside>
+      </section>
+
+      <section class="explore-filters" aria-label="分类筛选">
+        <p class="filters-title">分类</p>
+        <div class="filter-row" id="exFilterRow"></div>
+      </section>
+
+      <section class="explore-list" aria-labelledby="exListTitle">
+        <div class="list-head">
+          <h2 id="exListTitle">全部问题</h2>
+          <p id="exListCount"></p>
+        </div>
+        <div class="explore-grid" id="exGrid"></div>
+        <p class="explore-empty" id="exEmpty" hidden>这个分类还没有内容。</p>
+      </section>
+    </main>
   </div>
 
   <div id="subjectView" hidden>
@@ -2531,6 +3317,50 @@ body.is-challenge .quiz-card{box-shadow:0 10px 0 rgba(234,223,206,.55),var(--sha
           <button class="btn btn-ghost" id="homeBtn" type="button">换个题型</button>
         </div>
       </section>
+    </main>
+  </div>
+
+  <div id="gamesView" class="games-view" hidden>
+    <header class="topbar">
+      <button class="back-link" id="gamesBackBtn" type="button" aria-label="返回首页">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>返回</span>
+      </button>
+      <div class="topbar-title">
+        <h1>小游戏</h1>
+        <p>玩着练 · 数学 语文 英语</p>
+      </div>
+      <div class="topbar-tools"></div>
+    </header>
+    <main class="games-main">
+      <p class="games-lead">一局一分钟。小游戏单独记最高分，不算进做题统计，也不进复习本。</p>
+      <div class="games-grid" id="gamesGrid"></div>
+      <p class="games-note">建议家长陪着玩第一局，讲讲规则。</p>
+    </main>
+  </div>
+
+  <div id="gameView" class="game-view" hidden>
+    <header class="game-hud">
+      <button class="back-link game-exit" id="gameExitBtn" type="button">退出</button>
+      <strong class="game-hud-title" id="gameTitle">数字泡泡</strong>
+      <div class="game-hud-stats">
+        <span class="game-hud-score" id="gameScore">0 分</span>
+        <span class="game-hud-lives" id="gameLives" aria-label="还剩三颗心">❤❤❤</span>
+        <span class="game-hud-time" id="gameTime">1:00</span>
+      </div>
+    </header>
+    <main class="game-main">
+      <p class="game-prompt" id="gamePrompt" aria-live="polite"></p>
+      <div class="game-stage" id="gameStage"></div>
+      <div class="game-result" id="gameResult" hidden>
+        <p class="game-result-reason" id="gameResultReason">时间到！</p>
+        <p class="game-result-score"><strong id="gameResultScore">0</strong><span> 分</span></p>
+        <p class="game-result-best" id="gameResultBest">最高分 0</p>
+        <div class="game-result-actions">
+          <button class="btn btn-primary" id="gameAgainBtn" type="button">再来一局</button>
+          <button class="btn btn-ghost" id="gameBackBtn" type="button">其他游戏</button>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -2853,6 +3683,592 @@ function formatTime(totalSeconds) {
   const minutes = Math.floor(seconds / 60);
   return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
 }
+
+
+window.__AceExploreData = (() => {
+// 课外发现：学校里学不到的小问题。
+// 内容为自写，事实来源标注在 source 字段，链接指向公开页面。
+
+const CATEGORIES = [
+  { id: 'sky', name: '天空和地球', emoji: '🌍', note: '抬头就能看见，却很少有人讲清楚' },
+  { id: 'life', name: '动物和植物', emoji: '🐝', note: '它们不说话，但一直在想办法' },
+  { id: 'body', name: '身体和感觉', emoji: '🧠', note: '每天都在用，从没想过为什么' },
+  { id: 'old', name: '古人怎么过', emoji: '🏮', note: '没有冰箱、没有纸、没有钟' },
+  { id: 'money', name: '钱和规矩', emoji: '🪙', note: '大人天天用，没人给小孩讲过' },
+  { id: 'try', name: '在家试一下', emoji: '🔬', note: '五分钟能做完，材料家里就有' },
+];
+
+const ITEMS = [
+  // ---------- 天空和地球 ----------
+  {
+    id: 'sky-blue',
+    cat: 'sky',
+    q: '天空为什么是蓝色的？',
+    a: '阳光看着是白色，其实混着七种颜色。蓝光波长最短，遇到空气里的小颗粒就四处乱撞，撞得最厉害。我们从四面八方都能接到这种被撞散的蓝光，所以整片天是蓝的。傍晚阳光要穿过更厚的大气，蓝光在半路就用完了，剩下的红橙色照进来，天就红了。',
+    tip: '用一支手电筒照一杯清水，再滴一滴牛奶进去，从侧面看是淡蓝色的。',
+    source: {
+      name: 'NASA Science：Why is the sky blue?',
+      url: 'https://spaceplace.nasa.gov/blue-sky/en/',
+      license: '公有领域（NASA）',
+    },
+  },
+  {
+    id: 'sky-moon',
+    cat: 'sky',
+    q: '月亮为什么会跟着人走？',
+    a: '月亮离我们三十八万公里，远得几乎不动。你走一百米，看它的角度只变了一点点；路边几十米的树却飞快退到身后。一快一慢对比，感觉就像月亮跟着你。',
+    tip: '下次坐车时看远处的高山，也会跟着你走很久。',
+    source: { name: 'NASA Space Place', url: 'https://spaceplace.nasa.gov/', license: '公有领域（NASA）' },
+  },
+  {
+    id: 'sky-twinkle',
+    cat: 'sky',
+    q: '星星为什么会一闪一闪？',
+    a: '星光从很远的地方过来，要穿过厚厚的大气层。空气一直在流动，冷热不均，光就被折来折去，一会儿偏左一会儿偏右。落到你眼睛里时一亮一暗，看着就闪。在太空里看星星，是不闪的。',
+    source: { name: 'NASA Space Place', url: 'https://spaceplace.nasa.gov/', license: '公有领域（NASA）' },
+  },
+  {
+    id: 'sky-core',
+    cat: 'sky',
+    q: '地球里面是什么？',
+    a: '像一个煮得半熟的鸡蛋。最外面是薄薄的地壳，我们住在上面；中间是滚烫的地幔，岩石慢慢流动；最里面是地核，外面一层是铁水，中心是实心的铁球。人类挖得最深的洞只有十二公里多，连地壳都没钻穿。',
+    source: { name: 'USGS：Earth layers', url: 'https://pubs.usgs.gov/gip/interior/', license: '公有领域（USGS）' },
+  },
+  {
+    id: 'sky-season',
+    cat: 'sky',
+    q: '一年为什么会有四季？',
+    a: '不是因为地球离太阳忽远忽近，而是地球歪着身子绕太阳转。同一个地方，夏天阳光直直照下来，热量集中；冬天阳光斜斜扫过来，同样的热量摊开更大一片，就冷。南半球和北半球的季节正好反过来。',
+    source: { name: 'NASA：What causes the seasons?', url: 'https://spaceplace.nasa.gov/seasons/', license: '公有领域（NASA）' },
+  },
+  {
+    id: 'sky-day',
+    cat: 'sky',
+    q: '一天为什么分成二十四小时？',
+    a: '地球自转一圈，太阳升起落下一次，这是天生的。古人把白天的长度切成均匀的段来数，慢慢固定成二十四份。埃及人先分出白天十二份、夜晚十二份，这个数一路传到了我们的钟表上。',
+    source: { name: '大英博物馆：巴比伦与埃及计时', url: 'https://www.britishmuseum.org/', license: '公共信息' },
+  },
+
+  // ---------- 动物和植物 ----------
+  {
+    id: 'life-bee',
+    cat: 'life',
+    q: '蜜蜂飞出去那么远，怎么找到回家的路？',
+    a: '它记太阳的位置，也记路上的树、河和高楼。太阳在动，它就自己校正角度。找到花蜜后，它回巢跳一种摆动的舞，摆的方向告诉同伴花在哪边，摆多久告诉同伴有多远。',
+    source: { name: '诺贝尔奖：冯·弗里施与蜜蜂舞蹈', url: 'https://www.nobelprize.org/prizes/medicine/1973/frisch/facts/', license: '公共信息' },
+  },
+  {
+    id: 'life-tree-water',
+    cat: 'life',
+    q: '树是怎么把水从根送到树顶的？',
+    a: '根把水吸进来，送进树干里一排极细的管子。叶子上的小孔不停把水蒸发掉，像有人用吸管一直往上吸，水就被不停往上拉。有的树能把水送到一百米高。',
+    tip: '剪一枝芹菜插进放了红色色素的水里，放两小时，切成片就能看到红色的水管。',
+    source: { name: 'USDA Forest Service', url: 'https://www.fs.usda.gov/', license: '公共领域' },
+  },
+  {
+    id: 'life-ant',
+    cat: 'life',
+    q: '蚂蚁能搬起多重的东西？',
+    a: '很多蚂蚁能搬走比自己重十到五十倍的东西，相当于一个人扛起一辆小汽车。它们身体短、力气却大，而且能几个一起抬。',
+    source: { name: '自然史博物馆', url: 'https://www.nhm.ac.uk/', license: '公共信息' },
+  },
+  {
+    id: 'life-fish-sleep',
+    cat: 'life',
+    q: '鱼睡觉吗？',
+    a: '睡。只是鱼没有眼皮，闭不上眼睛，只能停在原地不动，鳃慢慢动。有的鱼还会找块石头缝卡住自己，躺着睡。',
+    source: { name: 'BBC Earth', url: 'https://www.bbcearth.com/', license: '公共信息' },
+  },
+  {
+    id: 'life-tree-talk',
+    cat: 'life',
+    q: '树和树会互相说话吗？',
+    a: '不会说字，但会传信号。叶子被虫子咬时，会放出一种气味，旁边的树闻到了就提前变苦，让虫子不想吃。它们地下的根还和一种真菌连在一起，像一张网，能互相送一点水和糖。',
+    source: { name: 'Nature：菌根网络研究综述', url: 'https://www.nature.com/', license: '公共信息' },
+  },
+  {
+    id: 'life-leaf-colour',
+    cat: 'life',
+    q: '叶子秋天为什么要变黄变红？',
+    a: '叶子里一直有黄和橙的色素，只是夏天被绿色的叶绿素盖住了。天冷、日照变短，树把叶绿素拆掉回收，黄色就露出来。有些树在落日前会造出红色的色素，像给自己戴一片遮阳镜。',
+    source: { name: 'USDA Forest Service', url: 'https://www.fs.usda.gov/', license: '公共领域' },
+  },
+
+  // ---------- 身体和感觉 ----------
+  {
+    id: 'body-yawn',
+    cat: 'body',
+    q: '人为什么会打哈欠？',
+    a: '还没有定论。一种说法是脑子有点热，张大嘴、深吸一口气能帮它降一点温。还有一种发现是：哈欠会传染，看到别人打，你就想打，这可能和感受别人的能力有关。',
+    source: { name: '美国国立卫生研究院 PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/', license: '公共信息' },
+  },
+  {
+    id: 'body-hiccup',
+    cat: 'body',
+    q: '打嗝是怎么来的？',
+    a: '胸口下面有一块叫膈（gé）的肌肉，吸气时它会往下沉。它突然抽一下，你猛地吸一口气，气冲过喉咙，喉口上的小盖子紧急关上，就发出了「嗝」的一声。',
+    source: { name: 'NHS：Hiccups', url: 'https://www.nhs.uk/', license: '公共信息' },
+  },
+  {
+    id: 'body-wrinkle',
+    cat: 'body',
+    q: '手泡水久了为什么会起皱？',
+    a: '不是水把皮泡胀了，是神经让手指的血管缩紧，皮肤往里收，皱起来。实验发现，皱的手指抓湿东西更稳，像鞋底的纹路。所以这可能是身体帮我们做的防滑。',
+    source: { name: 'Nature：Wrinkled fingers improve grip', url: 'https://www.nature.com/', license: '公共信息' },
+  },
+  {
+    id: 'body-smell',
+    cat: 'body',
+    q: '为什么闻不到自己身上的味道？',
+    a: '鼻子会「习惯」。一种气味一直存在，负责它的嗅觉细胞就不再报告，等于把这条消息静音了。别人的气味对你来说还是新的，所以你闻得到别人，别人也闻得到你。',
+    source: { name: '美国国立卫生研究院 PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/', license: '公共信息' },
+  },
+  {
+    id: 'body-tear',
+    cat: 'body',
+    q: '眼泪为什么是咸的？',
+    a: '眼泪里溶着盐，和体液是一路的。眼睛需要一层含盐水膜来保湿和挡灰，所以它天生带咸味。哭出来的泪成分略有不同，消毒和止痛的成分更多一点。',
+    source: { name: '美国眼科学会', url: 'https://www.aao.org/', license: '公共信息' },
+  },
+  {
+    id: 'body-dream',
+    cat: 'body',
+    q: '人为什么会做梦？',
+    a: '睡觉时大脑没关机，它在整理白天记下的东西，把重要的存起来，把没用的清掉。梦就是整理过程中闪过的画面，所以梦常常东一块西一块，还接不上。',
+    source: { name: '美国国立卫生研究院 PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/', license: '公共信息' },
+  },
+
+  // ---------- 古人怎么过 ----------
+  {
+    id: 'old-ice',
+    cat: 'old',
+    q: '古人没有冰箱，夏天怎么吃冰？',
+    a: '冬天在河上凿大冰块，搬进挖好的地窖，一层冰一层稻草堆起来，盖上厚土，存到夏天还不全化。皇宫里专门有管冰的官，叫「凌人」。有钱人夏天喝冰镇酒，普通人见不到。',
+    source: { name: '《周礼》凌人职', url: 'https://ctext.org/zhou-li', license: '公有领域' },
+  },
+  {
+    id: 'old-paper',
+    cat: 'old',
+    q: '古人没有纸，写在哪里？',
+    a: '最早刻在龟甲和骨头上，后来写在竹片和木片上。竹片用绳子编成一串，「册」这个字，就是几根竹片被绳子穿过的样子。纸在东汉才被改进好用，之前只有很贵的丝织品。',
+    source: { name: '中国哲学书电子化计划', url: 'https://ctext.org/', license: '部分开放' },
+  },
+  {
+    id: 'old-time',
+    cat: 'old',
+    q: '古人没有钟，怎么知道几点？',
+    a: '白天看太阳的影子，一根竖直的杆子投下的影子会走，那个装置叫日晷（guǐ）。阴天就用漏刻，让水一滴一滴流进壶里，看水位计时。夜里由人敲梆子巡街报时，所以叫「打更」。',
+    source: { name: '中国科学技术馆', url: 'https://cstm.cdstm.cn/', license: '公共信息' },
+  },
+  {
+    id: 'old-food',
+    cat: 'old',
+    q: '古人没有冰箱，怎么让肉不坏？',
+    a: '腌、晒、熏、窖。用大量的盐腌，把水抽出来，细菌就长不起来；烟熏在表面糊上一层，也能挡细菌。所以盐在古代很金贵，常常由国家专卖。',
+    source: { name: '大英百科全书：Food preservation', url: 'https://www.britannica.com/', license: '公共信息' },
+  },
+  {
+    id: 'old-teeth',
+    cat: 'old',
+    q: '古人刷牙吗？',
+    a: '刷。用柳枝的一端咬软了擦牙，后来用马尾或猪毛做刷头，蘸上牙粉。一千多年前的墓里挖出过一把真的牙刷，柄是骨头做的。',
+    source: { name: '大英博物馆', url: 'https://www.britishmuseum.org/', license: '公共信息' },
+  },
+  {
+    id: 'old-letter',
+    cat: 'old',
+    q: '古人怎么把信送到很远的地方？',
+    a: '靠驿站。每隔几十里有一个站，骑马的人换马不换人地接力，一天能跑几百里。紧急的军情插上羽毛表示加急。「鸿雁传书」是诗里的说法，不是真的让大雁送信。',
+    source: { name: '中国哲学书电子化计划', url: 'https://ctext.org/', license: '部分开放' },
+  },
+
+  // ---------- 钱和规矩 ----------
+  {
+    id: 'money-origin',
+    cat: 'money',
+    q: '钱是怎么来的？',
+    a: '一开始大家换东西，我拿米换你的鱼，可你不想吃米就没法换。后来找一种大家都愿意收的东西当中间物，贝壳、铜块都用过。中国最早的纸币叫「交子」，北宋在四川出现。',
+    source: { name: '中国人民银行：货币史', url: 'http://www.pbc.gov.cn/', license: '公共信息' },
+  },
+  {
+    id: 'money-interest',
+    cat: 'money',
+    q: '为什么钱存在银行会多出一点点？',
+    a: '银行把你的钱借给别人，别人要付利息，银行分一部分给你。所以那点利息，本质是你借出这笔钱应得的报酬。银行也会倒闭，所以它受监管，普通人存款有保险。',
+    source: { name: '中国人民银行', url: 'http://www.pbc.gov.cn/', license: '公共信息' },
+  },
+  {
+    id: 'money-price',
+    cat: 'money',
+    q: '为什么有的东西贵，有的便宜？',
+    a: '两件事决定：有多少人想要，和多难做出来。钻石少、想买的人多，就贵；水很重要，但到处都有，就很便宜。所以「有用」不等于「贵」。',
+    source: { name: 'Investopedia：Supply and demand', url: 'https://www.investopedia.com/', license: '公共信息' },
+  },
+  {
+    id: 'money-candy',
+    cat: 'money',
+    q: '超市为什么把糖放在收银台旁边？',
+    a: '因为你排队时无聊，会到处看，看得久就想买。大人买糖多半不是计划好的，是「顺手」。商店把最容易冲动买的东西，放在你最后经过的地方。',
+    source: { name: '消费者行为研究综述', url: 'https://www.consumer.ftc.gov/', license: '公共信息' },
+  },
+  {
+    id: 'money-light',
+    cat: 'money',
+    q: '为什么要有红绿灯？',
+    a: '路只有一条，人和车都想先走。如果每个人自己判断，就会撞。红绿灯是一个大家都同意遵守的规则：谁先走由灯决定，不由嗓门决定。规则让很多陌生人能同时安全地用同一条路。',
+    source: { name: '英国议会：交通信号史', url: 'https://www.parliament.uk/', license: '公共信息' },
+  },
+  {
+    id: 'money-work',
+    cat: 'money',
+    q: '为什么大人每天要去上班？',
+    a: '因为一个人做不出所有东西。种粮的、做衣服的、修电路的，各做一件，互相换。上班就是把自己的时间换成一件事，再换成别人做的东西。所以工作不只是「挣钱」，它也是分工的一部分。',
+    source: { name: '大英百科全书：Division of labour', url: 'https://www.britannica.com/', license: '公共信息' },
+  },
+
+  // ---------- 在家试一下 ----------
+  {
+    id: 'try-bridge',
+    cat: 'try',
+    q: '一张纸能撑起几枚硬币？',
+    a: '平放的一张纸，放一枚硬币就塌。把它来回折成手风琴那样，再架在两个杯子上，能撑起几十枚。折出来的棱像小梁，把重量分到两边。工程上的桥面，用的就是这个道理。',
+    tip: '两个杯子当桥墩，一张 A4 纸。先试平的，再试折成十道的，数一数各能放几枚硬币。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+  {
+    id: 'try-shadow',
+    cat: 'try',
+    q: '早上和中午，影子一样长吗？',
+    a: '不一样。太阳低的时候，光斜着来，影子被拉得很长；太阳高的时候，光直直下来，影子就短。所以古人用一根杆子的影子长短，就能知道大概几点。',
+    tip: '同一根筷子插在花盆边，早上、中午、傍晚各画一次影子顶端的位置。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+  {
+    id: 'try-rainbow',
+    cat: 'try',
+    q: '不用下雨，也能做出彩虹吗？',
+    a: '能。阳光是七种颜色混在一起的，一遇到水就分开，因为每种颜色的弯折角度不一样。装满水的盆、一面镜子、一束阳光，就能在白墙上投出一条彩虹。',
+    tip: '盆里放水，镜子斜插进水里对着太阳，把光反到白墙上，慢慢转镜子找角度。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+  {
+    id: 'try-orange',
+    cat: 'try',
+    q: '橘子带皮和剥了皮，哪个会浮起来？',
+    a: '带皮的浮，剥了皮的沉。橘子皮里全是小气孔，像穿了救生衣。脱掉这层，果肉比水重，就沉下去了。船能浮，靠的也是肚子里那团空气。',
+    tip: '一盆水，两个橘子，一个不剥一个剥光，同时放进去看。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+  {
+    id: 'try-static',
+    cat: 'try',
+    q: '气球怎么能不碰纸就吸起纸屑？',
+    a: '气球在头发上蹭几下，身上就带上了静电。带电的东西会去吸轻小的东西，纸屑就被吸起来。冬天脱毛衣的「噼啪」声，也是这种电在跑。',
+    tip: '吹一个气球，在干燥头发上蹭十下，靠近撕碎的小纸片。离得越近吸得越牢。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+  {
+    id: 'try-glass',
+    cat: 'try',
+    q: '敲杯子，水多和水少哪个声音高？',
+    a: '水少的杯子声音高，水多的声音低。水越多，一起振动的东西越重，就越难抖得快，声音就低。这也是琴弦越粗声音越低的原因。',
+    tip: '拿四个一样的杯子，装不同高度的水，用筷子轻轻敲杯口，从高到低排一排。',
+    source: { name: '自写', url: '', license: '自写' },
+  },
+];
+
+return { CATEGORIES, ITEMS };
+})();
+
+/* 课外发现 · 离线版：数据由 scripts/build-offline.mjs 注入，这里只管交互。 */
+(function () {
+  const data = window.__AceExploreData;
+  if (!data) return;
+
+  const { CATEGORIES, ITEMS } = data;
+  const STORAGE_KEY = 'ace-explore-seen-v1';
+  const CAT_BY_ID = new Map(CATEGORIES.map((cat) => [cat.id, cat]));
+  const SEEN = loadSeen();
+  let activeCat = 'all';
+  let bound = false;
+
+  function escapeHtml(value) {
+    return String(value).replace(
+      /[&<>"']/g,
+      (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char],
+    );
+  }
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function loadSeen() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return new Set(
+        Array.isArray(raw) ? raw.filter((id) => ITEMS.some((item) => item.id === id)) : [],
+      );
+    } catch {
+      return new Set();
+    }
+  }
+
+  function saveSeen() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...SEEN]));
+    } catch {
+      /* 隐私模式写不进去，只影响本次记录 */
+    }
+  }
+
+  function markSeen(id) {
+    if (SEEN.has(id)) return;
+    SEEN.add(id);
+    saveSeen();
+    renderSeenCount();
+    syncSeenBadges();
+  }
+
+  function renderSeenCount() {
+    const count = SEEN.size;
+    const total = ITEMS.length;
+    const fill = $('exSeenFill');
+    const bar = $('exSeenBar');
+    const label = $('exSeenCount');
+    const totalEl = $('exSeenTotal');
+    if (label) label.textContent = String(count);
+    if (totalEl) totalEl.textContent = String(total);
+    if (fill) fill.style.width = `${total ? (count / total) * 100 : 0}%`;
+    if (bar) {
+      bar.setAttribute('aria-valuemax', String(total));
+      bar.setAttribute('aria-valuenow', String(count));
+    }
+  }
+
+  function syncSeenBadges() {
+    for (const card of document.querySelectorAll('#exGrid .ex-card')) {
+      const seen = SEEN.has(card.dataset.id);
+      const badge = card.querySelector('.ex-seen');
+      if (badge) badge.hidden = !seen;
+      card.classList.toggle('is-seen', seen);
+    }
+  }
+
+  function sourceMarkup(item) {
+    const src = item.source;
+    if (!src || !src.name) return '';
+    if (!src.url) return '<p class="ex-source">内容为本站自写。</p>';
+    return `<p class="ex-source">来源：<a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.name)}</a>${
+      src.license ? ` · ${escapeHtml(src.license)}` : ''
+    }</p>`;
+  }
+
+  function cardMarkup(item) {
+    const cat = CAT_BY_ID.get(item.cat);
+    const panelId = `ex-panel-${item.id}`;
+    return `
+      <article class="ex-card" data-id="${escapeHtml(item.id)}" data-cat="${escapeHtml(item.cat)}">
+        <p class="ex-card-head">
+          <span class="ex-emoji" aria-hidden="true">${cat ? cat.emoji : '✨'}</span>
+          <span class="ex-cat">${cat ? escapeHtml(cat.name) : ''}</span>
+          <span class="ex-seen" hidden>看过了</span>
+        </p>
+        <h3 class="ex-q">${escapeHtml(item.q)}</h3>
+        <div class="ex-panel" id="${panelId}" inert>
+          <div class="ex-panel-inner">
+            <p class="ex-a">${escapeHtml(item.a)}</p>
+            ${item.tip ? `<p class="ex-tip"><span>在家试一下</span>${escapeHtml(item.tip)}</p>` : ''}
+            ${sourceMarkup(item)}
+          </div>
+        </div>
+        <button class="ex-toggle" type="button" aria-expanded="false" aria-controls="${panelId}">
+          <span class="ex-toggle-text">看答案</span>
+          <svg class="ex-chevron" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </article>
+    `;
+  }
+
+  function renderFilters() {
+    const root = $('exFilterRow');
+    if (!root) return;
+    const options = [{ id: 'all', name: '全部', emoji: '✨' }, ...CATEGORIES];
+    root.innerHTML = options
+      .map((cat) => {
+        const count =
+          cat.id === 'all' ? ITEMS.length : ITEMS.filter((item) => item.cat === cat.id).length;
+        return `
+          <button class="filter-chip" type="button" data-cat="${escapeHtml(cat.id)}" aria-pressed="${cat.id === activeCat}">
+            <span aria-hidden="true">${cat.emoji}</span>
+            <span>${escapeHtml(cat.name)}</span>
+            <em>${count}</em>
+          </button>
+        `;
+      })
+      .join('');
+  }
+
+  function renderGrid() {
+    const grid = $('exGrid');
+    if (!grid) return;
+    const items = activeCat === 'all' ? ITEMS : ITEMS.filter((item) => item.cat === activeCat);
+    grid.innerHTML = items.map(cardMarkup).join('');
+
+    const head = $('exListTitle');
+    const count = $('exListCount');
+    const cat = CAT_BY_ID.get(activeCat);
+    if (head) head.textContent = cat ? cat.name : '全部问题';
+    if (count) count.textContent = cat ? `${cat.note} · ${items.length} 条` : `${items.length} 条，点开就能看`;
+
+    const empty = $('exEmpty');
+    if (empty) empty.hidden = items.length > 0;
+    syncSeenBadges();
+  }
+
+  function setOpen(card, open) {
+    const panel = card.querySelector('.ex-panel');
+    const toggle = card.querySelector('.ex-toggle');
+    if (!panel || !toggle) return;
+    card.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    const text = toggle.querySelector('.ex-toggle-text');
+    if (text) text.textContent = open ? '收起' : '看答案';
+    if (open) {
+      panel.removeAttribute('inert');
+      panel.removeAttribute('aria-hidden');
+      markSeen(card.dataset.id);
+    } else {
+      panel.setAttribute('inert', '');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function toggleCard(card) {
+    if (!card) return;
+    const willOpen = !card.classList.contains('is-open');
+    if (willOpen) {
+      // 一次只展开一条，屏幕上不会堆满答案
+      for (const other of document.querySelectorAll('#exGrid .ex-card.is-open')) {
+        if (other !== card) setOpen(other, false);
+      }
+    }
+    setOpen(card, willOpen);
+  }
+
+  function dailyItem() {
+    const now = new Date();
+    const key = Number(
+      `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`,
+    );
+    return ITEMS[key % ITEMS.length];
+  }
+
+  function nowLabel() {
+    try {
+      return new Intl.DateTimeFormat('zh-CN', {
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'Asia/Shanghai',
+      }).format(new Date());
+    } catch {
+      return '今天';
+    }
+  }
+
+  function renderDaily() {
+    const item = dailyItem();
+    const cat = CAT_BY_ID.get(item.cat);
+    const date = $('exDailyDate');
+    const title = $('exDailyTitle');
+    const body = $('exDailyBody');
+    const answer = $('exDailyAnswer');
+    const reveal = $('exDailyReveal');
+    if (!title || !answer || !reveal) return;
+
+    if (date) date.textContent = `${nowLabel()} · ${cat ? `${cat.emoji} ${cat.name}` : '今日一题'}`;
+    title.textContent = item.q;
+    if (body) body.innerHTML = `<p>${cat ? escapeHtml(cat.note) : ''}</p>`;
+    answer.innerHTML = `
+      <p>${escapeHtml(item.a)}</p>
+      ${item.tip ? `<p class="ex-tip"><span>在家试一下</span>${escapeHtml(item.tip)}</p>` : ''}
+    `;
+    answer.hidden = true;
+    reveal.setAttribute('aria-expanded', 'false');
+    reveal.textContent = '看答案';
+  }
+
+  function randomItem() {
+    const pool = ITEMS.filter((item) => !SEEN.has(item.id));
+    const list = pool.length ? pool : ITEMS;
+    const item = list[Math.floor(Math.random() * list.length)];
+    if (activeCat !== 'all' && activeCat !== item.cat) {
+      activeCat = item.cat;
+      renderFilters();
+    }
+    renderGrid();
+
+    const card = document.querySelector(`#exGrid .ex-card[data-id="${item.id}"]`);
+    if (!card) return;
+    setOpen(card, true);
+    card.classList.add('is-flash');
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.setTimeout(() => card.classList.remove('is-flash'), 1200);
+    const toggle = card.querySelector('.ex-toggle');
+    if (toggle) toggle.focus({ preventScroll: true });
+  }
+
+  function bindEvents() {
+    if (bound) return;
+    bound = true;
+
+    const filterRow = $('exFilterRow');
+    if (filterRow) {
+      filterRow.addEventListener('click', (event) => {
+        const chip = event.target.closest('.filter-chip');
+        if (!chip) return;
+        activeCat = chip.dataset.cat;
+        renderFilters();
+        renderGrid();
+      });
+    }
+
+    const grid = $('exGrid');
+    if (grid) {
+      grid.addEventListener('click', (event) => {
+        const toggle = event.target.closest('.ex-toggle');
+        if (!toggle) return;
+        toggleCard(toggle.closest('.ex-card'));
+      });
+    }
+
+    const randomBtn = $('exRandom');
+    if (randomBtn) randomBtn.addEventListener('click', randomItem);
+
+    const reveal = $('exDailyReveal');
+    if (reveal) {
+      reveal.addEventListener('click', () => {
+        const answer = $('exDailyAnswer');
+        if (!answer) return;
+        const open = reveal.getAttribute('aria-expanded') === 'true';
+        reveal.setAttribute('aria-expanded', String(!open));
+        reveal.textContent = open ? '看答案' : '收起答案';
+        answer.hidden = open;
+        if (!open) markSeen(dailyItem().id);
+      });
+    }
+  }
+
+  window.AceExplore = {
+    mount() {
+      bindEvents();
+      renderSeenCount();
+      renderFilters();
+      renderGrid();
+      renderDaily();
+    },
+  };
+})();
 
 
 // 一年级本地版：数学 + 语文。离线可用，成绩保存在本机。
@@ -3486,6 +4902,20 @@ function formatTime(totalSeconds) {
 
   const SUBJECT_MAP = Object.fromEntries(SUBJECTS.map((s) => [s.id, s]));
 
+  /* 小游戏用到的题库数据（只读）。 */
+  window.AceGameData = {
+    mathTopics: {
+      add10: TOPIC_MAP.add10,
+      sub10: TOPIC_MAP.sub10,
+      mix10: TOPIC_MAP.mix10,
+      add20: TOPIC_MAP.add20,
+      sub20: TOPIC_MAP.sub20,
+      mix20: TOPIC_MAP.mix20,
+    },
+    hanzi: [...HANZI_1, ...HANZI_2].map(({ char, pinyin }) => ({ char, pinyin })),
+    words: EN_UNITS.flatMap((unit) => unit.words),
+  };
+
   /* ---------- 状态与存储 ---------- */
 
   const els = {
@@ -3497,11 +4927,15 @@ function formatTime(totalSeconds) {
     statsBackBtn: $('statsBackBtn'),
     challengeBtn: $('challengeBtn'),
     statsBtn: $('statsBtn'),
+    gamesBtn: $('gamesBtn'),
     reviewBtn: $('reviewBtn'),
     reviewBadge: $('reviewBadge'),
     reviewView: $('reviewView'),
     reviewContent: $('reviewContent'),
     reviewBackBtn: $('reviewBackBtn'),
+    exploreView: $('exploreView'),
+    exploreBackBtn: $('exploreBackBtn'),
+    exploreTeaser: $('exploreTeaser'),
     topicTimerOptions: $('topicTimerOptions'),
     pickerTimerOptions: $('pickerTimerOptions'),
     challengeSetup: $('challengeSetup'),
@@ -4141,7 +5575,21 @@ function formatTime(totalSeconds) {
     window.scrollTo(0, 0);
   }
 
+  function openExplore() {
+    stopRound();
+    els.homeView.hidden = true;
+    els.subjectView.hidden = true;
+    els.practiceView.hidden = true;
+    els.statsView.hidden = true;
+    els.reviewView.hidden = true;
+    els.exploreView.hidden = false;
+    document.body.classList.add('page-explore');
+    window.AceExplore?.mount();
+    window.scrollTo(0, 0);
+  }
+
   function showHome() {
+    window.AceGames?.stop();
     stopRound();
     state.mode = 'normal';
     state.challenge = null;
@@ -4153,11 +5601,14 @@ function formatTime(totalSeconds) {
     els.practiceView.hidden = true;
     els.statsView.hidden = true;
     els.reviewView.hidden = true;
-    document.body.classList.remove('is-timed', 'is-challenge');
+    els.exploreView.hidden = true;
+    document.body.classList.remove('is-timed', 'is-challenge', 'page-explore');
     els.homeView.hidden = false;
     renderHome();
     window.scrollTo(0, 0);
   }
+
+  window.AceGoHome = showHome;
 
   function shortDate(iso) {
     try {
@@ -5371,6 +6822,11 @@ function formatTime(totalSeconds) {
 
   els.statsBtn.addEventListener('click', openStats);
   els.statsBackBtn.addEventListener('click', showHome);
+  els.exploreTeaser.addEventListener('click', (event) => {
+    event.preventDefault();
+    openExplore();
+  });
+  els.exploreBackBtn.addEventListener('click', showHome);
   els.reviewBtn.addEventListener('click', () => openReview('wrong'));
   els.reviewBackBtn.addEventListener('click', showHome);
   els.topicTimerOptions.addEventListener('click', handleTimerPick);
@@ -5424,6 +6880,7 @@ function formatTime(totalSeconds) {
   els.audioCorrect.addEventListener('click', () => audioAnswer(true));
   els.audioWrong.addEventListener('click', () => audioAnswer(false));
 
+  els.gamesBtn.addEventListener('click', () => window.AceGames?.open());
   els.challengeBtn.addEventListener('click', openChallengeSetup);
   els.challengeCancel.addEventListener('click', closeChallengeSetup);
   els.challengeStart.addEventListener('click', startChallenge);
@@ -5571,6 +7028,508 @@ function formatTime(totalSeconds) {
   els.progressTotal.textContent = `共 ${QUESTION_COUNT} 题`;
   syncSoundButton();
   renderHome();
+})();
+
+
+/* 小游戏：数字泡泡（数学）、拼音配对（语文）、单词打地鼠（英语）。
+ * 独立于做题统计：只记每个小游戏自己的最高分和玩过次数。
+ * 依赖 app-v2.js 暴露的 window.AceGameData，以及返回首页的 window.AceGoHome。
+ */
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const STORE_KEY = 'ace.games.v1';
+  const ROUND_SECONDS = 60;
+  const PAIRS = 4;
+
+  const els = {
+    gamesView: $('gamesView'),
+    gamesGrid: $('gamesGrid'),
+    gamesBackBtn: $('gamesBackBtn'),
+    gameView: $('gameView'),
+    gameTitle: $('gameTitle'),
+    gameScore: $('gameScore'),
+    gameLives: $('gameLives'),
+    gameTime: $('gameTime'),
+    gamePrompt: $('gamePrompt'),
+    gameStage: $('gameStage'),
+    gameResult: $('gameResult'),
+    gameResultReason: $('gameResultReason'),
+    gameResultScore: $('gameResultScore'),
+    gameResultBest: $('gameResultBest'),
+    gameAgainBtn: $('gameAgainBtn'),
+    gameBackBtn: $('gameBackBtn'),
+    gameExitBtn: $('gameExitBtn'),
+  };
+
+  const GAMES = [
+    {
+      id: 'bubble',
+      emoji: '🫧',
+      title: '数字泡泡',
+      subject: '数学',
+      note: '点破答案正确的泡泡，答错扣一颗心。',
+      rule: '60 秒 · 6 个泡泡 · 3 颗心',
+    },
+    {
+      id: 'pinyin',
+      emoji: '🃏',
+      title: '拼音配对',
+      subject: '语文',
+      note: '翻开两张牌，把汉字和它的拼音配成一对。',
+      rule: '60 秒 · 4 对牌',
+    },
+    {
+      id: 'mole',
+      emoji: '🐹',
+      title: '单词打地鼠',
+      subject: '英语',
+      note: '看中文提示，点出写着正确英文单词的地鼠。',
+      rule: '60 秒 · 3 颗心',
+    },
+  ];
+
+  function data() {
+    return window.AceGameData || { mathTopics: {}, hanzi: [], words: [] };
+  }
+
+  function shuffle(list) {
+    const copy = list.slice();
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function pick(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  /* ---------- 最高分存储 ---------- */
+
+  function readScores() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  let scores = readScores();
+
+  function bestOf(id) {
+    const entry = scores[id];
+    return entry && Number.isFinite(entry.best) ? entry.best : 0;
+  }
+
+  function recordScore(id, score) {
+    const prev = scores[id] || { best: 0, plays: 0 };
+    scores[id] = {
+      best: Math.max(prev.best || 0, score),
+      plays: (prev.plays || 0) + 1,
+    };
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(scores));
+    } catch {
+      /* 存不了就只在本次生效 */
+    }
+  }
+
+  /* ---------- 跨游戏状态 ---------- */
+
+  const game = {
+    id: null,
+    score: 0,
+    lives: 3,
+    timeLeft: ROUND_SECONDS,
+    timer: null,
+    locked: false,
+    active: false,
+    correct: 0,
+    wrong: 0,
+  };
+
+  const pending = new Set();
+
+  function later(fn, ms) {
+    const id = window.setTimeout(() => {
+      pending.delete(id);
+      fn();
+    }, ms);
+    pending.add(id);
+    return id;
+  }
+
+  function clearPending() {
+    for (const id of pending) window.clearTimeout(id);
+    pending.clear();
+  }
+
+  function updateHud() {
+    els.gameScore.textContent = `${game.score} 分`;
+    const full = Math.max(0, game.lives);
+    els.gameLives.textContent = '❤'.repeat(full) + '♡'.repeat(Math.max(0, 3 - full));
+    els.gameLives.setAttribute('aria-label', `还剩 ${full} 颗心`);
+    const seconds = Math.max(0, game.timeLeft);
+    els.gameTime.textContent = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  }
+
+  function startTimer() {
+    window.clearInterval(game.timer);
+    game.timer = window.setInterval(() => {
+      if (!game.active) return;
+      game.timeLeft -= 1;
+      updateHud();
+      if (game.timeLeft <= 0) finish('时间到！');
+    }, 1000);
+  }
+
+  /* ---------- 列表页 ---------- */
+
+  function renderHub() {
+    els.gamesGrid.innerHTML = GAMES.map((item) => {
+      const best = bestOf(item.id);
+      const plays = scores[item.id]?.plays || 0;
+      return `
+        <button class="game-card" type="button" data-game="${item.id}">
+          <span class="game-card-emoji" aria-hidden="true">${item.emoji}</span>
+          <span class="game-card-body">
+            <span class="game-card-subject">${item.subject}</span>
+            <strong class="game-card-title">${item.title}</strong>
+            <span class="game-card-note">${item.note}</span>
+            <span class="game-card-rule">${item.rule}</span>
+          </span>
+          <span class="game-card-score">
+            <b>${best}</b>
+            <small>${plays ? `最高分 · 玩过 ${plays} 次` : '还没玩过'}</small>
+          </span>
+        </button>`;
+    }).join('');
+  }
+
+  function open() {
+    stop();
+    for (const id of ['homeView', 'subjectView', 'practiceView', 'statsView', 'reviewView', 'exploreView']) {
+      const view = $(id);
+      if (view) view.hidden = true;
+    }
+    els.gamesView.hidden = false;
+    els.gameView.hidden = true;
+    els.gameResult.hidden = true;
+    els.gameStage.hidden = false;
+    document.body.classList.remove('is-playing-game');
+    renderHub();
+    window.scrollTo(0, 0);
+  }
+
+  function stop() {
+    game.active = false;
+    window.clearInterval(game.timer);
+    game.timer = null;
+    clearPending();
+    game.locked = false;
+    if (els.gameView) els.gameView.hidden = true;
+    if (els.gamesView) els.gamesView.hidden = true;
+    document.body.classList.remove('is-playing-game');
+  }
+
+  function goHome() {
+    if (typeof window.AceGoHome === 'function') window.AceGoHome();
+    else stop();
+  }
+
+  /* ---------- 开局 / 结算 ---------- */
+
+  function start(id) {
+    const meta = GAMES.find((item) => item.id === id);
+    if (!meta) return;
+    clearPending();
+    window.clearInterval(game.timer);
+    game.id = id;
+    game.score = 0;
+    game.lives = 3;
+    game.timeLeft = ROUND_SECONDS;
+    game.locked = false;
+    game.active = true;
+    game.correct = 0;
+    game.wrong = 0;
+    els.gamesView.hidden = true;
+    els.gameView.hidden = false;
+    els.gameResult.hidden = true;
+    els.gameStage.hidden = false;
+    els.gameStage.className = 'game-stage';
+    els.gameStage.innerHTML = '';
+    els.gamePrompt.textContent = '';
+    els.gameTitle.textContent = meta.title;
+    document.body.classList.add('is-playing-game');
+    updateHud();
+    startTimer();
+    window.scrollTo(0, 0);
+    if (id === 'bubble') newBubbleQuestion();
+    if (id === 'pinyin') startPinyin();
+    if (id === 'mole') newMoleQuestion();
+  }
+
+  function finish(reason) {
+    if (!game.active) return;
+    game.active = false;
+    window.clearInterval(game.timer);
+    game.timer = null;
+    clearPending();
+    recordScore(game.id, game.score);
+    els.gameStage.hidden = true;
+    els.gameResult.hidden = false;
+    els.gameResultReason.textContent = reason;
+    els.gameResultScore.textContent = String(game.score);
+    els.gameResultBest.textContent = `最高分 ${bestOf(game.id)}`;
+  }
+
+  /* ---------- 数字泡泡 ---------- */
+
+  let bubbleAnswer = null;
+
+  function bubbleTopicId() {
+    return game.correct < 4 ? 'mix10' : 'mix20';
+  }
+
+  function newBubbleQuestion() {
+    if (!game.active) return;
+    const topics = data().mathTopics || {};
+    const topic = topics[bubbleTopicId()] || topics.mix10;
+    let question = null;
+    for (let attempt = 0; attempt < 30 && !question; attempt += 1) {
+      try {
+        const candidate = topic?.make?.();
+        if (candidate && Number.isFinite(candidate.answer)) question = candidate;
+      } catch {
+        /* 换一题 */
+      }
+    }
+    if (!question) question = { display: '3 + 4', answer: 7 };
+    bubbleAnswer = question.answer;
+    els.gamePrompt.innerHTML = `<span class="game-eq">${question.display} = <em>?</em></span>`;
+    renderBubbles(question.answer);
+  }
+
+  function renderBubbles(answer) {
+    const values = [answer];
+    let guard = 0;
+    while (values.length < 6 && guard < 300) {
+      guard += 1;
+      const delta = (1 + Math.floor(Math.random() * 4)) * (Math.random() < 0.5 ? -1 : 1);
+      const value = answer + delta;
+      if (value >= 0 && value <= 30 && !values.includes(value)) values.push(value);
+    }
+    shuffle(values);
+    els.gameStage.className = 'game-stage bubble-stage';
+    els.gameStage.innerHTML = values
+      .map(
+        (value, index) =>
+          `<button class="bubble bubble-${index}" type="button" data-value="${value}" aria-label="${value}"><span>${value}</span></button>`,
+      )
+      .join('');
+  }
+
+  function bubbleTap(button) {
+    if (game.locked || !game.active) return;
+    const value = Number(button.dataset.value);
+    if (value === bubbleAnswer) {
+      game.locked = true;
+      game.score += 10;
+      game.correct += 1;
+      button.classList.add('is-pop');
+      els.gameScore.textContent = `${game.score} 分`;
+      later(() => {
+        if (!game.active) return;
+        game.locked = false;
+        newBubbleQuestion();
+      }, 420);
+    } else {
+      button.classList.add('is-wrong');
+      button.disabled = true;
+      game.wrong += 1;
+      game.lives -= 1;
+      updateHud();
+      if (game.lives <= 0) {
+        finish('三颗心用完了');
+      } else {
+        later(() => button.classList.remove('is-wrong'), 350);
+      }
+    }
+  }
+
+  /* ---------- 拼音配对 ---------- */
+
+  let memory = null;
+
+  function pinyinPairs() {
+    const seen = new Set();
+    const list = [];
+    for (const item of data().hanzi || []) {
+      if (!item || !item.char || !item.pinyin || seen.has(item.pinyin)) continue;
+      seen.add(item.pinyin);
+      list.push(item);
+    }
+    return list;
+  }
+
+  function startPinyin() {
+    const pool = shuffle(pinyinPairs()).slice(0, PAIRS);
+    const cards = [];
+    pool.forEach((item, pair) => {
+      cards.push({ type: 'char', text: item.char, pair });
+      cards.push({ type: 'pinyin', text: item.pinyin, pair });
+    });
+    const deck = shuffle(cards);
+    memory = { deck, flipped: [], matched: 0, total: pool.length, lock: false, moves: 0 };
+    els.gamePrompt.innerHTML = '<span class="game-eq">翻开两张，把汉字和拼音配成一对</span>';
+    els.gameStage.className = 'game-stage pinyin-stage';
+    els.gameStage.innerHTML = `
+      <div class="memory-grid">
+        ${deck
+          .map(
+            (card, index) => `
+          <button class="memory-card" type="button" data-card="${index}" aria-label="第 ${index + 1} 张牌">
+            <span class="memory-face">?</span>
+          </button>`,
+          )
+          .join('')}
+      </div>`;
+  }
+
+  function flipCard(button) {
+    if (!memory || memory.lock || !game.active) return;
+    const index = Number(button.dataset.card);
+    if (!Number.isFinite(index)) return;
+    if (button.classList.contains('is-up') || button.classList.contains('is-matched')) return;
+    const card = memory.deck[index];
+    button.classList.add('is-up');
+    button.classList.toggle('is-pinyin', card.type === 'pinyin');
+    button.querySelector('.memory-face').textContent = card.text;
+    memory.flipped.push({ button, card });
+    if (memory.flipped.length < 2) return;
+
+    memory.moves += 1;
+    const [first, second] = memory.flipped;
+    const isPair = first.card.pair === second.card.pair && first.card.type !== second.card.type;
+    if (isPair) {
+      memory.flipped = [];
+      memory.matched += 1;
+      game.score += 25;
+      game.correct += 1;
+      els.gameScore.textContent = `${game.score} 分`;
+      first.button.classList.add('is-matched');
+      second.button.classList.add('is-matched');
+      if (memory.matched >= memory.total) {
+        game.locked = true;
+        const bonus = Math.max(0, game.timeLeft);
+        game.score += bonus;
+        els.gameScore.textContent = `${game.score} 分`;
+        later(() => finish(`全部配对！时间奖励 ${bonus} 分`), 650);
+      }
+      return;
+    }
+
+    memory.lock = true;
+    later(() => {
+      first.button.classList.remove('is-up', 'is-pinyin');
+      second.button.classList.remove('is-up', 'is-pinyin');
+      first.button.querySelector('.memory-face').textContent = '?';
+      second.button.querySelector('.memory-face').textContent = '?';
+      memory.flipped = [];
+      memory.lock = false;
+    }, 750);
+  }
+
+  /* ---------- 单词打地鼠 ---------- */
+
+  let moleAnswer = null;
+
+  function newMoleQuestion() {
+    if (!game.active) return;
+    const words = (data().words || []).filter((item) => item && item.en && item.zh);
+    if (!words.length) {
+      finish('没有单词可用');
+      return;
+    }
+    const correct = pick(words);
+    const wrongPool = words.filter((item) => item.en !== correct.en && item.zh !== correct.zh);
+    const wrongs = shuffle(wrongPool).slice(0, 3);
+    const options = shuffle([correct, ...wrongs]);
+    const holes = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8]).slice(0, options.length);
+    const byHole = new Map();
+    options.forEach((item, index) => byHole.set(holes[index], item));
+
+    moleAnswer = correct.en;
+    els.gamePrompt.innerHTML = `<span class="game-eq">“${correct.zh}” 用英语怎么说？</span>`;
+    els.gameStage.className = 'game-stage mole-stage';
+    els.gameStage.innerHTML = `
+      <div class="mole-grid">
+        ${Array.from({ length: 9 }, (_, hole) => {
+          const item = byHole.get(hole);
+          if (!item) return '<span class="mole-hole" aria-hidden="true"></span>';
+          return `
+            <span class="mole-hole">
+              <button class="mole" type="button" data-word="${item.en}" aria-label="${item.en}">${item.en}</button>
+            </span>`;
+        }).join('')}
+      </div>`;
+  }
+
+  function moleTap(button) {
+    if (game.locked || !game.active) return;
+    const word = button.dataset.word;
+    if (word === moleAnswer) {
+      game.locked = true;
+      game.score += 10;
+      game.correct += 1;
+      button.classList.add('is-hit');
+      els.gameScore.textContent = `${game.score} 分`;
+      later(() => {
+        if (!game.active) return;
+        game.locked = false;
+        newMoleQuestion();
+      }, 380);
+    } else {
+      game.wrong += 1;
+      game.lives -= 1;
+      button.classList.add('is-miss');
+      button.disabled = true;
+      updateHud();
+      if (game.lives <= 0) finish('三颗心用完了');
+    }
+  }
+
+  /* ---------- 事件 ---------- */
+
+  els.gamesGrid.addEventListener('click', (event) => {
+    const card = event.target.closest('[data-game]');
+    if (card) start(card.dataset.game);
+  });
+
+  els.gameStage.addEventListener('click', (event) => {
+    const bubble = event.target.closest('.bubble');
+    if (bubble) {
+      bubbleTap(bubble);
+      return;
+    }
+    const card = event.target.closest('.memory-card');
+    if (card) {
+      flipCard(card);
+      return;
+    }
+    const mole = event.target.closest('.mole');
+    if (mole) moleTap(mole);
+  });
+
+  els.gamesBackBtn.addEventListener('click', goHome);
+  els.gameExitBtn.addEventListener('click', open);
+  els.gameBackBtn.addEventListener('click', open);
+  els.gameAgainBtn.addEventListener('click', () => start(game.id));
+
+  window.AceGames = { open, stop };
 })();
 
   </script>

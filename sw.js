@@ -1,5 +1,5 @@
 // 由 scripts/build-offline.mjs 生成，缓存版本随页面内容变化。
-const CACHE = 'ace-offline-1231a650b6';
+const CACHE = 'ace-offline-84766df2fa';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png'];
 
 self.addEventListener('install', (event) => {
